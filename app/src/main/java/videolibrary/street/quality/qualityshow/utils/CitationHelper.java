@@ -15,6 +15,9 @@ public class CitationHelper {
 
     public String getCitation(){
         int position = (int)( Math.random()*( this.citations.size() + 1));
+        if(position == this.citations.size()){
+            position--;
+        }
         return "« " + this.citations.get(position) + " »";
     }
 
