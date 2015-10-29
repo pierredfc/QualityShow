@@ -64,7 +64,17 @@ public class UserHelper {
      * @param listener  listener for received all informations
      */
     public void create(User user, UserListener listener){
-        userRepository.create(user, new UserCallbacks.CreateCallback(listener));
+        userRepository.createUser(user.getEmail(), user.getPassword(), user.getCreationParameters()).save(new UserCallbacks.CreateCallback(listener));
+    }
+
+    /**
+     * Get user and films in the same time, you can choose if you want the categories
+     * @param user          Current user
+     * @param listener      Listener about user actions
+     * @param categories    Boolean about include categories
+     */
+    public void films(User user,boolean categories, UserListener listener){
+        userRepository.films((int)user.getId(), categories, new UserCallbacks.FilmsCallback(listener));
     }
 
 }

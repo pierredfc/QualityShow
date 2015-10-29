@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.api.user.dao;
 
 import com.strongloop.android.remoting.Repository;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Map;
 public class User extends com.strongloop.android.loopback.User {
 
     String created, lastUpdated;
+
+    public ArrayList<Film> films;
 
     public String getCreated() {
         return created;
@@ -26,6 +29,14 @@ public class User extends com.strongloop.android.loopback.User {
 
     public void setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public ArrayList<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(ArrayList<Film> films) {
+        this.films = films;
     }
 
     @Override

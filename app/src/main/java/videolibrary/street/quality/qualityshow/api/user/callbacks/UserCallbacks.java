@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.api.user.callbacks;
 
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.strongloop.android.loopback.AccessToken;
 import com.strongloop.android.loopback.UserRepository;
 import com.strongloop.android.loopback.callbacks.ListCallback;
@@ -9,12 +10,17 @@ import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.JsonUtil;
 import com.strongloop.android.remoting.adapters.Adapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
@@ -100,7 +106,7 @@ public class UserCallbacks {
     /**
      * Callback for create function on UserRepository
      */
-    public static class CreateCallback extends Adapter.JsonObjectCallback{
+    public static class CreateCallback implements VoidCallback {
 
         private UserListener listener;
 
@@ -109,20 +115,83 @@ public class UserCallbacks {
         }
 
         @Override
-        public void onSuccess(JSONObject response) {
-            videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository repository = new videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository();
+        public void onSuccess() {
             Log.d(Constants.Log.TAG, "User created");
-            JSONObject userJson = response.optJSONObject("user");
-            User user = userJson != null
-                    ? repository.createObject(JsonUtil.fromJson(userJson))
-                    : null;
-            this.listener.isCreated(user);
+            this.listener.isCreated(true);
         }
 
         @Override
         public void onError(Throwable t) {
             Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + CreateCallback.class.getSimpleName(), t);
             this.listener.onError(t);
+        }
+    }
+
+    /**
+     * Callback when we want received user and films
+     */
+    public static class FilmsCallback extends Adapter.JsonArrayCallback{
+
+        private UserListener listener;
+
+        public FilmsCallback(UserListener listener) {
+            this.listener = listener;
+        }
+
+        /**
+         * The method invoked when the call completes successfully and the
+         * response is a JSON object or <code>null</code> if the response
+         * string is "null".
+         *
+         * @param response The JSON object.
+         */
+//        @Override
+//        public void onSuccess(JSONObject response) {
+//            Log.d(Constants.Log.TAG, "User and films received");
+//            videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository repository = new videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository();
+//            JSONObject userJson = response.optJSONObject("user");
+//            User user = userJson != null
+//                    ? repository.createObject(JsonUtil.fromJson(userJson))
+//                    : null;
+//            this.listener.gettingFilms(user);
+//        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + CreateCallback.class.getSimpleName(), t);
+            this.listener.onError(t);
+        }
+
+        /**
+         * The method invoked when the call completes successfully and the
+         * response is a JSON array or <code>null</code> if the response
+         * string is "null".
+         *
+         * @param response The JSON array.
+         */
+        @Override
+        public void onSuccess(JSONArray response) {
+            ArrayList<Film> films = new ArrayList<>();
+            FilmRepository repository = new FilmRepository();
+            for (int i = 0; i < response.length(); i++){
+                JSONObject object = null;
+                try {
+                    object  = response.getJSONObject(i);
+                    Film film = object != null
+                            ? repository.createObject(JsonUtil.fromJson(object))
+                            : null;
+                    films.add(film);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.d(Constants.Log.TAG, "Films received");
+            this.listener.gettingFilms(films);
         }
     }
 

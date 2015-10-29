@@ -2,6 +2,9 @@ package videolibrary.street.quality.qualityshow.api.user.listeners;
 
 import com.strongloop.android.loopback.AccessToken;
 
+import java.util.ArrayList;
+
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 
 /**
@@ -30,9 +33,15 @@ public interface UserListener {
 
     /**
      * Say if the user is created or not
-     * @param user          User we have created
+     * @param user          boolean User we have created
      */
-    public void isCreated(User user);
+    public void isCreated(boolean user);
+
+    /**
+     * Get user with all films include
+     * @param films         List of films received
+     */
+    public void gettingFilms(ArrayList<Film> films);
 
     /**
      * Call when an action was not executed correctly
