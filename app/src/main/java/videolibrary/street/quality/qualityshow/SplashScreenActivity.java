@@ -5,16 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.strongloop.android.loopback.AccessToken;
+
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.utils.CitationHelper;
 
-public class SplashScreenActivity extends Activity {
+public class SplashScreenActivity extends Activity implements UserListener{
 
     TextView citation;
     CitationHelper citationHelper;
+
+    User user;
+    AccessToken accessToken;
+    UserHelper userHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,10 @@ public class SplashScreenActivity extends Activity {
         this.citation = (TextView) findViewById(R.id.citation);
         this.citationHelper = new CitationHelper();
         setCitation(this.citationHelper.getCitation());
+
+        userHelper = new UserHelper(getApplicationContext());
+        userHelper.login("string@string.fr", "string", (UserListener) this);
+
 
         if(isNetworkConnected()){
            nextActivity();
@@ -44,5 +55,27 @@ public class SplashScreenActivity extends Activity {
     private void nextActivity() {
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void isLogged(AccessToken accessToken, User user) {
+        this.accessToken = accessToken;
+        this.user = user;
+    }
+
+    @Override
+    public void isUpdated(boolean isUpdated) {
+    }
+
+    @Override
+    public void isDeleted(boolean isDeleted) {
+    }
+
+    @Override
+    public void isCreated(User user) {
+    }
+
+    @Override
+    public void onError(Throwable e) {
     }
 }
