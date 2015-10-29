@@ -1,6 +1,10 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
+import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
+import com.strongloop.android.remoting.adapters.RestContractItem;
+
+import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
@@ -23,4 +27,31 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
         super(className, nameForRestUrl, userClass);
     }
 
+    @Override
+    public RestContract createContract() {
+        RestContract contract = super.createContract();
+
+        String clasName = getClassName();
+
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".films");
+
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id", "DELETE"), clasName + ".delete");
+
+
+        return contract;
+    }
+
+    public void films(int userId, Adapter.JsonObjectCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", userId);
+//        params.put("filter[include][films]", "categories");
+//        params.put("filter[include][series][saisons]", "episodes");
+//        params.put("filter[include][series]", "categories");
+
+        invokeStaticMethod("films", params, callback);
+    }
+
+    public void create(User user, Adapter.JsonObjectCallback callback){
+
+    }
 }
