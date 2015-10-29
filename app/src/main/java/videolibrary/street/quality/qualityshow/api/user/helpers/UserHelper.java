@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallback;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
@@ -74,7 +75,7 @@ public class UserHelper {
      * @param categories    Boolean about include categories
      */
     public void films(User user,boolean categories, UserListener listener){
-        userRepository.films((int)user.getId(), categories, new UserCallbacks.FilmsCallback(listener));
+        userRepository.getFilms((int) user.getId(), categories, new FilmsCallback.GetFilmsCallback(listener));
     }
 
 }

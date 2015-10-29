@@ -33,17 +33,17 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
 
         String clasName = getClassName();
 
-        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".films");
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".getFilms");
 
         return contract;
     }
 
-    public void films(int userId, boolean categories, Adapter.JsonArrayCallback callback){
+    public void getFilms(int userId, boolean categories, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
         params.put("id", userId);
         if(categories)
-            params.put("filter[include][films]", "categories");
-        invokeStaticMethod("films", params, callback);
+            params.put("filter[include]", "categories");
+        invokeStaticMethod("getFilms", params, callback);
     }
 
 }

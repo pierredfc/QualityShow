@@ -2,12 +2,24 @@ package videolibrary.street.quality.qualityshow.api.user.dao;
 
 import com.strongloop.android.loopback.Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by elerion on 10/26/15.
  */
 public class Film extends Model {
 
     private String title, released, year, overview, language;
+
+    private ArrayList<Category> categories;
+
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
 
     public String getTitle() {
         return title;
