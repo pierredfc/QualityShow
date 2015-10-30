@@ -21,7 +21,7 @@ public class LoginActivity extends Activity {
     public void sendMessage(View view){
         //Retrieve each field
         Context context = getApplicationContext();
-        String username = ((EditText)findViewById(R.id.username)).getText().toString();
+        String username = ((EditText)findViewById(R.id.email)).getText().toString();
         if(username == null || username.length() == 0){
             int duration = Toast.LENGTH_SHORT;
             Toast.makeText(context, "incorrect username", duration).show();
