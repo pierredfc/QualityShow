@@ -15,6 +15,8 @@ public class User extends com.strongloop.android.loopback.User {
 
     public ArrayList<Film> films;
 
+    public ArrayList<Serie> series;
+
     public String getCreated() {
         return created;
     }
@@ -45,6 +47,14 @@ public class User extends com.strongloop.android.loopback.User {
 
     public void setFilms(ArrayList<Film> films) {
         this.films = films;
+    }
+
+    public ArrayList<Serie> getSeries() {
+        return series;
+    }
+
+    public void setSeries(ArrayList<Serie> series) {
+        this.series = series;
     }
 
     @Override

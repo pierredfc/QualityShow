@@ -2,25 +2,12 @@ package videolibrary.street.quality.qualityshow.api.user.callbacks;
 
 import android.util.Log;
 
-import com.google.gson.JsonObject;
 import com.strongloop.android.loopback.AccessToken;
 import com.strongloop.android.loopback.UserRepository;
-import com.strongloop.android.loopback.callbacks.ListCallback;
 import com.strongloop.android.loopback.callbacks.VoidCallback;
-import com.strongloop.android.remoting.JsonUtil;
-import com.strongloop.android.remoting.adapters.Adapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
@@ -45,7 +32,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User deleted");
-            this.listener.isDeleted(true);
+            this.listener.userIsDeleted(true);
         }
 
         @Override
@@ -68,8 +55,8 @@ public class UserCallbacks {
 
         @Override
         public void onSuccess(AccessToken token, User currentUser) {
+            Log.d(Constants.Log.TAG, "User is logged");
             this.listener.isLogged(token, currentUser);
-            Log.d(Constants.Log.TAG, currentUser.toString());
         }
 
         @Override
@@ -93,7 +80,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User is update");
-            this.listener.isUpdated(true);
+            this.listener.userIsUpdated(true);
         }
 
         @Override
@@ -117,7 +104,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User created");
-            this.listener.isCreated(true);
+            this.listener.userIsCreated(true);
         }
 
         @Override

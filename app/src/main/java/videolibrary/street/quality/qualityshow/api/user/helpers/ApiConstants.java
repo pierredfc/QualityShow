@@ -13,4 +13,7 @@ public class ApiConstants {
     public static final String FILM_MODEL_NAME  = "film";
     public static final String FILM_API_NAME    = "Films";
 
+    public static final String SERIE_MODEL_NAME = "serie";
+    public static final String SERIE_API_NAME   = "Series";
+
 }

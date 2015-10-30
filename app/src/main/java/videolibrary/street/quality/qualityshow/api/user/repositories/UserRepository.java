@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.ApiAdapter;
 import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
@@ -39,8 +40,11 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
 
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".getFilms");
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films", "POST"), clasName + ".addFilm");
-
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films/:filmId", "DELETE"), clasName + ".deleteFilm");
+
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/series", "GET"), clasName + ".getSeries");
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/series", "POST"), clasName + ".addSerie");
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/series/:serieId", "DELETE"), clasName + ".deleteSerie");
 
         return contract;
     }
@@ -65,6 +69,29 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
         params.put("userId", userId);
         params.put("filmId", filmId);
         invokeStaticMethod("deleteFilm", params, callback);
+    }
+
+
+    public void getSeries(int userId, boolean categories, Adapter.JsonArrayCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", userId);
+        if(categories)
+            params.put("filter[include]", "categories");
+        invokeStaticMethod("getSeries", params, callback);
+    }
+
+    public void addSerie(int userId, Serie serie, Adapter.JsonObjectCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.putAll(serie.toMap());
+        invokeStaticMethod("addSerie", params, callback);
+    }
+
+    public void deleteSerie(int userId, int serieId, Adapter.Callback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("SerieId", serieId);
+        invokeStaticMethod("deleteSerie", params, callback);
     }
 
 }

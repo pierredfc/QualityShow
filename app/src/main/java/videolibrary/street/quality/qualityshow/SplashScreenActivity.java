@@ -16,15 +16,19 @@ import java.util.Map;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.ApiListeners;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
+import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.utils.CitationHelper;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
-public class SplashScreenActivity extends Activity implements UserListener, FilmListener{
+public class SplashScreenActivity extends Activity implements ApiListeners{
 
     TextView citation;
     CitationHelper citationHelper;
@@ -43,9 +47,6 @@ public class SplashScreenActivity extends Activity implements UserListener, Film
         setCitation(this.citationHelper.getCitation());
 
         userHelper = new UserHelper(getApplicationContext());
-
-
-
         userHelper.login("string@string.fr", "string", (UserListener) this);
 
 
@@ -76,44 +77,80 @@ public class SplashScreenActivity extends Activity implements UserListener, Film
     public void isLogged(AccessToken accessToken, User user) {
         this.accessToken = accessToken;
         this.user = user;
-        Film film = new Film();
-        film.setLanguage("test");
-        film.setTitle("test");
-        userHelper.addFilm((int)this.user.getId(), film, this);
-    }
 
-    @Override
-    public void isUpdated(boolean isUpdated) {
-    }
-
-    @Override
-    public void isDeleted(boolean isDeleted) {
-    }
-
-    @Override
-    public void OnError(Throwable t) {
-
-    }
-
-    @Override
-    public void isCreated(boolean user) {
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("title", "test");
+        userHelper.addFilm(this.user, new FilmRepository().createObject(params), this);
     }
 
     /**
-     * Get user with all films include
+     * Call when update is done
      *
-     * @param films List of films received
+     * @param isUpdated Say if the user is updated or not
      */
     @Override
-    public void gettingFilms(ArrayList<Film> films) {
-        this.user.setFilms(films);
+    public void userIsUpdated(boolean isUpdated) {
+
+    }
+
+    /**
+     * Call when delete is done
+     *
+     * @param isDeleted Say if the user is deleted or not
+     */
+    @Override
+    public void userIsDeleted(boolean isDeleted) {
+
+    }
+
+    /**
+     * Say if the user is created or not
+     *
+     * @param user boolean User we have created
+     */
+    @Override
+    public void userIsCreated(boolean user) {
+
+    }
+
+    /**
+     * Call when an action was not executed correctly
+     *
+     * @param t Exception return by action
+     */
+    @Override
+    public void onError(Throwable t) {
+
+    }
+
+
+    @Override
+    public void filmIsAdded(Film film) {
+        userHelper.deleteFilm(this.user, (int) film.getId(), this);
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void filmIsDeleted() {
+        Log.d(Constants.Log.TAG, "End of films Test");
     }
 
     @Override
-    public void isAdded(Film films) {
+    public void getFilms(ArrayList<Film> films) {
+
+    }
+
+    @Override
+    public void serieIsAdded(Serie serie) {
+
+    }
+
+    @Override
+    public void serieIsDeleted() {
+
+    }
+
+    @Override
+    public void getSeries(ArrayList<Serie> series) {
+
     }
 }

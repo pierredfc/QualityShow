@@ -1,20 +1,18 @@
 package videolibrary.street.quality.qualityshow.api.user.helpers;
 
 import android.content.Context;
-import android.os.SystemClock;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallback;
+import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallbacks;
+import videolibrary.street.quality.qualityshow.api.user.callbacks.SerieCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
+import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 
@@ -89,16 +87,28 @@ public class UserHelper {
      * @param listener      Listener about user actions
      * @param categories    Boolean about include categories
      */
-    public void films(User user,boolean categories, UserListener listener){
-        userRepository.getFilms((int) user.getId(), categories, new FilmsCallback.GetFilmsCallback(listener));
+    public void films(User user,boolean categories, FilmListener listener){
+        userRepository.getFilms((int) user.getId(), categories, new FilmsCallbacks.GetFilmsCallback(listener));
     }
 
-    public void addFilm(int userId, Film film, FilmListener listener){
-        userRepository.addFilm(userId, film, new FilmsCallback.AddFilmCallback(listener));
+    public void addFilm(User user, Film film, FilmListener listener){
+        userRepository.addFilm((int) user.getId(), film, new FilmsCallbacks.AddFilmCallback(listener));
     }
 
-    public void deleteFilm(int userId, int filmId, FilmListener listener){
-        userRepository.deleteFilm(userId, filmId, new FilmsCallback.DeleteFilmCallback(listener));
+    public void deleteFilm(User user, int filmId, FilmListener listener){
+        userRepository.deleteFilm((int) user.getId(), filmId, new FilmsCallbacks.DeleteFilmCallback(listener));
+    }
+
+    public void series(User user, boolean categories, SerieListener listener){
+        userRepository.getSeries((int) user.getId(), categories, new SerieCallbacks.GetSeriesCallback(listener));
+    }
+
+    public void addSerie(User user, Serie serie, SerieListener listener){
+        userRepository.addSerie((int) user.getId(), serie, new SerieCallbacks.AddSerieCallback(listener));
+    }
+
+    public void deleteSerie(User user, int serieId, SerieListener listener){
+        userRepository.deleteSerie((int) user.getId(), serieId, new SerieCallbacks.DeleteSerieCallback(listener));
     }
 
 }

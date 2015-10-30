@@ -2,7 +2,6 @@ package videolibrary.street.quality.qualityshow.api.user.callbacks;
 
 import android.util.Log;
 
-import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.JsonUtil;
 import com.strongloop.android.remoting.adapters.Adapter;
 
@@ -14,14 +13,13 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
-import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by elerion on 10/30/15.
  */
-public class FilmsCallback {
+public class FilmsCallbacks {
 
 
     /**
@@ -29,9 +27,9 @@ public class FilmsCallback {
     */
     public static class GetFilmsCallback extends Adapter.JsonArrayCallback{
 
-        private UserListener listener;
+        private FilmListener listener;
 
-        public GetFilmsCallback(UserListener listener) {
+        public GetFilmsCallback(FilmListener listener) {
             this.listener = listener;
         }
         /**
@@ -70,7 +68,7 @@ public class FilmsCallback {
                 }
             }
             Log.d(Constants.Log.TAG, "Films received");
-            this.listener.gettingFilms(films);
+            this.listener.getFilms(films);
         }
     }
 
@@ -96,7 +94,7 @@ public class FilmsCallback {
             Film film = response != null
                     ? repository.createObject(JsonUtil.fromJson(response))
                     : null;
-            this.listener.isAdded(film);
+            this.listener.filmIsAdded(film);
         }
 
         /**
@@ -107,6 +105,7 @@ public class FilmsCallback {
         @Override
         public void onError(Throwable t) {
             Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + AddFilmCallback.class.getSimpleName(), t);
+            this.listener.onError(t);
         }
     }
 
@@ -127,7 +126,7 @@ public class FilmsCallback {
         @Override
         public void onSuccess(String response) {
             Log.d(Constants.Log.TAG, "film deleted");
-            this.listener.isDeleted(true);
+            this.listener.filmIsDeleted();
         }
 
         /**
@@ -138,6 +137,7 @@ public class FilmsCallback {
         @Override
         public void onError(Throwable t) {
             Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + DeleteFilmCallback.class.getSimpleName(), t);
+            this.listener.onError(t);
         }
     }
 }
