@@ -33,5 +33,4 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".MainActivity"/>
     </application>
-
 </manifest>

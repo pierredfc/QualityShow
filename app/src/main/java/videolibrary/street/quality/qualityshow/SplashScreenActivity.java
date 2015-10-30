@@ -32,6 +32,9 @@ public class SplashScreenActivity extends Activity implements UserListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
+        //Intent intentLoginActivity = new Intent(this, LoginActivity.class);
+        //startActivity(intentLoginActivity);
+
         this.citation = (TextView) findViewById(R.id.citation);
         this.citationHelper = new CitationHelper();
         setCitation(this.citationHelper.getCitation());
