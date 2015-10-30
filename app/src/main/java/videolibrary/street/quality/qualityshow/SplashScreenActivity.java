@@ -5,16 +5,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.widget.TextView;
 
-import videolibrary.street.quality.qualityshow.utils.CitationHelper;
+import com.strongloop.android.loopback.AccessToken;
 
-public class SplashScreenActivity extends Activity {
+import java.util.ArrayList;
+
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.utils.CitationHelper;
+import videolibrary.street.quality.qualityshow.utils.Constants;
+
+public class SplashScreenActivity extends Activity implements UserListener{
 
     TextView citation;
     CitationHelper citationHelper;
+
+    User user;
+    AccessToken accessToken;
+    UserHelper userHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +37,12 @@ public class SplashScreenActivity extends Activity {
         this.citationHelper = new CitationHelper();
         setCitation(this.citationHelper.getCitation());
 
+        userHelper = new UserHelper(getApplicationContext());
+        userHelper.login("string@string.fr", "string", (UserListener) this);
+
+
         if(isNetworkConnected()){
-           nextActivity();
+//           nextActivity();
         } else {
             //@TODO
         }
@@ -44,5 +60,39 @@ public class SplashScreenActivity extends Activity {
     private void nextActivity() {
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void isLogged(AccessToken accessToken, User user) {
+        this.accessToken = accessToken;
+        this.user = user;
+        this.userHelper.films(this.user, false, (UserListener) this);
+    }
+
+    @Override
+    public void isUpdated(boolean isUpdated) {
+    }
+
+    @Override
+    public void isDeleted(boolean isDeleted) {
+    }
+
+    @Override
+    public void isCreated(boolean user) {
+    }
+
+    /**
+     * Get user with all films include
+     *
+     * @param films List of films received
+     */
+    @Override
+    public void gettingFilms(ArrayList<Film> films) {
+        this.user.setFilms(films);
+        Log.d(Constants.Log.TAG, "Film recu");
+    }
+
+    @Override
+    public void onError(Throwable e) {
     }
 }

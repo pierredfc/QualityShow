@@ -5,8 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5c09b92f76f991fb244af78acb4a5360c9cdd242
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
