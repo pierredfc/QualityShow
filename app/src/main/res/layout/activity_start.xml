@@ -10,17 +10,49 @@
         android:layout_height="match_parent"
         android:id="@+id/start_textView"
         android:background="#80000000"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_account"
+            android:id="@+id/no_account_button"
+            android:textColor="#fff"
+            android:backgroundTint="@android:color/background_dark"
+            android:layout_above="@+id/sign_up_button"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:id="@+id/sign_up_button"
+            android:backgroundTint="@android:color/background_dark"
+            android:textColor="#fff"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="83dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slogan"
+            android:id="@+id/slogan"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:fontFamily="Segoe UI Light" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ask_account"
             android:id="@+id/ask_account"
-            android:layout_marginStart="76dp"
-            android:layout_alignBaseline="@+id/sign_in"
-            android:layout_alignBottom="@+id/sign_in"
-            android:layout_alignParentStart="true" />
+            android:layout_marginBottom="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/logoText" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,52 +60,18 @@
             android:text="@string/sign_in"
             android:id="@+id/sign_in"
             android:textStyle="bold"
-            android:onClick="LaunchSignInActivity"
-            android:layout_marginStart="27dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/ask_account" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_account"
-            android:id="@+id/button2"
-            android:layout_above="@+id/ask_account"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="26dp"
-            android:textColor="#fff"
-            android:backgroundTint="@android:color/background_dark" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            android:id="@+id/button"
-            android:layout_alignParentStart="true"
-            android:layout_above="@+id/button2"
-            android:layout_alignParentLeft="true"
-            android:backgroundTint="@android:color/background_dark"
-            android:textColor="#fff" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EASY. TO. FOLLOW"
-            android:id="@+id/textView"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            android:fontFamily="Segoe UI Light" />
+            android:layout_alignTop="@+id/ask_account"
+            android:layout_toEndOf="@+id/logoText" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Q"
-            android:id="@+id/textView2"
-            android:layout_marginBottom="32dp"
-            android:textColor="#8BC34A"
+            android:id="@+id/logoText"
             android:textSize="100dp"
-            android:layout_above="@+id/textView"
+            android:textColor="@color/greenQ"
+            android:layout_marginBottom="68dp"
+            android:layout_above="@+id/slogan"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>

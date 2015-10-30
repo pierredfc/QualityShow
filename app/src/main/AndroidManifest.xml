@@ -28,16 +28,10 @@
         <activity
             android:name=".StartActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <activity
-            android:name=".SearchActivity"
-            android:label="@string/title_activity_search"
-            android:launchMode="singleTop">
 
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

@@ -20,7 +20,6 @@ import videolibrary.street.quality.qualityshow.utils.CitationHelper;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 public class SplashScreenActivity extends Activity implements UserListener{
-
     TextView citation;
     CitationHelper citationHelper;
 
@@ -37,14 +36,13 @@ public class SplashScreenActivity extends Activity implements UserListener{
         this.citationHelper = new CitationHelper();
         setCitation(this.citationHelper.getCitation());
 
-        userHelper = new UserHelper(getApplicationContext());
-        userHelper.login("string@string.fr", "string", (UserListener) this);
-
+       /* userHelper = new UserHelper(getApplicationContext());
+        userHelper.login("string@string.fr", "string", (UserListener) this);*/
 
         if(isNetworkConnected()){
-//           nextActivity();
+            nextActivity();
         } else {
-            //@TODO
+            mainActivity();
         }
     }
 
@@ -59,6 +57,11 @@ public class SplashScreenActivity extends Activity implements UserListener{
 
     private void nextActivity() {
         Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+    }
+
+    private void mainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
