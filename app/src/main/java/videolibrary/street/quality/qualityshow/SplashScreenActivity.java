@@ -42,7 +42,7 @@ public class SplashScreenActivity extends Activity implements UserListener{
         userHelper = new UserHelper(getApplicationContext());
         userHelper.create("test", "test@test.fr", "test", "MR. test", this);
 //        userHelper.login("string@string.fr", "string", (UserListener) this);
-        
+
 
         if(isNetworkConnected()){
             nextActivity();
