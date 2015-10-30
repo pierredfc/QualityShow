@@ -6,6 +6,9 @@ import android.os.SystemClock;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallback;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
@@ -21,6 +24,11 @@ public class UserHelper {
 
     private final ApiAdapter apiAdapter;
     private final UserRepository userRepository;
+
+    private final String EMAIL      = "email";
+    private final String USENAME    = "username";
+    private final String PASSWORD   = "password";
+    private final String REALM      = "realm";
 
     /**
      * Contructor
@@ -61,11 +69,17 @@ public class UserHelper {
 
     /**
      * Create a new user, you need to create user just with [realm, username, email, password, created(optional), lastupdate(optional)]
-     * @param user      user who will created
      * @param listener  listener for received all informations
      */
-    public void create(User user, UserListener listener){
-        userRepository.createUser(user.getEmail(), user.getPassword(), user.getCreationParameters()).save(new UserCallbacks.CreateCallback(listener));
+    public void create(String username, String email, String password, String realm, UserListener listener){
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put(this.EMAIL, email);
+        map.put(this.USENAME, username);
+        map.put(this.REALM, realm);
+        map.put(this.PASSWORD, password);
+
+        userRepository.createObject(map).save(new UserCallbacks.CreateCallback(listener));
+//        userRepository.createUser(user.getEmail(), user.getPassword(), user.getCreationParameters()).save(new UserCallbacks.CreateCallback(listener));
     }
 
     /**
