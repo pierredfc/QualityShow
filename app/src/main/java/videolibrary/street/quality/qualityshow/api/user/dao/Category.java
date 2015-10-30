@@ -7,7 +7,7 @@ import com.strongloop.android.loopback.Model;
  */
 public class Category extends Model {
 
-    private String name;
+    private String name = "string";
 
     public String getName() {
         return name;

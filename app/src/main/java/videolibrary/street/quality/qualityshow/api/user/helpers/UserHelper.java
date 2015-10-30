@@ -12,7 +12,9 @@ import java.util.Objects;
 
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallback;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 
@@ -79,7 +81,6 @@ public class UserHelper {
         map.put(this.PASSWORD, password);
 
         userRepository.createObject(map).save(new UserCallbacks.CreateCallback(listener));
-//        userRepository.createUser(user.getEmail(), user.getPassword(), user.getCreationParameters()).save(new UserCallbacks.CreateCallback(listener));
     }
 
     /**
@@ -90,6 +91,14 @@ public class UserHelper {
      */
     public void films(User user,boolean categories, UserListener listener){
         userRepository.getFilms((int) user.getId(), categories, new FilmsCallback.GetFilmsCallback(listener));
+    }
+
+    public void addFilm(int userId, Film film, FilmListener listener){
+        userRepository.addFilm(userId, film, new FilmsCallback.AddFilmCallback(listener));
+    }
+
+    public void deleteFilm(int userId, int filmId, FilmListener listener){
+        userRepository.deleteFilm(userId, filmId, new FilmsCallback.DeleteFilmCallback(listener));
     }
 
 }

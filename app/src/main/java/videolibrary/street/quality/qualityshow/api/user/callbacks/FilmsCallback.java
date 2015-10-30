@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.api.user.callbacks;
 
 import android.util.Log;
 
+import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.JsonUtil;
 import com.strongloop.android.remoting.adapters.Adapter;
 
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
@@ -32,25 +34,6 @@ public class FilmsCallback {
         public GetFilmsCallback(UserListener listener) {
             this.listener = listener;
         }
-
-        /**
-         * The method invoked when the call completes successfully and the
-         * response is a JSON object or <code>null</code> if the response
-         * string is "null".
-         *
-         * @param response The JSON object.
-         */
-//        @Override
-//        public void onSuccess(JSONObject response) {
-//            Log.d(Constants.Log.TAG, "User and films received");
-//            videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository repository = new videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository();
-//            JSONObject userJson = response.optJSONObject("user");
-//            User user = userJson != null
-//                    ? repository.createObject(JsonUtil.fromJson(userJson))
-//                    : null;
-//            this.listener.gettingFilms(user);
-//        }
-
         /**
          * The method invoked when an error occurs.
          *
@@ -91,4 +74,70 @@ public class FilmsCallback {
         }
     }
 
+    public static class AddFilmCallback extends Adapter.JsonObjectCallback{
+
+        private FilmListener listener;
+
+        public AddFilmCallback(FilmListener listener) {
+            this.listener = listener;
+        }
+
+        /**
+         * The method invoked when the call completes successfully and the
+         * response is a JSON object or <code>null</code> if the response
+         * string is "null".
+         *
+         * @param response The JSON object.
+         */
+        @Override
+        public void onSuccess(JSONObject response) {
+            Log.d(Constants.Log.TAG, "Film added");
+            FilmRepository repository = new FilmRepository();
+            Film film = response != null
+                    ? repository.createObject(JsonUtil.fromJson(response))
+                    : null;
+            this.listener.isAdded(film);
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + AddFilmCallback.class.getSimpleName(), t);
+        }
+    }
+
+    public static class DeleteFilmCallback implements Adapter.Callback{
+
+        private FilmListener listener;
+
+        public DeleteFilmCallback(FilmListener listener) {
+            this.listener = listener;
+        }
+
+        /**
+         * The method invoked when the call completes successfully and the
+         * response is a JSON object or <code>null</code> if the response
+         * string is "null".
+         *
+         */
+        @Override
+        public void onSuccess(String response) {
+            Log.d(Constants.Log.TAG, "film deleted");
+            this.listener.isDeleted(true);
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + DeleteFilmCallback.class.getSimpleName(), t);
+        }
+    }
 }

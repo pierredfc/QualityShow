@@ -14,15 +14,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.utils.CitationHelper;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
-public class SplashScreenActivity extends Activity implements UserListener{
+public class SplashScreenActivity extends Activity implements UserListener, FilmListener{
 
     TextView citation;
     CitationHelper citationHelper;
@@ -41,8 +43,12 @@ public class SplashScreenActivity extends Activity implements UserListener{
         setCitation(this.citationHelper.getCitation());
 
         userHelper = new UserHelper(getApplicationContext());
-        userHelper.create("test", "test@test.fr", "test", "MR. test", this);
-//        userHelper.login("string@string.fr", "string", (UserListener) this);
+
+
+
+        userHelper.login("string@string.fr", "string", (UserListener) this);
+
+
 
 
         if(isNetworkConnected()){
@@ -70,7 +76,10 @@ public class SplashScreenActivity extends Activity implements UserListener{
     public void isLogged(AccessToken accessToken, User user) {
         this.accessToken = accessToken;
         this.user = user;
-        this.userHelper.films(this.user, false, (UserListener) this);
+        Film film = new Film();
+        film.setLanguage("test");
+        film.setTitle("test");
+        userHelper.addFilm((int)this.user.getId(), film, this);
     }
 
     @Override
@@ -79,6 +88,11 @@ public class SplashScreenActivity extends Activity implements UserListener{
 
     @Override
     public void isDeleted(boolean isDeleted) {
+    }
+
+    @Override
+    public void OnError(Throwable t) {
+
     }
 
     @Override
@@ -97,5 +111,9 @@ public class SplashScreenActivity extends Activity implements UserListener{
 
     @Override
     public void onError(Throwable e) {
+    }
+
+    @Override
+    public void isAdded(Film films) {
     }
 }

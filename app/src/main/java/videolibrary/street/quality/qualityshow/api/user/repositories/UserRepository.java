@@ -1,12 +1,16 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
+import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
 import com.strongloop.android.remoting.adapters.RestContractItem;
 
 import java.util.HashMap;
 
+import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.ApiAdapter;
 import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
 
 /**
@@ -34,6 +38,9 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
         String clasName = getClassName();
 
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".getFilms");
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films", "POST"), clasName + ".addFilm");
+
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films/:filmId", "DELETE"), clasName + ".deleteFilm");
 
         return contract;
     }
@@ -44,6 +51,20 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
         if(categories)
             params.put("filter[include]", "categories");
         invokeStaticMethod("getFilms", params, callback);
+    }
+
+    public void addFilm(int userId, Film film, Adapter.JsonObjectCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.putAll(film.toMap());
+        invokeStaticMethod("addFilm", params, callback);
+    }
+
+    public void deleteFilm(int userId, int filmId, Adapter.Callback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("filmId", filmId);
+        invokeStaticMethod("deleteFilm", params, callback);
     }
 
 }
