@@ -11,11 +11,14 @@ import android.widget.TextView;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.utils.CitationHelper;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
@@ -39,8 +42,10 @@ public class SplashScreenActivity extends Activity implements UserListener{
         this.citationHelper = new CitationHelper();
         setCitation(this.citationHelper.getCitation());
 
-       /* userHelper = new UserHelper(getApplicationContext());
-        userHelper.login("string@string.fr", "string", (UserListener) this);*/
+        userHelper = new UserHelper(getApplicationContext());
+        userHelper.create("test", "test@test.fr", "test", "MR. test", this);
+//        userHelper.login("string@string.fr", "string", (UserListener) this);
+
 
         if(isNetworkConnected()){
             nextActivity();
@@ -95,7 +100,6 @@ public class SplashScreenActivity extends Activity implements UserListener{
     @Override
     public void gettingFilms(ArrayList<Film> films) {
         this.user.setFilms(films);
-        Log.d(Constants.Log.TAG, "Film recu");
     }
 
     @Override
