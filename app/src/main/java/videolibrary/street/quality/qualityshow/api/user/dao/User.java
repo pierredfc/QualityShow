@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class User extends com.strongloop.android.loopback.User {
 
-    String created, lastUpdated;
+    String created, lastUpdated, username;
 
     public ArrayList<Film> films;
 
@@ -29,6 +29,14 @@ public class User extends com.strongloop.android.loopback.User {
 
     public void setLastUpdated(String lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public ArrayList<Film> getFilms() {
