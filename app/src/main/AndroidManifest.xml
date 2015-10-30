@@ -20,9 +20,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".LoginActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".StartActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
-    </application>
+
+        </application>
+
 
 </manifest>
