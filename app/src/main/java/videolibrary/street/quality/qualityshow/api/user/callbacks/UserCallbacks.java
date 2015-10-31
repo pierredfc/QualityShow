@@ -2,7 +2,6 @@ package videolibrary.street.quality.qualityshow.api.user.callbacks;
 
 import android.util.Log;
 
-import com.google.gson.JsonObject;
 import com.strongloop.android.loopback.AccessToken;
 import com.strongloop.android.loopback.UserRepository;
 import com.strongloop.android.loopback.callbacks.ListCallback;
@@ -17,10 +16,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
@@ -30,6 +27,32 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
  */
 public class UserCallbacks {
 
+    public static class GetAllUsers implements ListCallback<User> {
+        private UserListener listener;
+
+        public GetAllUsers(UserListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSuccess(List<User> objects) {
+            Log.d(Constants.Log.TAG, "Users received");
+            ArrayList<User> users = new ArrayList<User>();
+            users = (ArrayList<User>)objects;
+            this.listener.getAllUsers(users);
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
 
     /**
      * Callback for delete function on UserRepository
@@ -45,7 +68,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User deleted");
-            this.listener.isDeleted(true);
+            this.listener.userIsDeleted(true);
         }
 
         @Override
@@ -68,8 +91,8 @@ public class UserCallbacks {
 
         @Override
         public void onSuccess(AccessToken token, User currentUser) {
+            Log.d(Constants.Log.TAG, "User is logged");
             this.listener.isLogged(token, currentUser);
-            Log.d(Constants.Log.TAG, currentUser.toString());
         }
 
         @Override
@@ -93,7 +116,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User is update");
-            this.listener.isUpdated(true);
+            this.listener.userIsUpdated(true);
         }
 
         @Override
@@ -117,7 +140,7 @@ public class UserCallbacks {
         @Override
         public void onSuccess() {
             Log.d(Constants.Log.TAG, "User created");
-            this.listener.isCreated(true);
+            this.listener.userIsCreated(true);
         }
 
         @Override
