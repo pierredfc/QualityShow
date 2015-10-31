@@ -1,19 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Material.Light">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
+
     </style>
-
-
-    <style name="MyActionBar" parent="android:Theme.Material">
-        <item name="android:background">@color/grayQ</item>
-        <item name="android:textColor">#fff</item>
-        <item name="android:titleTextStyle">@style/TitleText</item>
-    </style>
-
-    <style name="TitleText" parent="android:Theme.Material.Light">
-        <item name="android:textColor">#fff</item>
-    </style>
-
 
 </resources>

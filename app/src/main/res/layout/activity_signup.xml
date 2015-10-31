@@ -13,18 +13,18 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="134dp"
-        android:text="Email"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:hint="Email" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/nameText"
         android:layout_below="@+id/emailText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Username" />
 
     <EditText
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         android:id="@+id/pwdText"
         android:layout_below="@+id/nameText"
         android:layout_alignStart="@+id/nameText"
-        android:text="Password" />
+        android:hint="Password" />
 
     <Button
         android:layout_width="match_parent"
