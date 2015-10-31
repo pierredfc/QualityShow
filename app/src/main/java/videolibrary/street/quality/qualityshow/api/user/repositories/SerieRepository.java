@@ -79,7 +79,7 @@ public class SerieRepository extends ModelRepository<Serie> {
 
     public void deleteSaison(int serieId, int saisonId, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("filmId", serieId);
+        params.put("serieId", serieId);
         params.put("saisonId", saisonId);
         invokeStaticMethod("deleteSaison", params, callback);
     }

@@ -121,7 +121,7 @@ public class SplashScreenActivity extends Activity implements ApiListeners{
 
     @Override
     public void categorieIsAdded(Category category) {
-        
+
     }
 
     @Override
