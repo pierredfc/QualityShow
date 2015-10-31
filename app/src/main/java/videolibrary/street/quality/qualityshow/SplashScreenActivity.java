@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -40,6 +41,7 @@ public class SplashScreenActivity extends Activity implements ApiListeners{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
@@ -146,6 +148,21 @@ public class SplashScreenActivity extends Activity implements ApiListeners{
 
     @Override
     public void saisonIsDeleted() {
+
+    }
+
+    @Override
+    public void episodeIsAdded(Episode episode) {
+
+    }
+
+    @Override
+    public void getEpisodes(ArrayList<Episode> episodes) {
+
+    }
+
+    @Override
+    public void episodeIsDelete() {
 
     }
 
