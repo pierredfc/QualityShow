@@ -4,7 +4,17 @@ import android.util.Log;
 
 import com.strongloop.android.loopback.AccessToken;
 import com.strongloop.android.loopback.UserRepository;
+import com.strongloop.android.loopback.callbacks.ListCallback;
 import com.strongloop.android.loopback.callbacks.VoidCallback;
+import com.strongloop.android.remoting.JsonUtil;
+import com.strongloop.android.remoting.adapters.Adapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
@@ -17,6 +27,32 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
  */
 public class UserCallbacks {
 
+    public static class GetAllUsers implements ListCallback<User> {
+        private UserListener listener;
+
+        public GetAllUsers(UserListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSuccess(List<User> objects) {
+            Log.d(Constants.Log.TAG, "Users received");
+            ArrayList<User> users = new ArrayList<User>();
+            users = (ArrayList<User>)objects;
+            this.listener.getAllUsers(users);
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
 
     /**
      * Callback for delete function on UserRepository

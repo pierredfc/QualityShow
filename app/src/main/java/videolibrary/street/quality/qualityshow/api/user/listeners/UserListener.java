@@ -12,6 +12,9 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
  * Listener for User Actions, onError is call each time that an action not work
  */
 public interface UserListener {
+
+    public void getAllUsers(ArrayList<User> users);
+
     /**
      * Call when login is done
      * @param accessToken   accessToken use to consume the api server

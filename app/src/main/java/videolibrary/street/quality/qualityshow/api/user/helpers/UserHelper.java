@@ -39,6 +39,10 @@ public class UserHelper {
         userRepository = apiAdapter.createRepository(UserRepository.class);
     }
 
+    public void users(UserListener listener){
+        userRepository.findAll(new UserCallbacks.GetAllUsers(listener));
+    }
+
     /**
      * Login function
      * @param email     email of user who want to login
