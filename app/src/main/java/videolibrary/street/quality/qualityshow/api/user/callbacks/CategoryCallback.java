@@ -19,7 +19,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 /**
  * Created by elerion on 10/31/15.
  */
-public class CategorieCallback {
+public class CategoryCallback {
 
     public static class GetCategoriesCallback extends Adapter.JsonArrayCallback{
 

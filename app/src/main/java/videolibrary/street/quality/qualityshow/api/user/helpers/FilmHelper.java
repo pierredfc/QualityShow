@@ -1,14 +1,8 @@
 package videolibrary.street.quality.qualityshow.api.user.helpers;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.strongloop.android.loopback.callbacks.ListCallback;
-import com.strongloop.android.remoting.adapters.Adapter;
-
-import java.util.List;
-
-import videolibrary.street.quality.qualityshow.api.user.callbacks.CategorieCallback;
+import videolibrary.street.quality.qualityshow.api.user.callbacks.CategoryCallback;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.listeners.CategorieListener;
@@ -28,15 +22,15 @@ public class FilmHelper {
     }
 
     public void addCategorie(Film film, Category category, CategorieListener listener){
-        filmRepository.addCategory((int) film.getId(), category, new CategorieCallback.AddCategoryCallback(listener));
+        filmRepository.addCategory((int) film.getId(), category, new CategoryCallback.AddCategoryCallback(listener));
     }
 
     public void getCategpries(Film film, CategorieListener listener){
-        filmRepository.getCategories((int) film.getId(), new CategorieCallback.GetCategoriesCallback(listener));
+        filmRepository.getCategories((int) film.getId(), new CategoryCallback.GetCategoriesCallback(listener));
     }
 
     public void deleteCategorie(Film film, Category category, CategorieListener listener){
-        filmRepository.deleteCategory((int) film.getId(), (int) category.getId(), new CategorieCallback.DeleteCategoryCallback(listener));
+        filmRepository.deleteCategory((int) film.getId(), (int) category.getId(), new CategoryCallback.DeleteCategoryCallback(listener));
     }
 
 }
