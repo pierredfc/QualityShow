@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.api.user.dao;
 
 import com.strongloop.android.loopback.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -11,6 +12,8 @@ public class Saison extends Model {
     private Integer aired_episodes, episodes_count, number, serieId;
     private HashMap<String, Ids> ids;
     private HashMap<String, Poster> poster;
+
+    private ArrayList<Episode> episodes;
 
     public Integer getAired_episodes() {
         return aired_episodes;
@@ -58,5 +61,13 @@ public class Saison extends Model {
 
     public void setPoster(HashMap<String, Poster> poster) {
         this.poster = poster;
+    }
+
+    public ArrayList<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(ArrayList<Episode> episodes) {
+        this.episodes = episodes;
     }
 }

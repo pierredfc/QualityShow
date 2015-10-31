@@ -1,18 +1,15 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
-import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
 import com.strongloop.android.remoting.adapters.RestContractItem;
 
 import java.util.HashMap;
 
-import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.api.user.helpers.ApiAdapter;
-import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
 
 /**
  * Created by elerion on 10/26/15.

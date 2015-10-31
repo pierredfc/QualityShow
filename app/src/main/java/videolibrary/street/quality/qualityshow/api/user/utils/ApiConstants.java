@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow.api.user.helpers;
+package videolibrary.street.quality.qualityshow.api.user.utils;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
@@ -20,5 +20,11 @@ public class ApiConstants {
 
     public static final String CATEGORIE_MODEL_NAME     = "category";
     public static final String CATEGORIE_API_NAME       = "Categories";
+
+    public static final String SAISON_MODEL_NAME        = "saison";
+    public static final String SAISON_API_NAME          = "Saisons";
+
+    public static final String EPISODE_MODEL_NAME       = "episode";
+    public static final String EPISODEE_API_NAME        = "Episodes";
 
 }

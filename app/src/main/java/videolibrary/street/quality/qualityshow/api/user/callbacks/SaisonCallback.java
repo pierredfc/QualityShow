@@ -12,20 +12,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
-import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
-import videolibrary.street.quality.qualityshow.api.user.repositories.CategoryRepository;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
+import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by elerion on 10/31/15.
  */
-public class CategoryCallback {
+public class SaisonCallback {
 
-    public static class GetCategoriesCallback extends Adapter.JsonArrayCallback{
+    public static class GetSaisonsCallback extends Adapter.JsonArrayCallback{
 
-        private CategoryListener listener;
+        private SaisonListener listener;
 
-        public GetCategoriesCallback(CategoryListener listener) {
+        public GetSaisonsCallback(SaisonListener listener) {
             this.listener = listener;
         }
 
@@ -38,29 +39,28 @@ public class CategoryCallback {
          */
         @Override
         public void onSuccess(JSONArray response) {
-            ArrayList<Category> categories = new ArrayList<>();
-            CategoryRepository repository = new CategoryRepository();
-            if (response != null){
-                for (int i = 0; i < response.length(); i++){
+            ArrayList<Saison> saisons = new ArrayList<>();
+            SaisonRepository repository = new SaisonRepository();
+            if(response != null){
+                for (int i = 0; i < response.length(); i++) {
                     JSONObject object = null;
-
-                    Category category = object != null
-                            ? repository.createObject(JsonUtil.fromJson(object))
-                            : null;
-                    if(category != null)
-                        categories.add(category);
 
                     try {
                         object = response.getJSONObject(i);
+
+                        Saison saison = object != null
+                                ? repository.createObject(JsonUtil.fromJson(object))
+                                : null;
+                        if (saison != null)
+                            saisons.add(saison);
                     } catch (JSONException e) {
                         Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + getClass().getSimpleName(), e);
                         this.listener.onError(e);
                     }
                 }
             }
-            Log.d(Constants.Log.TAG, "Categories received");
-            this.listener.getCategories(categories);
-
+            Log.d(Constants.Log.TAG, "Saisons received");
+            this.listener.getSaisons(saisons);
         }
 
         /**
@@ -75,11 +75,10 @@ public class CategoryCallback {
         }
     }
 
-    public static class AddCategoryCallback extends Adapter.JsonObjectCallback{
+    public static class AddSaisonCallback extends Adapter.JsonObjectCallback{
+        private SaisonListener listener;
 
-        private CategoryListener listener;
-
-        public AddCategoryCallback(CategoryListener listener) {
+        public AddSaisonCallback(SaisonListener listener) {
             this.listener = listener;
         }
 
@@ -92,12 +91,12 @@ public class CategoryCallback {
          */
         @Override
         public void onSuccess(JSONObject response) {
-            Log.d(Constants.Log.TAG, "Category added");
-            CategoryRepository repository = new CategoryRepository();
-            Category category = response != null
+            Log.d(Constants.Log.TAG, "Saison added");
+            SaisonRepository repository = new SaisonRepository();
+            Saison saison = response != null
                     ? repository.createObject(JsonUtil.fromJson(response))
                     : null;
-            this.listener.categorieIsAdded(category);
+            this.listener.saisonIsAdded(saison);
         }
 
         /**
@@ -112,12 +111,11 @@ public class CategoryCallback {
         }
     }
 
-    public static class DeleteCategoryCallback implements Adapter.Callback{
+    public static class DeleteSaisonCallback implements Adapter.Callback{
+        private SaisonListener listener;
 
-        private CategoryListener listener;
-
-        public DeleteCategoryCallback(CategoryListener categorieListener) {
-            this.listener = categorieListener;
+        public DeleteSaisonCallback(SaisonListener listener) {
+            this.listener = listener;
         }
 
         /**
@@ -127,8 +125,8 @@ public class CategoryCallback {
          */
         @Override
         public void onSuccess(String response) {
-            Log.d(Constants.Log.TAG, "Category deleted");
-            this.listener.categorieIsDeleted();
+            Log.d(Constants.Log.TAG, "Saison delete");
+            this.listener.saisonIsDeleted();
         }
 
         /**

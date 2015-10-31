@@ -8,8 +8,9 @@ import com.strongloop.android.remoting.adapters.RestContractItem;
 import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
-import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
 
 /**
  * Created by elerion on 10/30/15.
@@ -34,6 +35,10 @@ public class SerieRepository extends ModelRepository<Serie> {
         contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "POST"), className + ".addCategory");
         contract.addItem(new RestContractItem("/" + restUrl + "/:serieId/categories/:categoryId", "DELETE"), className + ".deleteCategory");
 
+        contract.addItem(new RestContractItem("/" + restUrl + "/:id/saisons", "GET"), className + ".getSaisons");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:id/saisons", "POST"), className + ".addSaison");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:serieId/saisons/:saisonId", "DELETE"), className + ".deleteSaison");
+
         return contract;
     }
 
@@ -55,5 +60,27 @@ public class SerieRepository extends ModelRepository<Serie> {
         params.put("filmId", serieId);
         params.put("categoryId", categoryId);
         invokeStaticMethod("deleteCategory", params, callback);
+    }
+
+    public void getSaisons(int serieId, boolean episode, Adapter.JsonArrayCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", serieId);
+        if (episode)
+            params.put("filter[include]", "episodes");
+        invokeStaticMethod("getSaisons", params, callback);
+    }
+
+    public void addSaison(int serieId, Saison saison, Adapter.JsonObjectCallback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", serieId);
+        params.putAll(saison.toMap());
+        invokeStaticMethod("addSaison", params, callback);
+    }
+
+    public void deleteSaison(int serieId, int saisonId, Adapter.Callback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("filmId", serieId);
+        params.put("saisonId", saisonId);
+        invokeStaticMethod("deleteSaison", params, callback);
     }
 }

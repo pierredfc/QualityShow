@@ -15,6 +15,8 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiAdapter;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
 
 /**
  * Created by elerion on 10/26/15.

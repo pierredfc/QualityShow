@@ -16,6 +16,7 @@ import java.util.Map;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
@@ -74,6 +75,11 @@ public class SplashScreenActivity extends Activity implements ApiListeners{
     }
 
     @Override
+    public void getAllUsers(ArrayList<User> users) {
+
+    }
+
+    @Override
     public void isLogged(AccessToken accessToken, User user) {
         this.accessToken = accessToken;
         this.user = user;
@@ -110,6 +116,36 @@ public class SplashScreenActivity extends Activity implements ApiListeners{
      */
     @Override
     public void userIsCreated(boolean user) {
+
+    }
+
+    @Override
+    public void categorieIsAdded(Category category) {
+        
+    }
+
+    @Override
+    public void getCategories(ArrayList<Category> categories) {
+
+    }
+
+    @Override
+    public void categorieIsDeleted() {
+
+    }
+
+    @Override
+    public void saisonIsAdded(Saison saison) {
+
+    }
+
+    @Override
+    public void getSaisons(ArrayList<Saison> saisons) {
+
+    }
+
+    @Override
+    public void saisonIsDeleted() {
 
     }
 

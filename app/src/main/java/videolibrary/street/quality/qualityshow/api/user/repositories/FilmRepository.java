@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
-import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
 
 /**
  * Created by elerion on 10/26/15.

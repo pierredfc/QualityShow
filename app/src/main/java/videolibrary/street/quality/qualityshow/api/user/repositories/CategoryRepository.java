@@ -3,7 +3,7 @@ package videolibrary.street.quality.qualityshow.api.user.repositories;
 import com.strongloop.android.loopback.ModelRepository;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
-import videolibrary.street.quality.qualityshow.api.user.helpers.ApiConstants;
+import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
 
 /**
  * Created by elerion on 10/31/15.
