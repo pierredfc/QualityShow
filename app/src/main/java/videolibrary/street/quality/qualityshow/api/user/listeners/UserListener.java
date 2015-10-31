@@ -12,6 +12,9 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
  * Listener for User Actions, onError is call each time that an action not work
  */
 public interface UserListener {
+
+    public void getAllUsers(ArrayList<User> users);
+
     /**
      * Call when login is done
      * @param accessToken   accessToken use to consume the api server
@@ -23,29 +26,23 @@ public interface UserListener {
      * Call when update is done
      * @param isUpdated     Say if the user is updated or not
      */
-    public void isUpdated(boolean isUpdated);
+    public void userIsUpdated(boolean isUpdated);
 
     /**
      * Call when delete is done
      * @param isDeleted     Say if the user is deleted or not
      */
-    public void isDeleted(boolean isDeleted);
+    public void userIsDeleted(boolean isDeleted);
 
     /**
      * Say if the user is created or not
      * @param user          boolean User we have created
      */
-    public void isCreated(boolean user);
-
-    /**
-     * Get user with all films include
-     * @param films         List of films received
-     */
-    public void gettingFilms(ArrayList<Film> films);
+    public void userIsCreated(boolean user);
 
     /**
      * Call when an action was not executed correctly
-     * @param e             Exception return by action
+     * @param t             Exception return by action
      */
-    public void onError(Throwable e);
+    public void onError(Throwable t);
 }
