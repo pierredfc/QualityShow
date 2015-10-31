@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,16 +35,34 @@ public class LoginActivity extends Activity implements UserListener {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.login_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.login_menu_cancel) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void sendMessage(View view){
         //Retrieve each field
         Context context = getApplicationContext();
-        String email = ((EditText)findViewById(R.id.email)).getText().toString();
+        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
         if(email == "" || email.length() == 0){
             int duration = Toast.LENGTH_SHORT;
             Toast.makeText(context, "Incorrect username", duration).show();
         }
         else{
-            String password = ((EditText)findViewById(R.id.password)).getText().toString();
+            String password = ((EditText)findViewById(R.id.pwdText)).getText().toString();
             if(password == "" || password.length() == 0){
 
                 int duration = Toast.LENGTH_SHORT;
@@ -90,6 +110,6 @@ public class LoginActivity extends Activity implements UserListener {
     }
 
     private void setToolbar(){
-
+        setTitle("Se connecter");
     }
 }

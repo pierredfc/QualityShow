@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -60,6 +62,24 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.sign_up_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.signup_menu_cancel) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void getAllUsers(ArrayList<User> users) {
 
     }
@@ -94,6 +114,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
     }
 
     private void setToolbar(){
-        setTitle("S'inscrire");
+        setTitle("Inscription");
     }
 }

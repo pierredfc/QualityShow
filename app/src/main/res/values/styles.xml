@@ -8,4 +8,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="MyBtnStyle" parent="@style/android:Theme.Material">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:background">@color/purple</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
+    <style name="MyETStyle" parent="@style/android:Theme.Material">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:background">#fff</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
 </resources>
