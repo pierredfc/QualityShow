@@ -4,10 +4,12 @@ package videolibrary.street.quality.qualityshow;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.strongloop.android.loopback.AccessToken;
 
@@ -21,6 +23,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{
 
     UserHelper userHelper;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +31,10 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         setContentView(R.layout.activity_signup);
 
         findViewById(R.id.signUpButton).setOnClickListener(this);
+        this.toolbar = (Toolbar) findViewById(R.id.signUp_toolBar);
+        this.setActionBar(this.toolbar);
 
-        setTitle("S'inscrire");
+        setToolbar();
     }
 
     @Override
@@ -38,21 +43,24 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         EditText username = (EditText) findViewById(R.id.nameText);
         EditText password = (EditText) findViewById(R.id.pwdText);
 
-        boolean emptyMail = TextUtils.isEmpty(email.getText());
-        boolean emptyUsername = TextUtils.isEmpty(username.getText());
-        boolean emptyPwd = TextUtils.isEmpty(password.getText());
+        Editable usernameEditable = username.getText();
+        Editable mailEditable = email.getText();
+        Editable pwdEditable = password.getText();
+
+        boolean emptyMail = TextUtils.isEmpty(mailEditable);
+        boolean emptyUsername = TextUtils.isEmpty(usernameEditable);
+        boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
 
         if(!emptyMail && !emptyPwd && !emptyUsername){
             userHelper = new UserHelper(getApplicationContext());
-            User user = new User();
-            user.setEmail(email.getText().toString());
-            user.setRealm(username.getText().toString());
-            user.setPassword(password.getText().toString());
-
-            userHelper.create(user, this);
+            userHelper.create(usernameEditable.toString(), mailEditable.toString(), pwdEditable.toString(), "Default", this);
         } else {
-            Toast.makeText(this, "Erreur", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void getAllUsers(ArrayList<User> users) {
 
     }
 
@@ -62,30 +70,30 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
     }
 
     @Override
-    public void isUpdated(boolean isUpdated) {
+    public void userIsUpdated(boolean isUpdated) {
 
     }
 
     @Override
-    public void isDeleted(boolean isDeleted) {
+    public void userIsDeleted(boolean isDeleted) {
 
     }
 
     @Override
-    public void isCreated(boolean user) {
+    public void userIsCreated(boolean user) {
         if(user){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Toast.makeText(SignUpActivity.this, "Inscription réussie", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
     }
 
     @Override
-    public void gettingFilms(ArrayList<Film> films) {
-
+    public void onError(Throwable e) {
+        Toast.makeText(SignUpActivity.this, "Erreur d'inscription, veuillez ré-essayer.", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onError(Throwable e) {
-
+    private void setToolbar(){
+        setTitle("S'inscrire");
     }
 }

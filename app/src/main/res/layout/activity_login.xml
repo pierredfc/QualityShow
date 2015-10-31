@@ -1,3 +1,4 @@
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#e3e3e3"
@@ -6,6 +7,10 @@
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".LoginActivity"
     android:orientation="vertical">
+
+    <include android:id="@+id/login_toolBar"
+        layout="@layout/toolbar"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
