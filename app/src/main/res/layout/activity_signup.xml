@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:background="#EFEFEF">
 
-    <include android:id="@+id/signUp_toolBar"
-        layout="@layout/toolbar2"/>
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

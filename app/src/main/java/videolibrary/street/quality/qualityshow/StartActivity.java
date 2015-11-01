@@ -97,6 +97,11 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
 
     }
 
+    @Override
+    public void userIsLogout() {
+
+    }
+
     private void stopProgressBar(){
         progressBar = (ProgressBar) findViewById(R.id.start_progressBar);
         progressBar.setProgress(0);

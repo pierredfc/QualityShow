@@ -26,16 +26,11 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class LoginActivity extends Activity implements UserListener, View.OnClickListener {
 
-    Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        this.toolbar = (Toolbar) findViewById(R.id.login_toolBar);
-        this.setActionBar(this.toolbar);
-        setToolbar();
     }
 
 
@@ -90,12 +85,13 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
     }
 
     @Override
-    public void onError(Throwable t) {
-        Toast.makeText(getApplicationContext(), "Erreur lors de la connexion", Toast.LENGTH_LONG).show();
+    public void userIsLogout() {
+
     }
 
-    private void setToolbar(){
-        setTitle("Se connecter");
+    @Override
+    public void onError(Throwable t) {
+        Toast.makeText(getApplicationContext(), "Erreur lors de la connexion", Toast.LENGTH_LONG).show();
     }
 
     @Override
