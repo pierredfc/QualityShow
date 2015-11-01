@@ -150,4 +150,25 @@ public class UserCallbacks {
         }
     }
 
+    public static class LogoutOutCallback implements VoidCallback{
+
+        private UserListener listener;
+
+        public LogoutOutCallback(UserListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSuccess() {
+            Log.d(Constants.Log.TAG, "User lougout");
+            this.listener.userIsLogout();
+        }
+
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG,Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
+
 }

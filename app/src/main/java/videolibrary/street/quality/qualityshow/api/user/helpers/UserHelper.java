@@ -130,4 +130,8 @@ public class UserHelper {
         return this.currentUser;
     }
 
+    public void lougout(UserListener listener){
+        this.userRepository.logout(new UserCallbacks.LogoutOutCallback(listener));
+    }
+
 }

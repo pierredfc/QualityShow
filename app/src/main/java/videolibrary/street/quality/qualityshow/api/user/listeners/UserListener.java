@@ -40,6 +40,8 @@ public interface UserListener {
      */
     public void userIsCreated(boolean user);
 
+    public void userIsLogout();
+
     /**
      * Call when an action was not executed correctly
      * @param t             Exception return by action
