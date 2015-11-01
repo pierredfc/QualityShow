@@ -1,19 +1,15 @@
 package videolibrary.street.quality.qualityshow;
 
 
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.SearchManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -25,15 +21,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.utils.Constants;
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener{
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener {
 
     Toolbar toolbar;
     User user;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +39,24 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Home");
 
+
         user = QualityShowApplication.getUserHelper().getCurrentUser();
         if (user == null) {
             user = new User();
             user.setUsername("Anonyme");
         }
 
-          setDrawer(savedInstanceState);
+        setDrawer(savedInstanceState);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
 
@@ -64,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.main_menu_search:
-                return true;
             case R.id.main_menu_settings:
                 Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
@@ -81,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         //     finish();
     }
 
-    private void setDrawer(Bundle savedInstanceState){
+
+    private void setDrawer(Bundle savedInstanceState) {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.color.purple)
@@ -116,6 +116,17 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        //Lancement de la recherche @// TODO: 02/11/2015  
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
         return false;
     }
 }
