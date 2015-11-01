@@ -3,7 +3,11 @@ package videolibrary.street.quality.qualityshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +24,15 @@ import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 
-public class LoginActivity extends Activity implements UserListener {
+public class LoginActivity extends Activity implements UserListener, View.OnClickListener {
 
     Toolbar toolbar;
-    UserHelper userHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
         this.toolbar = (Toolbar) findViewById(R.id.login_toolBar);
         this.setActionBar(this.toolbar);
         setToolbar();
@@ -53,27 +57,6 @@ public class LoginActivity extends Activity implements UserListener {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view){
-        //Retrieve each field
-        Context context = getApplicationContext();
-        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
-        if(email == "" || email.length() == 0){
-            int duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, "Incorrect username", duration).show();
-        }
-        else{
-            String password = ((EditText)findViewById(R.id.pwdText)).getText().toString();
-            if(password == "" || password.length() == 0){
-
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, "Incorrect password", duration).show();
-            }else{
-                userHelper = new UserHelper(context);
-                userHelper.login(email, password, this);
-            }
-        }
-    }
-
     @Override
     public void getAllUsers(ArrayList<User> users) {
 
@@ -83,9 +66,6 @@ public class LoginActivity extends Activity implements UserListener {
     public void isLogged(AccessToken accessToken, User user) {
         Toast.makeText(getApplicationContext(), "Bienvenue " + user.getUsername(), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
-        Bundle extras = new Bundle();
-
-        intent.putExtras(extras);
         startActivity(intent);
     }
 
@@ -111,5 +91,23 @@ public class LoginActivity extends Activity implements UserListener {
 
     private void setToolbar(){
         setTitle("Se connecter");
+    }
+
+    @Override
+    public void onClick(View v) {
+        EditText email = (EditText) findViewById(R.id.login_email_text);
+        EditText password = (EditText) findViewById(R.id.login_pwd_txt);
+
+        Editable mailEditable = email.getText();
+        Editable pwdEditable = password.getText();
+
+        boolean emptyMail = TextUtils.isEmpty(mailEditable);
+        boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
+
+        if(!emptyMail && !emptyPwd){
+            QualityShowApplication.getUserHelper().login(mailEditable.toString(), pwdEditable.toString(), this);
+        } else {
+            Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();
+        }
     }
 }

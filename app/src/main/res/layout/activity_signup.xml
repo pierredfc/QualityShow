@@ -5,7 +5,7 @@
     android:background="#EFEFEF">
 
     <include android:id="@+id/signUp_toolBar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar2"/>
 
     <EditText
         android:layout_width="match_parent"

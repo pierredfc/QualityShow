@@ -2,54 +2,53 @@ package videolibrary.street.quality.qualityshow;
 
 
 import android.app.Activity;
-import android.content.res.Configuration;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
-public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    ActionBarDrawerToggle drawerToggle;
-    ListView listView;
+    User user;
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.toolbar = (Toolbar) findViewById(R.id.main_toolBar);
-        this.setActionBar(this.toolbar);
-        setToolbar();
 
-        this.drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        drawerToggle = new ActionBarDrawerToggle(this, this.drawerLayout,0,0);
-        drawerLayout.setDrawerListener(this.drawerToggle);
+
+        this.toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        this.setSupportActionBar(this.toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        setTitle("Home");
+
         setDrawer();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // synchroniser le drawerToggle après la restauration via onRestoreInstanceState
-        drawerToggle.syncState();
-    }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,12 +63,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    private void setToolbar(){
+    private void setDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-    }
-
-    private void setDrawer(){
-        listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.left_drawer);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, Constants.Drawer.getDrawerList());
 
@@ -79,6 +76,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        selectItem(position);
     }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+        // Create a new fragment and specify the planet to show based on position
+        Fragment fragment = new Fragment();
+        Bundle args = new Bundle();
+        args.putInt("Position", position);
+        fragment.setArguments(args);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        listView.setItemChecked(position, true);
+        setTitle(Constants.Drawer.getDrawerList()[position]);
+        mDrawerLayout.closeDrawer(listView);
+    }
+
+
 }

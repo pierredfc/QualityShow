@@ -24,7 +24,6 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{
 
-    UserHelper userHelper;
     Toolbar toolbar;
 
     @Override
@@ -54,8 +53,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
 
         if(!emptyMail && !emptyPwd && !emptyUsername){
-            userHelper = new UserHelper(getApplicationContext());
-            userHelper.create(usernameEditable.toString(), mailEditable.toString(), pwdEditable.toString(), "Default", this);
+            QualityShowApplication.getUserHelper().create(usernameEditable.toString(), mailEditable.toString(), pwdEditable.toString(), "Default", this);
         } else {
             Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();
         }
