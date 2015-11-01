@@ -99,7 +99,7 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
 
     @Override
     public void userIsLogout() {
-        
+
     }
 
     @Override

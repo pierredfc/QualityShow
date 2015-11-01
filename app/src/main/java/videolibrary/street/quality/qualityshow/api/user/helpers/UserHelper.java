@@ -36,7 +36,6 @@ public class UserHelper {
     private final String PASSWORD   = "password";
     private final String REALM      = "realm";
 
-    private User currentUser;
 
     /**
      * Contructor
@@ -124,10 +123,7 @@ public class UserHelper {
     }
 
     public User getCurrentUser(){
-        if(currentUser == null){
-            currentUser = this.userRepository.getCachedCurrentUser();
-        }
-        return this.currentUser;
+        return this.userRepository.getCachedCurrentUser();
     }
 
     public void logout(UserListener listener){
@@ -136,6 +132,10 @@ public class UserHelper {
 
     public void findUserById(int id, UserListener listener){
         userRepository.findById(id, new UserCallbacks.FindUserByIdCallback(listener));
+    }
+
+    public void retrieveRegisteredUser(UserListener listener){
+        this.userRepository.findCurrentUser(new UserCallbacks.RetrieveRegisteredUserCallback(listener));
     }
 
 }
