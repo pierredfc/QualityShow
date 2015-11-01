@@ -197,4 +197,24 @@ public class UserCallbacks {
         }
     }
 
+    public static class RetrieveRegisteredUserCallback implements ObjectCallback<User>{
+        private UserListener listener;
+
+        public RetrieveRegisteredUserCallback(UserListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onSuccess(User object) {
+            Log.d(Constants.Log.TAG, "User retrived");
+            this.listener.userIsRetrieved(object);
+        }
+
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
+
 }

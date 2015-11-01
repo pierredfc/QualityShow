@@ -44,6 +44,8 @@ public interface UserListener {
 
     public void userIsFind(User user);
 
+    public void userIsRetrieved(User user);
+
     /**
      * Call when an action was not executed correctly
      * @param t             Exception return by action
