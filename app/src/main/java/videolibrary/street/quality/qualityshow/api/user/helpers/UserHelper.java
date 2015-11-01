@@ -1,6 +1,9 @@
 package videolibrary.street.quality.qualityshow.api.user.helpers;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.strongloop.android.loopback.callbacks.ObjectCallback;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,6 +20,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiAdapter;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
+import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by elerion on 10/26/15.
@@ -31,6 +35,8 @@ public class UserHelper {
     private final String USENAME    = "username";
     private final String PASSWORD   = "password";
     private final String REALM      = "realm";
+
+    private User currentUser;
 
     /**
      * Contructor
@@ -115,6 +121,13 @@ public class UserHelper {
 
     public void deleteSerie(User user, int serieId, SerieListener listener){
         userRepository.deleteSerie((int) user.getId(), serieId, new SerieCallbacks.DeleteSerieCallback(listener));
+    }
+
+    public User getCurrentUser(){
+        if(currentUser == null){
+            currentUser = this.userRepository.getCachedCurrentUser();
+        }
+        return this.currentUser;
     }
 
 }
