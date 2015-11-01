@@ -16,7 +16,9 @@ public class QualityShowApplication extends Application {
 
         // Keep a reference to the application context
         sContext = getApplicationContext();
-        userHelper = new UserHelper(sContext);
+        if(userHelper == null){
+            userHelper = new UserHelper(sContext);
+        }
     }
 
     // Used to access Context anywhere within the app

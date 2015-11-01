@@ -34,10 +34,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        user = QualityShowApplication.getUserHelper().getCurrentUser();
+        if(user == null){
+            user = new User();
+            user.setUsername("Anonyme");
+        }
 
-
-        this.toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        this.setSupportActionBar(this.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_drawer);
@@ -100,4 +104,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+   //     finish();
+    }
 }
