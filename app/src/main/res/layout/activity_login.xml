@@ -6,9 +6,6 @@
     android:orientation="vertical"
     android:theme="@style/AppTheme">
 
-    <include android:id="@+id/login_toolBar"
-        layout="@layout/toolbar2"/>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

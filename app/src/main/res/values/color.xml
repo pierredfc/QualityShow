@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple">#4A148C</color>
+    <color name="d_purple">#340E63</color>
+    <color name="accent_purple">#9C27B0</color>
     <color name="background_gray">#EFEFEF</color>
     <color name="grayQ">#212121</color>
     <color name="greenQ">#8BC34A</color>

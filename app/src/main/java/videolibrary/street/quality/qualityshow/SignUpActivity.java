@@ -24,18 +24,12 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{
 
-    Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
         findViewById(R.id.signUpButton).setOnClickListener(this);
-        this.toolbar = (Toolbar) findViewById(R.id.signUp_toolBar);
-        this.setActionBar(this.toolbar);
-
-        setToolbar();
     }
 
     @Override
@@ -121,7 +115,4 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         Toast.makeText(SignUpActivity.this, "Erreur d'inscription, veuillez ré-essayer.", Toast.LENGTH_SHORT).show();
     }
 
-    private void setToolbar(){
-        setTitle("Inscription");
-    }
 }

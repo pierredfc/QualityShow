@@ -3,35 +3,33 @@ package videolibrary.street.quality.qualityshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 
-public class LoginActivity extends Activity implements UserListener {
+public class LoginActivity extends Activity implements UserListener, View.OnClickListener {
 
-    Toolbar toolbar;
-    UserHelper userHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        this.toolbar = (Toolbar) findViewById(R.id.login_toolBar);
-        this.setActionBar(this.toolbar);
-        setToolbar();
+
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
 
@@ -53,27 +51,6 @@ public class LoginActivity extends Activity implements UserListener {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view){
-        //Retrieve each field
-        Context context = getApplicationContext();
-        String email = ((EditText)findViewById(R.id.emailText)).getText().toString();
-        if(email == "" || email.length() == 0){
-            int duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, "Incorrect username", duration).show();
-        }
-        else{
-            String password = ((EditText)findViewById(R.id.pwdText)).getText().toString();
-            if(password == "" || password.length() == 0){
-
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, "Incorrect password", duration).show();
-            }else{
-                userHelper = new UserHelper(context);
-                userHelper.login(email, password, this);
-            }
-        }
-    }
-
     @Override
     public void getAllUsers(ArrayList<User> users) {
 
@@ -82,10 +59,12 @@ public class LoginActivity extends Activity implements UserListener {
     @Override
     public void isLogged(AccessToken accessToken, User user) {
         Toast.makeText(getApplicationContext(), "Bienvenue " + user.getUsername(), Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle extras = new Bundle();
 
-        intent.putExtras(extras);
+        SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.login_information), Context.MODE_PRIVATE);
+        prefs.edit().putString("Email", user.getEmail()).apply();
+        prefs.edit().putString("Password", user.getPassword()).apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -119,7 +98,21 @@ public class LoginActivity extends Activity implements UserListener {
         Toast.makeText(getApplicationContext(), "Erreur lors de la connexion", Toast.LENGTH_LONG).show();
     }
 
-    private void setToolbar(){
-        setTitle("Se connecter");
+    @Override
+    public void onClick(View v) {
+        EditText email = (EditText) findViewById(R.id.login_email_text);
+        EditText password = (EditText) findViewById(R.id.login_pwd_txt);
+
+        Editable mailEditable = email.getText();
+        Editable pwdEditable = password.getText();
+
+        boolean emptyMail = TextUtils.isEmpty(mailEditable);
+        boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
+
+        if (!emptyMail && !emptyPwd) {
+            QualityShowApplication.getUserHelper().login(mailEditable.toString(), pwdEditable.toString(), this);
+        } else {
+            Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();
+        }
     }
 }
