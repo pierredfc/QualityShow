@@ -24,8 +24,6 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{
 
-    Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +102,11 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
 
     @Override
     public void userIsLogout() {
+
+    }
+
+    @Override
+    public void userIsFind(User user) {
 
     }
 

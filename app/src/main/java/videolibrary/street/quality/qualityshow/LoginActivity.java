@@ -7,29 +7,28 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 
 public class LoginActivity extends Activity implements UserListener, View.OnClickListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
@@ -62,8 +61,8 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
         Toast.makeText(getApplicationContext(), "Bienvenue " + user.getUsername(), Toast.LENGTH_LONG).show();
 
         SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.login_information), Context.MODE_PRIVATE);
-        prefs.edit().putString("Email", user.getEmail()).commit();
-        prefs.edit().putString("Password", user.getPassword()).commit();
+        prefs.edit().putString("Email", user.getEmail()).apply();
+        prefs.edit().putString("Password", user.getPassword()).apply();
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -90,6 +89,11 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
     }
 
     @Override
+    public void userIsFind(User user) {
+
+    }
+
+    @Override
     public void onError(Throwable t) {
         Toast.makeText(getApplicationContext(), "Erreur lors de la connexion", Toast.LENGTH_LONG).show();
     }
@@ -105,7 +109,7 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
         boolean emptyMail = TextUtils.isEmpty(mailEditable);
         boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
 
-        if(!emptyMail && !emptyPwd){
+        if (!emptyMail && !emptyPwd) {
             QualityShowApplication.getUserHelper().login(mailEditable.toString(), pwdEditable.toString(), this);
         } else {
             Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();

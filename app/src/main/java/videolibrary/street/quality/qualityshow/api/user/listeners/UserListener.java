@@ -42,6 +42,8 @@ public interface UserListener {
 
     public void userIsLogout();
 
+    public void userIsFind(User user);
+
     /**
      * Call when an action was not executed correctly
      * @param t             Exception return by action
