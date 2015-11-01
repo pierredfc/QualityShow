@@ -36,18 +36,7 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
         this.citationHelper = new CitationHelper();
         this.citation.setText(this.citationHelper.getCitation());
 
-        SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.login_information), Context.MODE_PRIVATE);
-        String email = prefs.getString("Email", "");
-        String pwd = prefs.getString("Password", "");
-
-        if (!email.isEmpty() && !pwd.isEmpty()) {
-            QualityShowApplication.getUserHelper().login(email, pwd, this);
-        } else {
-            stopProgressBar();
-            findViewById(R.id.no_account_button).setOnClickListener(this);
-            findViewById(R.id.sign_up_button).setOnClickListener(this);
-            findViewById(R.id.sign_in).setOnClickListener(this);
-        }
+        QualityShowApplication.getUserHelper().retrieveRegisteredUser(this);
      }
 
 
@@ -105,6 +94,19 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
     @Override
     public void userIsFind(User user) {
 
+    }
+
+    @Override
+    public void userIsRetrieved(User user) {
+        stopProgressBar();
+        if(user == null){
+            findViewById(R.id.no_account_button).setOnClickListener(this);
+            findViewById(R.id.sign_up_button).setOnClickListener(this);
+            findViewById(R.id.sign_in).setOnClickListener(this);
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void stopProgressBar(){

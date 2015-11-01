@@ -21,10 +21,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.strongloop.android.loopback.AccessToken;
+
+import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener, UserListener {
 
     Toolbar toolbar;
     User user;
@@ -68,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
             case R.id.main_menu_settings:
                 Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.deconnexion:
+                QualityShowApplication.getUserHelper().logout(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -77,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //     finish();
     }
 
 
@@ -121,12 +127,57 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        //Lancement de la recherche @// TODO: 02/11/2015  
+        //Lancement de la recherche @// TODO: 02/11/2015
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+
+    @Override
+    public void getAllUsers(ArrayList<User> users) {
+
+    }
+
+    @Override
+    public void isLogged(AccessToken accessToken, User user) {
+
+    }
+
+    @Override
+    public void userIsUpdated(boolean isUpdated) {
+
+    }
+
+    @Override
+    public void userIsDeleted(boolean isDeleted) {
+
+    }
+
+    @Override
+    public void userIsCreated(boolean user) {
+
+    }
+
+    @Override
+    public void userIsLogout() {
+        finish();
+    }
+
+    @Override
+    public void userIsFind(User user) {
+
+    }
+
+    @Override
+    public void userIsRetrieved(User user) {
+
+    }
+
+    @Override
+    public void onError(Throwable t) {
+
     }
 }

@@ -111,6 +111,11 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
     }
 
     @Override
+    public void userIsRetrieved(User user) {
+
+    }
+
+    @Override
     public void onError(Throwable e) {
         Toast.makeText(SignUpActivity.this, "Erreur d'inscription, veuillez ré-essayer.", Toast.LENGTH_SHORT).show();
     }
