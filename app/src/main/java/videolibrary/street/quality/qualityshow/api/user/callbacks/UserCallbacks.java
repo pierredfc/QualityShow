@@ -5,12 +5,11 @@ import android.util.Log;
 import com.strongloop.android.loopback.AccessToken;
 import com.strongloop.android.loopback.UserRepository;
 import com.strongloop.android.loopback.callbacks.ListCallback;
+import com.strongloop.android.loopback.callbacks.ObjectCallback;
 import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.JsonUtil;
 import com.strongloop.android.remoting.adapters.Adapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -160,13 +159,40 @@ public class UserCallbacks {
 
         @Override
         public void onSuccess() {
-            Log.d(Constants.Log.TAG, "User lougout");
+            Log.d(Constants.Log.TAG, "User logout");
             this.listener.userIsLogout();
         }
 
         @Override
         public void onError(Throwable t) {
             Log.e(Constants.Log.TAG,Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
+
+    public static class FindUserByIdCallback implements ObjectCallback<User> {
+
+        private UserListener listener;
+
+        public FindUserByIdCallback(UserListener listener) {
+            this.listener = listener;
+        }
+
+
+        @Override
+        public void onSuccess(User object) {
+            Log.d(Constants.Log.TAG, "User is find");
+            this.listener.userIsFind(object);
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
             this.listener.onError(t);
         }
     }
