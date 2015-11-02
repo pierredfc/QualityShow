@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.api.user.dao;
 
 import com.strongloop.android.loopback.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,6 +16,8 @@ public class Serie extends Model {
     private HashMap<String, Fanart> fanart;
     private HashMap<String, Poster> poster;
     private HashMap<String, Airs> airs;
+
+    private ArrayList<Saison> saisons;
 
     public String getTitle() {
         return title;
@@ -118,5 +121,13 @@ public class Serie extends Model {
 
     public void setAirs(HashMap<String, Airs> airs) {
         this.airs = airs;
+    }
+
+    public ArrayList<Saison> getSaisons() {
+        return saisons;
+    }
+
+    public void setSaisons(ArrayList<Saison> saisons) {
+        this.saisons = saisons;
     }
 }
