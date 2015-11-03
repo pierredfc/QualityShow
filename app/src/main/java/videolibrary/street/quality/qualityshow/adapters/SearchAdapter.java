@@ -11,15 +11,14 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
 
-    List<BeanItem> results;
+    List<Serie> results;
 
-    public SearchAdapter(List<BeanItem> results){
+    public SearchAdapter(List<Serie> results) {
         this.results = results;
     }
 
@@ -31,12 +30,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
 
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
-        if(position < getItemCount()){
-            BeanShowItem item = (BeanShowItem) results.get(position);
+        if (position < getItemCount()) {
+            Serie item = (Serie) results.get(position);
 
-            if(item != null){
-                Picasso.with(QualityShowApplication.getContext()).load(item.getShow().getImages().getPoster().getThumb()).into(holder.image);
-                holder.name.setText(item.getShow().getTitle());
+            if (item != null) {
+                Object p = item.getPoster().get("thumb");
+                String image = (String) p;
+                Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
+                holder.name.setText(item.getTitle());
             }
         }
     }

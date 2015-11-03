@@ -13,6 +13,7 @@ import java.util.List;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.adapters.SearchAdapter;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
@@ -54,7 +55,7 @@ public class SearchFragment extends Fragment implements RequestListener {
     }
 
     @Override
-    public void onResponseReceived(List<BeanItem> response) {
+    public void onResponseReceived(List<Serie> response) {
         searchAdapter = new SearchAdapter(response);
         resultsView.setAdapter(searchAdapter);
     }

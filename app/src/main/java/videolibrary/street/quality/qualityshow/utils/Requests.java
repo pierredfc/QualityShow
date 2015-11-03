@@ -4,7 +4,14 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.strongloop.android.remoting.JsonUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -12,6 +19,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
@@ -23,7 +33,7 @@ public class Requests {
     public static final String MOVIE_SEARCH = "Movie_search";
     public static final String SERIE_SEARCH = "Serie_search";
 
-    public static List<BeanItem> search(String mode, String toSearch) {
+    public static List<Serie> search(String mode, String toSearch) {
         try {
             String request = null;
             switch (mode) {
@@ -45,21 +55,46 @@ public class Requests {
 
             // If success
             if (responseCode == 200) {
-                Type typeList = null;
-                switch (mode) {
-                    case MOVIE_SEARCH:
-                        typeList = new TypeToken<ArrayList<BeanMovieItem>>(){}.getType();
-                        break;
-                    case SERIE_SEARCH:
-                        typeList = new TypeToken<ArrayList<BeanShowItem>>(){}.getType();
-                        break;
+                String jsonStr = convertStreamToString(connection.getInputStream());
+                Log.d("Requests", jsonStr);
+                JSONArray jsonArray = new JSONArray(jsonStr);
+                SerieRepository repo = new SerieRepository();
+                List<Serie> series = new ArrayList<>();
+                Log.d("Requests", "JSONArray length: " + jsonArray.length());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Serie serie = repo.createObject(JsonUtil.fromJson(jsonObject));
+                    Log.d("Requests", serie.getCountry());
+                    series.add(serie);
                 }
-                return new Gson().fromJson(new com.google.gson.stream.JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8")), typeList);
+                return series;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private static String convertStreamToString(InputStream is) {
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 }

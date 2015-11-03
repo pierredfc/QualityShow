@@ -227,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     }
 
-    @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
