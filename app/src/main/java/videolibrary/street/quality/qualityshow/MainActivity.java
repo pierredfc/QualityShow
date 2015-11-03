@@ -193,8 +193,11 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     public void onResponseReceived(List<BeanItem> response) {
         for (BeanItem item : response) {
-            Log.d("Search", ((BeanShowItem) item).getShow().getTitle());
-            Log.d("Search", ((BeanShowItem) item).getShow().getIds().getImdb());
+            try {
+                Log.d("Search", ((BeanShowItem) item).getShow().getTitle());
+                Log.d("Search", ((BeanShowItem) item).getShow().getIds().getImdb());
+            } catch (NullPointerException e) {
+            }
         }
 
 
