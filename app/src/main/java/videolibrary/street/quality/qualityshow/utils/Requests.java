@@ -30,7 +30,7 @@ public class Requests {
                     request = HOST + "/" + MOVIES_PATH + "/search?movie=" + toSearch;
                     break;
                 case SERIE_SEARCH:
-                    request = HOST + "/" + SERIES_PATH + "/search?series=" + toSearch;
+                    request = HOST + "/" + SERIES_PATH + "/search?serie=" + toSearch;
                     break;
             }
             Log.d("Request", request);
@@ -44,7 +44,7 @@ public class Requests {
 
             // If success
             if (responseCode == 200) {
-                Type typeList = new TypeToken<ArrayList<BeanMovieItem>>(){}.getType();
+                Type typeList = new TypeToken<ArrayList<BeanItem>>(){}.getType();
                 return new Gson().fromJson(new com.google.gson.stream.JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8")), typeList);
             }
         } catch (Exception e) {

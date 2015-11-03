@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 
@@ -20,20 +21,21 @@ public class PlanningHolder extends RecyclerView.ViewHolder implements View.OnCl
 
 
     private ClickListener clickListener;
-    private Episode episode;
+    private Serie serie;
 
     public PlanningHolder(View itemView){
         super(itemView);
         view = itemView;
+
         imageView = (ImageView) itemView.findViewById(R.id.p_image_serie);
-        serie_titleView = (TextView) itemView.findViewById(R.id.p_serie_title);
+      /*  serie_titleView = (TextView) itemView.findViewById(R.id.p_serie_title);
         episodeView = (TextView) itemView.findViewById(R.id.p_serie_season_and_episode);
-        episode_titleView = (TextView) itemView.findViewById(R.id.p_serie_episode_name);
+        episode_titleView = (TextView) itemView.findViewById(R.id.p_serie_episode_name);*/
     }
 
-    public void setView(Episode ep, ClickListener listener){
+    public void setView(Serie serie, ClickListener listener){
         clickListener = listener;
-        episode = ep;
+        this.serie = serie;
         view.setOnClickListener(this);
     }
 

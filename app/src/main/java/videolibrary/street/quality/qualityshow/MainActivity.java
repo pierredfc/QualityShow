@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
@@ -67,8 +68,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.main_layout, homeFragment);
+        transaction.add(R.id.frame_container, homeFragment);
         transaction.commit();
+
         handleIntent(getIntent());
     }
 
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+
         return false;
     }
 
@@ -208,8 +211,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
             String query = intent.getStringExtra(SearchManager.QUERY);
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
             requestAsyncTask.execute(Requests.SERIE_SEARCH, query);
-
-
         }
     }
 

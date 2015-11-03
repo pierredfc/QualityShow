@@ -11,17 +11,17 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 
 public class PlanningAdapter extends RecyclerView.Adapter<PlanningHolder> {
 
     ClickListener clickListener;
-    List<Episode> episodes;
+    List<Serie> series;
 
-    public PlanningAdapter(List<Episode> eps, ClickListener listener){
-        episodes = eps;
+    public PlanningAdapter(List<Serie> list_serie, ClickListener listener) {
+        series = list_serie;
         clickListener = listener;
     }
 
@@ -33,19 +33,26 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningHolder> {
 
     @Override
     public void onBindViewHolder(PlanningHolder holder, int position) {
-        Episode episode = episodes.get(position);
+        if(position < getItemCount()){
+            Serie serie = series.get(position);
 
-       // holder.episode_titleView.setText(); ;
-        holder.episodeView.setText(episode.getNumber()); ;
-        holder.serie_titleView.setText(episode.getTitle());
+            if(serie != null){
+                // holder.episode_titleView.setText();
+               // holder.episodeView.setText(Integer.toString(serie.getYear()));
+               // holder.serie_titleView.setText(serie.getTitle());
 
-       // Picasso.with(QualityShowApplication.getContext()).load(episode.).into(holder.imageView);
-        holder.setView(episode, clickListener);
+                Object photo = serie.getPoster().get("thumb");
+
+                Picasso.with(QualityShowApplication.getContext()).load((String) photo).into(holder.imageView);
+                holder.setView(serie, clickListener);
+            }
+        }
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return series.size();
     }
 }

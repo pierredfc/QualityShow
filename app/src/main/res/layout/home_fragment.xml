@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/CustomTheme">
 
 
     <LinearLayout
@@ -14,50 +15,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yesterday"
-            android:id="@+id/yesterday_textview"
-            android:layout_gravity="center_horizontal" />
+            android:text="Mes séries"
+            android:id="@+id/show_textView"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+         />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/yesterday_listview"
+            android:id="@+id/show_listView"
             android:divider="#eeeeee"
             android:scrollbars="none"
             android:dividerHeight="1dp"
-            android:textFilterEnabled="false" />
+            android:textFilterEnabled="false" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Today"
-            android:id="@+id/today_textview"
-            android:layout_gravity="center_horizontal" />
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/today_listview"
-            android:divider="#eeeeee"
-            android:scrollbars="none"
-            android:dividerHeight="1dp"
-            android:textFilterEnabled="false" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tomorrow"
-            android:id="@+id/tomorrow_textview"
-            android:layout_gravity="center_horizontal" />
+        </android.support.v7.widget.RecyclerView>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tomorrow_listview"
-            android:divider="#eeeeee"
-            android:scrollbars="none"
-            android:dividerHeight="1dp"
-            android:textFilterEnabled="false" />
     </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>
