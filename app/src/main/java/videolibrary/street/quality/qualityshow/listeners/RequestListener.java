@@ -2,8 +2,8 @@ package videolibrary.street.quality.qualityshow.listeners;
 
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
 public interface RequestListener {
-    void onResponseReceived(List<BeanItem> response);
+    void onResponseReceived(List<Serie> response);
 }

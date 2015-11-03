@@ -232,13 +232,13 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     @Override
-    public void onResponseReceived(List<BeanItem> response) {
-        for (BeanItem item : response) {
-            try {
-                Log.d("Search", ((BeanShowItem) item).getShow().getTitle());
-                Log.d("Search", ((BeanShowItem) item).getShow().getIds().getImdb());
-            } catch (NullPointerException e) {
-            }
+    public void onResponseReceived(List<Serie> response) {
+        for (Serie item : response) {
+            Log.d("Search", item.getTitle());
+//            try {
+//                Log.d("Search", item.getTitle());
+//            } catch (NullPointerException e) {
+//            }
         }
 
 
