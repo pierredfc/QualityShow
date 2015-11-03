@@ -14,6 +14,7 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
+import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
 
 public class Requests {
     public static final String HOST = "http://de-coster.fr:4000/api";
@@ -44,7 +45,15 @@ public class Requests {
 
             // If success
             if (responseCode == 200) {
-                Type typeList = new TypeToken<ArrayList<BeanItem>>(){}.getType();
+                Type typeList = null;
+                switch (mode) {
+                    case MOVIE_SEARCH:
+                        typeList = new TypeToken<ArrayList<BeanMovieItem>>(){}.getType();
+                        break;
+                    case SERIE_SEARCH:
+                        typeList = new TypeToken<ArrayList<BeanShowItem>>(){}.getType();
+                        break;
+                }
                 return new Gson().fromJson(new com.google.gson.stream.JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8")), typeList);
             }
         } catch (Exception e) {
