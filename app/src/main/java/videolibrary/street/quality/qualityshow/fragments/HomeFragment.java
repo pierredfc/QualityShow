@@ -28,6 +28,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public SwipeRefreshLayout rootView;
     private RecyclerView showsView;
 
+    boolean userConnected;
+
     private PlanningAdapter showsAdapter;
 
     @Override
@@ -38,13 +40,25 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         final GridLayoutManager layoutManager = new GridLayoutManager(QualityShowApplication.getContext(), 3);
         this.showsView.setLayoutManager(layoutManager);
 
+        checkUserConnected();
+
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+        if(userConnected){
+            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+        }
+    }
+
+    private void checkUserConnected(){
+        if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
+            userConnected = false;
+        } else {
+            userConnected = true;
+        }
     }
 
     @Override

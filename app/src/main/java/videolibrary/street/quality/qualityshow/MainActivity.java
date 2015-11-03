@@ -35,6 +35,9 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
+import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
+import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
+import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
@@ -46,7 +49,11 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     private Toolbar toolbar;
     private User user;
     private SearchView searchView;
+
     private HomeFragment homeFragment;
+    private ProfilFragment profilFragment;
+    private RecommandationsFragment recommandationsFragment;
+    private SettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        // searchView.setOnQueryTextListener(this);
 
         return true;
     }
@@ -121,7 +127,14 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         SecondaryDrawerItem planning = new SecondaryDrawerItem().withName("Mon planning");
         SecondaryDrawerItem recommandations = new SecondaryDrawerItem().withName("Recommandations");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Réglages");
-        SecondaryDrawerItem login = new SecondaryDrawerItem().withName("Se déconnecter");
+
+        SecondaryDrawerItem login;
+
+        if(user.getUsername() != "Anonyme"){
+            login = new SecondaryDrawerItem().withName("Se déconnecter");
+        } else {
+            login = new SecondaryDrawerItem().withName("Se connecter");
+        }
 
         Drawer result = new DrawerBuilder().withActivity(this).withToolbar(toolbar)
                 .addDrawerItems(
@@ -140,7 +153,35 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     @Override
-    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+    public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
+        switch(position){
+            case 1:
+                profilFragment = new ProfilFragment();
+                FragmentTransaction profilTransaction = getFragmentManager().beginTransaction();
+                profilTransaction.add(R.id.frame_container, profilFragment);
+                profilTransaction.commit();
+                return true;
+            case 2:
+                //planning
+                break;
+            case 3:
+                recommandationsFragment = new RecommandationsFragment();
+                FragmentTransaction recommandationsTransaction = getFragmentManager().beginTransaction();
+                recommandationsTransaction.add(R.id.frame_container, recommandationsFragment);
+                recommandationsTransaction.commit();
+                return true;
+            case 4:
+                settingsFragment = new SettingsFragment();
+                FragmentTransaction settingsTransaction = getFragmentManager().beginTransaction();
+                settingsTransaction.add(R.id.frame_container, settingsFragment);
+                settingsTransaction.commit();
+                return true;
+            case 5:
+                // se déconnecter
+                break;
+            default:
+                return false;
+        }
 
         return false;
     }
@@ -206,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     private void handleIntent(Intent intent) {
-
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);

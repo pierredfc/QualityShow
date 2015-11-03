@@ -60,10 +60,6 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
     public void isLogged(AccessToken accessToken, User user) {
         Toast.makeText(getApplicationContext(), "Bienvenue " + user.getUsername(), Toast.LENGTH_LONG).show();
 
-     /*   SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.login_information), Context.MODE_PRIVATE);
-        prefs.edit().putString("Email", user.getEmail()).apply();
-        prefs.edit().putString("Password", user.getPassword()).apply();*/
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

@@ -37,6 +37,9 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
         this.citation.setText(this.citationHelper.getCitation());
 
         QualityShowApplication.getUserHelper().retrieveRegisteredUser(this);
+        findViewById(R.id.no_account_button).setOnClickListener(this);
+        findViewById(R.id.sign_up_button).setOnClickListener(this);
+        findViewById(R.id.sign_in).setOnClickListener(this);
      }
 
 
