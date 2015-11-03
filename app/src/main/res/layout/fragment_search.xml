@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="videolibrary.street.quality.qualityshow.MainActivity">
+    android:id="@+id/fragment_search"
+    android:theme="@style/CustomTheme">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" android:text="@string/large_text" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_resultsView"
+        android:divider="#eeeeee"
+        android:scrollbars="none"
+        android:dividerHeight="1dp"
+        android:textFilterEnabled="false" >
 
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

@@ -3,17 +3,15 @@ package videolibrary.street.quality.qualityshow.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -21,6 +19,7 @@ import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.adapters.PlanningAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {
@@ -34,7 +33,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.home_fragment, container, false);
+        rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_home, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
 
         final GridLayoutManager layoutManager = new GridLayoutManager(QualityShowApplication.getContext(), 3);

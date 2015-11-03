@@ -1,6 +1,7 @@
 package videolibrary.street.quality.qualityshow;
 
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,24 +27,18 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
+import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
-import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
-import videolibrary.street.quality.qualityshow.utils.Requests;
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, RequestListener, ClickListener {
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, ClickListener {
 
     private Toolbar toolbar;
     private User user;
@@ -54,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     private ProfilFragment profilFragment;
     private RecommandationsFragment recommandationsFragment;
     private SettingsFragment settingsFragment;
+    private SearchFragment searchFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         SecondaryDrawerItem login;
 
-        if(user.getUsername() != "Anonyme"){
+        if (user.getUsername() != "Anonyme") {
             login = new SecondaryDrawerItem().withName("Se déconnecter");
         } else {
             login = new SecondaryDrawerItem().withName("Se connecter");
@@ -154,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
-        switch(position){
+        switch (position) {
             case 1:
                 profilFragment = new ProfilFragment();
                 FragmentTransaction profilTransaction = getFragmentManager().beginTransaction();
@@ -232,19 +228,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     @Override
-    public void onResponseReceived(List<BeanItem> response) {
-        for (BeanItem item : response) {
-            try {
-                Log.d("Search", ((BeanShowItem) item).getShow().getTitle());
-                Log.d("Search", ((BeanShowItem) item).getShow().getIds().getImdb());
-            } catch (NullPointerException e) {
-            }
-        }
-
-
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
     }
@@ -252,8 +235,21 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_SEARCH, query);
+
+
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            if(searchFragment != null){
+                transaction.remove(searchFragment);
+            }
+            if(homeFragment != null){
+                transaction.remove(homeFragment);
+            }
+
+            searchFragment = SearchFragment.newInstance(query);
+            transaction.add(R.id.frame_container, searchFragment);
+        //    transaction.addToBackStack(null);
+            transaction.commit();
         }
     }
 
