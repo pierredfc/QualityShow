@@ -30,6 +30,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         setContentView(R.layout.activity_signup);
 
         findViewById(R.id.signUpButton).setOnClickListener(this);
+        setTitle(getString(R.string.sign_up));
     }
 
     @Override

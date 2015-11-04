@@ -29,6 +29,7 @@ import com.strongloop.android.loopback.AccessToken;
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     @Override
-    public void onEpisodeClicked(Episode episode) {
-
+    public void onSerieClick(Serie serie) {
+        Toast.makeText(QualityShowApplication.getContext(), serie.getTitle(), Toast.LENGTH_LONG).show();
     }
 }

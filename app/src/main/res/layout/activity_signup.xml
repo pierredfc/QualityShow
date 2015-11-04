@@ -30,7 +30,8 @@
         android:hint="Username"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:textColorHint="#000" />
+        android:textColorHint="#000"
+        android:textColor="#000"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
         android:layout_alignStart="@+id/nameText"
         android:hint="Password"
         android:textColorHint="#000"
+        android:textColor="#000"
         android:fontFamily="sans-serif"/>
 
     <Button
