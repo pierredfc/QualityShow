@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow;
+package videolibrary.street.quality.qualityshow.activities;
 
 
 import android.app.Activity;
@@ -11,15 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
+import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{

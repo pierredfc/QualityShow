@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow;
+package videolibrary.street.quality.qualityshow.activities;
 
 
 import android.app.FragmentManager;
@@ -28,7 +28,8 @@ import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
+import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
@@ -255,6 +256,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public void onSerieClick(Serie serie) {
-        Toast.makeText(QualityShowApplication.getContext(), serie.getTitle(), Toast.LENGTH_LONG).show();
+        
     }
 }

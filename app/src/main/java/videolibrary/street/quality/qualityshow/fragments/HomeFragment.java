@@ -11,15 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import videolibrary.street.quality.qualityshow.MainActivity;
+import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.adapters.PlanningAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {

@@ -1,22 +1,20 @@
-package videolibrary.street.quality.qualityshow;
+package videolibrary.street.quality.qualityshow.activities;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
+import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.utils.CitationHelper;

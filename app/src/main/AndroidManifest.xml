@@ -13,13 +13,7 @@
         android:label="@string/app_name">
 
         <activity
-            android:name=".SplashScreenActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-        </activity>
-
-        <activity
-            android:name=".StartActivity"
+            android:name=".activities.StartActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,9 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.SignUpActivity"/>
+        <activity android:name=".activities.MainActivity"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTop">
 

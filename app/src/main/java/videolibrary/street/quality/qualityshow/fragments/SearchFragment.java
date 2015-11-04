@@ -8,18 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.MainActivity;
+import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.adapters.SearchAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 
