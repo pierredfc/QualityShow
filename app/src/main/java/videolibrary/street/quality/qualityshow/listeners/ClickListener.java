@@ -1,8 +1,8 @@
 package videolibrary.street.quality.qualityshow.listeners;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
 
 public interface ClickListener {
-    void onEpisodeClicked(Episode episode);
+    void onSerieClick(Serie serie);
 }

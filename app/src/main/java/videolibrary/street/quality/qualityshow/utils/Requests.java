@@ -36,6 +36,11 @@ public class Requests {
     public static List<Serie> search(String mode, String toSearch) {
         try {
             String request = null;
+
+            if(toSearch.contains(" ")){
+                toSearch = toSearch.replace(" ", "+");
+            }
+
             switch (mode) {
                 case MOVIE_SEARCH:
                     request = HOST + "/" + MOVIES_PATH + "/search?movie=" + toSearch;

@@ -1,5 +1,6 @@
 package videolibrary.street.quality.qualityshow.adapters;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +13,17 @@ import java.util.List;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
 
     List<Serie> results;
+    private ClickListener clickListener;
 
-    public SearchAdapter(List<Serie> results) {
+    public SearchAdapter(List<Serie> results, ClickListener listener) {
         this.results = results;
+        clickListener = listener;
     }
 
     @Override
@@ -31,13 +35,28 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
         if (position < getItemCount()) {
-            Serie item = (Serie) results.get(position);
+            Serie item = results.get(position);
 
             if (item != null) {
                 Object p = item.getPoster().get("thumb");
                 String image = (String) p;
-                Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
+
+
+                if (image == null) {
+                    Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
+                    holder.image.setImageDrawable(drawable);
+                } else {
+                    Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
+                }
                 holder.name.setText(item.getTitle());
+                Integer year = item.getYear();
+                if(year != null){
+                    holder.year.setText(Integer.toString(year));
+                } else {
+                    holder.year.setText(" ");
+                }
+
+                holder.setView(item, clickListener);
             }
         }
     }

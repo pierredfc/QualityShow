@@ -30,6 +30,7 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
         setContentView(R.layout.activity_login);
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+        setTitle(getString(R.string.sign_in_activity));
     }
 
 

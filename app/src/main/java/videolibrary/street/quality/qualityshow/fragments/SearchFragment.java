@@ -7,9 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.adapters.SearchAdapter;
@@ -26,6 +29,7 @@ public class SearchFragment extends Fragment implements RequestListener {
 
     private String query;
     private SearchAdapter searchAdapter;
+    private TextView no_result_foundView;
 
     public static SearchFragment newInstance(String query) {
         final SearchFragment searchFragment = new SearchFragment();
@@ -39,6 +43,8 @@ public class SearchFragment extends Fragment implements RequestListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_search, container, false);
         resultsView = (RecyclerView) rootView.findViewById(R.id.search_resultsView);
+        no_result_foundView = (TextView) rootView.findViewById(R.id.no_result_found);
+        no_result_foundView.setVisibility(View.GONE);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(QualityShowApplication.getContext());
         resultsView.setLayoutManager(layoutManager);
@@ -56,8 +62,12 @@ public class SearchFragment extends Fragment implements RequestListener {
 
     @Override
     public void onResponseReceived(List<Serie> response) {
-        searchAdapter = new SearchAdapter(response);
-        resultsView.setAdapter(searchAdapter);
+        if(response.size() == 0){
+            no_result_foundView.setVisibility(View.VISIBLE);
+        } else {
+            searchAdapter = new SearchAdapter(response, (MainActivity) getActivity());
+            resultsView.setAdapter(searchAdapter);
+        }
     }
 
 
