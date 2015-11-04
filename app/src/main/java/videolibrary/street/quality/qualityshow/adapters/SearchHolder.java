@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 
@@ -18,7 +17,7 @@ public class SearchHolder extends RecyclerView.ViewHolder implements View.OnClic
     public TextView year;
 
     private ClickListener clickListener;
-    private Serie serie;
+    private Object item;
 
     public SearchHolder(View itemView) {
         super(itemView);
@@ -28,14 +27,14 @@ public class SearchHolder extends RecyclerView.ViewHolder implements View.OnClic
         this.year = (TextView) itemView.findViewById(R.id.search_year_view);
     }
 
-    public void setView(Serie serie, ClickListener listener){
+    public void setView(Object item, ClickListener listener){
         this.clickListener = listener;
-        this.serie = serie;
+        this.item = item;
         view.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        this.clickListener.onSerieClick(serie);
+        this.clickListener.onItemClick(item);
     }
 }
