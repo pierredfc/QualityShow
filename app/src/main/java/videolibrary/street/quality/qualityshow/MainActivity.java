@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
             searchFragment = SearchFragment.newInstance(query);
             transaction.add(R.id.frame_container, searchFragment);
-        //    transaction.addToBackStack(null);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
     }

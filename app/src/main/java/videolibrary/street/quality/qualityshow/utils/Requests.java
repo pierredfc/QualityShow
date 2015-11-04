@@ -61,12 +61,19 @@ public class Requests {
                 SerieRepository repo = new SerieRepository();
                 List<Serie> series = new ArrayList<>();
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
+
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Serie serie = repo.createObject(JsonUtil.fromJson(jsonObject));
-                    Log.d("Requests", serie.getCountry());
+
+                    JSONObject tmpSerie = jsonObject.getJSONObject("show");
+                    tmpSerie.put("poster", tmpSerie.getJSONObject("images").getJSONObject("poster"));
+                    tmpSerie.put("fanart", tmpSerie.getJSONObject("images").getJSONObject("fanart"));
+
+                    Serie serie = repo.createObject(JsonUtil.fromJson(tmpSerie));
+
                     series.add(serie);
                 }
+
                 return series;
             }
         } catch (Exception e) {
