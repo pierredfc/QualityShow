@@ -5,5 +5,5 @@ import java.util.List;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
 public interface RequestListener {
-    void onResponseReceived(List<Serie> response);
+    void onResponseReceived(List<Object> response);
 }

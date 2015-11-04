@@ -51,11 +51,11 @@ public class SearchFragment extends Fragment implements RequestListener {
         super.onStart();
         query = getArguments().getString("query");
         RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-        requestAsyncTask.execute(Requests.SERIE_SEARCH, query);
+        requestAsyncTask.execute(Requests.MOVIE_SEARCH, query);
     }
 
     @Override
-    public void onResponseReceived(List<Serie> response) {
+    public void onResponseReceived(List<Object> response) {
         searchAdapter = new SearchAdapter(response);
         resultsView.setAdapter(searchAdapter);
     }

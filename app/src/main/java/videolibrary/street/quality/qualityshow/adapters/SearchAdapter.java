@@ -11,14 +11,15 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
 
-    List<Serie> results;
+    List<Object> results;
 
-    public SearchAdapter(List<Serie> results) {
+    public SearchAdapter(List<Object> results) {
         this.results = results;
     }
 
@@ -31,13 +32,23 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
     @Override
     public void onBindViewHolder(SearchHolder holder, int position) {
         if (position < getItemCount()) {
-            Serie item = (Serie) results.get(position);
-
-            if (item != null) {
-                Object p = item.getPoster().get("thumb");
-                String image = (String) p;
-                Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
-                holder.name.setText(item.getTitle());
+            if (results.get(position) instanceof Serie) {
+                Serie item = (Serie) results.get(position);
+                if (item != null) {
+                    Object p = item.getPoster().get("thumb");
+                    String image = (String) p;
+                    Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
+                    holder.name.setText(item.getTitle());
+                }
+            }
+            if (results.get(position) instanceof Film) {
+                Film item = (Film) results.get(position);
+                if (item != null) {
+                    Object p = item.getPoster().get("thumb");
+                    String image = (String) p;
+                    Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
+                    holder.name.setText(item.getTitle());
+                }
             }
         }
     }

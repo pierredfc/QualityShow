@@ -11,19 +11,19 @@ import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
-public class RequestAsyncTask extends AsyncTask<String, Integer, List<Serie>> {
+public class RequestAsyncTask extends AsyncTask<String, Integer, List<Object>> {
     private final RequestListener requestListener;
     public RequestAsyncTask(RequestListener requestListener) {
         this.requestListener = requestListener;
     }
 
     @Override
-    protected List<Serie> doInBackground(String... params) {
+    protected List<Object> doInBackground(String... params) {
         return Requests.search(params[0], params[1]);
     }
 
     @Override
-    protected void onPostExecute(List<Serie> response) {
+    protected void onPostExecute(List<Object> response) {
         requestListener.onResponseReceived(response);
     }
 }
