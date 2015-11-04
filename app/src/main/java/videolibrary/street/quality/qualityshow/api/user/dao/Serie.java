@@ -1,5 +1,8 @@
 package videolibrary.street.quality.qualityshow.api.user.dao;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.strongloop.android.loopback.Model;
 
 import java.util.ArrayList;
@@ -8,10 +11,17 @@ import java.util.HashMap;
 /**
  * Created by elerion on 10/30/15.
  */
-public class Serie extends Model {
+public class Serie extends Model implements Parcelable {
 
-    private String title, country, first_aired, language, overview, status, trailer;
-    private Integer aired_episode, year;
+    private String title;
+    private String country;
+    private String first_aired;
+    private String language;
+    private String overview;
+    private String status;
+    private String trailer;
+    private Integer aired_episode;
+    private Integer year;
     private HashMap<String, Ids> ids;
     private HashMap<String, Fanart> fanart;
     private HashMap<String, Poster> poster;
@@ -130,4 +140,79 @@ public class Serie extends Model {
     public void setSaisons(ArrayList<Saison> saisons) {
         this.saisons = saisons;
     }
+
+    public Serie(){ }
+
+    protected Serie(Parcel in) {
+        title = in.readString();
+        country = in.readString();
+        first_aired = in.readString();
+        language = in.readString();
+        overview = in.readString();
+        status = in.readString();
+        trailer = in.readString();
+        aired_episode = in.readByte() == 0x00 ? null : in.readInt();
+        year = in.readByte() == 0x00 ? null : in.readInt();
+        ids = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        fanart = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        poster = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        airs = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        if (in.readByte() == 0x01) {
+            saisons = new ArrayList<Saison>();
+            in.readList(saisons, Saison.class.getClassLoader());
+        } else {
+            saisons = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(country);
+        dest.writeString(first_aired);
+        dest.writeString(language);
+        dest.writeString(overview);
+        dest.writeString(status);
+        dest.writeString(trailer);
+        if (aired_episode == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(aired_episode);
+        }
+        if (year == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(year);
+        }
+        dest.writeValue(ids);
+        dest.writeValue(fanart);
+        dest.writeValue(poster);
+        dest.writeValue(airs);
+        if (saisons == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(saisons);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Serie> CREATOR = new Parcelable.Creator<Serie>() {
+        @Override
+        public Serie createFromParcel(Parcel in) {
+            return new Serie(in);
+        }
+
+        @Override
+        public Serie[] newArray(int size) {
+            return new Serie[size];
+        }
+    };
 }
