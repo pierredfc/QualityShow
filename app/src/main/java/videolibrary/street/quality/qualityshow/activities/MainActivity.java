@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
@@ -240,10 +241,10 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            if(searchFragment != null){
+            if (searchFragment != null) {
                 transaction.remove(searchFragment);
             }
-            if(homeFragment != null){
+            if (homeFragment != null) {
                 transaction.remove(homeFragment);
             }
 
@@ -255,7 +256,12 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
     @Override
-    public void onSerieClick(Serie serie) {
-        
+    public void onItemClick(Object item) {
+        if (item instanceof Serie) {
+            Toast.makeText(QualityShowApplication.getContext(), ((Serie) item).getTitle(), Toast.LENGTH_LONG).show();
+        }
+        if (item instanceof Film) {
+            Toast.makeText(QualityShowApplication.getContext(), ((Film) item).getTitle(), Toast.LENGTH_LONG).show();
+        }
     }
 }

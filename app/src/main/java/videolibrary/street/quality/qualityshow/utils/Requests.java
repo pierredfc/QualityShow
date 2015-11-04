@@ -21,6 +21,7 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
@@ -33,7 +34,7 @@ public class Requests {
     public static final String MOVIE_SEARCH = "Movie_search";
     public static final String SERIE_SEARCH = "Serie_search";
 
-    public static List<Serie> search(String mode, String toSearch) {
+    public static List<Object> search(String mode, String toSearch) {
         try {
             String request = null;
 
@@ -51,35 +52,54 @@ public class Requests {
             }
             Log.d("Request", request);
 
-            // Create the HTTP Get request to Twitter servers
             final HttpURLConnection connection = (HttpURLConnection) new URL(request).openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 
             final int responseCode = connection.getResponseCode();
 
-            // If success
             if (responseCode == 200) {
                 String jsonStr = convertStreamToString(connection.getInputStream());
                 Log.d("Requests", jsonStr);
                 JSONArray jsonArray = new JSONArray(jsonStr);
-                SerieRepository repo = new SerieRepository();
-                List<Serie> series = new ArrayList<>();
+                List<Object> items = new ArrayList<>();
+
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                switch (mode) {
+                    case MOVIE_SEARCH: {
+                        FilmRepository repo = new FilmRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    JSONObject tmpSerie = jsonObject.getJSONObject("show");
-                    tmpSerie.put("poster", tmpSerie.getJSONObject("images").getJSONObject("poster"));
-                    tmpSerie.put("fanart", tmpSerie.getJSONObject("images").getJSONObject("fanart"));
+                            JSONObject tmpObj = jsonObject.getJSONObject("movie");
+                            tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                            tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
 
-                    Serie serie = repo.createObject(JsonUtil.fromJson(tmpSerie));
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
 
-                    series.add(serie);
+                            items.add(item);
+                        }
+                    }
+                        break;
+                    case SERIE_SEARCH: {
+                        SerieRepository repo = new SerieRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            JSONObject tmpObj = jsonObject.getJSONObject("show");
+                            tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                            tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
+
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+
+                            items.add(item);
+                        }
+                    }
+                        break;
                 }
 
-                return series;
+                return items;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,11 +109,10 @@ public class Requests {
     }
 
     private static String convertStreamToString(InputStream is) {
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 
-        String line = null;
+        String line;
         try {
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
