@@ -1,51 +1,108 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/main_layout">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+ <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/purple"
-        android:elevation="4dp" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-    <FrameLayout
-        android:layout_below="@id/toolbar"
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="horizontal"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/show_app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/background_gray">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
 
-            <ImageView
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/show_collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="201dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginLeft="0dp"
-                android:id="@+id/search_image_view" />
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Titre du film"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:id="@+id/s_film_title" />
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleMarginStart="48dp"
+                app:expandedTitleMarginEnd="64dp"
+                android:fitsSystemWindows="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="S00E00"
-            android:id="@+id/s_date_movie" />
+                <ImageView
+                    android:id="@+id/show_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax"/>
 
-    </FrameLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/show_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin" />
 
-</RelativeLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Titre du film"
+                        android:textSize="20dp"
+                        android:textColor="@color/purple"
+                        android:textStyle="bold"
+                        android:id="@+id/show_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="right"
+                        android:text=""
+                        android:textColor="@color/md_black_1000"
+                        android:id="@+id/s_status" />
+
+
+                 </GridLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/synopsis"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15dp"
+                    android:text=""
+                    android:textColor="@color/md_black_1000"
+                    android:id="@+id/s_genres" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15dp"
+                    android:text=""
+                    android:textColor="@color/md_black_1000"
+                    android:id="@+id/s_seasons" />
+            </LinearLayout>
+        </FrameLayout>
+    </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
