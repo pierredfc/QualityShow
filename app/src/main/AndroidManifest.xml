@@ -24,6 +24,9 @@
 
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.SignUpActivity"/>
+        <activity android:name=".activities.ShowActivity"
+            android:theme="@style/CustomTheme"
+            android:launchMode="singleTop"/>
         <activity android:name=".activities.MainActivity"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTop">

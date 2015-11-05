@@ -256,12 +256,16 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public void onItemClick(Object item) {
+        Intent intent=new Intent(this,ShowActivity.class);
         if (item instanceof Serie) {
-            Toast.makeText(QualityShowApplication.getContext(), ((Serie) item).getTitle(), Toast.LENGTH_LONG).show();
+            intent.putExtra("isMovie",false);
+            intent.putExtra("show",(Serie) item);
         }
         if (item instanceof Film) {
-            Toast.makeText(QualityShowApplication.getContext(), ((Film) item).getTitle(), Toast.LENGTH_LONG).show();
+            intent.putExtra("isMovie",true);
+            intent.putExtra("show",(Film) item);
         }
+        startActivity(intent);
     }
 
     @Override

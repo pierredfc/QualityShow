@@ -17,7 +17,7 @@
     <string name="large_text">
         "Material is the metaphor.\n\n"
     </string>
-
+    <string name="add_watch">Suivre</string>
     <string name="search_title">Rechercher</string>
     <string name="search_hint">Search</string>
     <string name="no_result">Pas de résultats.</string>
