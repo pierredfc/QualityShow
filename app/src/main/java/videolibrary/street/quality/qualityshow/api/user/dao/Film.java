@@ -24,14 +24,14 @@ public class Film extends Model implements Parcelable {
     private HashMap<String, Fanart> fanart;
     private HashMap<String, Ids> ids;
 
-    private ArrayList<Category> categories;
+    private ArrayList<Category> genres;
 
-    public ArrayList<Category> getCategories() {
-        return categories;
+    public ArrayList<Category> getGenres() {
+        return genres;
     }
 
-    public void setCategories(ArrayList<Category> categories) {
-        this.categories = categories;
+    public void setGenres(ArrayList<Category> genres) {
+        this.genres = genres;
     }
 
     public String getTitle() {
@@ -124,10 +124,10 @@ public class Film extends Model implements Parcelable {
         fanart = (HashMap) in.readValue(HashMap.class.getClassLoader());
         ids = (HashMap) in.readValue(HashMap.class.getClassLoader());
         if (in.readByte() == 0x01) {
-            categories = new ArrayList<Category>();
-            in.readList(categories, Category.class.getClassLoader());
+            genres = new ArrayList<Category>();
+            in.readList(genres, Category.class.getClassLoader());
         } else {
-            categories = null;
+            genres = null;
         }
     }
 
@@ -152,11 +152,11 @@ public class Film extends Model implements Parcelable {
         dest.writeValue(poster);
         dest.writeValue(fanart);
         dest.writeValue(ids);
-        if (categories == null) {
+        if (genres == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeList(categories);
+            dest.writeList(genres);
         }
     }
 

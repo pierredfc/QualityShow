@@ -27,6 +27,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
@@ -34,14 +35,16 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.async.CalendarRequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
 import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
+import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, ClickListener {
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, ClickListener, CalendarListener {
 
     private Toolbar toolbar;
     private User user;
@@ -106,13 +109,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         }
     }
 
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
     private void setDrawer(Bundle savedInstanceState) {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -158,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 profilFragment = new ProfilFragment();
                 FragmentTransaction profilTransaction = getFragmentManager().beginTransaction();
                 profilTransaction.add(R.id.frame_container, profilFragment);
+                profilTransaction.addToBackStack(null);
                 profilTransaction.commit();
                 return true;
             case 2:
@@ -167,12 +164,14 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 recommandationsFragment = new RecommandationsFragment();
                 FragmentTransaction recommandationsTransaction = getFragmentManager().beginTransaction();
                 recommandationsTransaction.add(R.id.frame_container, recommandationsFragment);
+                recommandationsTransaction.addToBackStack(null);
                 recommandationsTransaction.commit();
                 return true;
             case 4:
                 settingsFragment = new SettingsFragment();
                 FragmentTransaction settingsTransaction = getFragmentManager().beginTransaction();
                 settingsTransaction.add(R.id.frame_container, settingsFragment);
+                settingsTransaction.addToBackStack(null);
                 settingsTransaction.commit();
                 return true;
             case 5:
@@ -267,5 +266,25 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
             intent.putExtra("show",(Film) item);
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else if (isTaskRoot() && getFragmentManager().getBackStackEntryCount() == 0) {
+            askLeaveOrLogout();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void askLeaveOrLogout(){
+        Toast.makeText(QualityShowApplication.getContext(), "askLeaveOrLogout", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCalendarRequestReceived(List<String> response) {
+
     }
 }

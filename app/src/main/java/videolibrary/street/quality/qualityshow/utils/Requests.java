@@ -40,6 +40,8 @@ public class Requests {
     public static final String POPULAR_PATH = "popular";
     public static final String TRENDING_PATH = "trending";
 
+    public static final String CALENDAR_HOST = "https://api-v2launch.trakt.tv/calendars/all/shows";
+
     public static List<Object> search(String mode, String toSearch) {
         try {
             String request = null;
@@ -154,5 +156,29 @@ public class Requests {
             }
         }
         return sb.toString();
+    }
+
+    public static List<String> calendarSearch(String date, Integer days){
+        try{
+            String request = null;
+            request = CALENDAR_HOST + "/" + date + "/" + days;
+            Log.d("Request", request);
+
+            final HttpURLConnection connection = (HttpURLConnection) new URL(request).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+            final int responseCode = connection.getResponseCode();
+
+            if(responseCode == 200){
+                String jsonStr = convertStreamToString(connection.getInputStream());
+                int i = 0;
+            }
+
+        } catch (Exception e){
+            Log.e("calendarSearch", e.getMessage());
+        }
+
+        return null;
     }
 }

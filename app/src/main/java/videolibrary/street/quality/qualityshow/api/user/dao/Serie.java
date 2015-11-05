@@ -28,6 +28,7 @@ public class Serie extends Model implements Parcelable {
     private HashMap<String, Airs> airs;
 
     private ArrayList<Saison> saisons;
+    private ArrayList<Category> genres;
 
     public String getTitle() {
         return title;
@@ -141,7 +142,17 @@ public class Serie extends Model implements Parcelable {
         this.saisons = saisons;
     }
 
-    public Serie(){ }
+    public ArrayList<Category> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(ArrayList<Category> genres) {
+        this.genres = genres;
+    }
+
+    public Serie() {
+    }
+
 
     protected Serie(Parcel in) {
         title = in.readString();
@@ -162,6 +173,12 @@ public class Serie extends Model implements Parcelable {
             in.readList(saisons, Saison.class.getClassLoader());
         } else {
             saisons = null;
+        }
+        if (in.readByte() == 0x01) {
+            genres = new ArrayList<Category>();
+            in.readList(genres, Category.class.getClassLoader());
+        } else {
+            genres = null;
         }
     }
 
@@ -200,6 +217,12 @@ public class Serie extends Model implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(saisons);
+        }
+        if (genres == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(genres);
         }
     }
 
