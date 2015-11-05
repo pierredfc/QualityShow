@@ -18,7 +18,7 @@ public class CalendarRequestAsyncTask extends AsyncTask<String, Integer, List<St
 
     @Override
     protected List<String> doInBackground(String... params) {
-        return Requests.calendarSearch(params[0], Integer.parseInt(params[1]));
+        return Requests.calendarSearch(params[0], params[1], Integer.parseInt(params[2]));
     }
 
     @Override

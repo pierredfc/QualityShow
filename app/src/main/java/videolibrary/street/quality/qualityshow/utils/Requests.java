@@ -179,10 +179,10 @@ public class Requests {
         return sb.toString();
     }
 
-    public static List<String> calendarSearch(String date, Integer days){
+    public static List<String> calendarSearch(String show, String date, Integer days){
         try{
             String request = null;
-            request = CALENDAR_HOST + "/" + date + "/" + days;
+            request = HOST + "/Calendar?type_request=" + show + "&start_date=" + date + "&day=" + days;
             Log.d("Request", request);
 
             final HttpURLConnection connection = (HttpURLConnection) new URL(request).openConnection();
@@ -193,7 +193,7 @@ public class Requests {
 
             if(responseCode == 200){
                 String jsonStr = convertStreamToString(connection.getInputStream());
-                int i = 0;
+
             }
 
         } catch (Exception e){
