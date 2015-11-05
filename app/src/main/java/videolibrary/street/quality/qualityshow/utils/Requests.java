@@ -33,6 +33,8 @@ public class Requests {
     public static final String SERIES_PATH = "Series";
     public static final String MOVIE_SEARCH = "Movie_search";
     public static final String SERIE_SEARCH = "Serie_search";
+    public static final String MOVIE_POPULAR = "Movie_popular";
+    public static final String MOVIE_TRENDING = "Movie_trending";
 
     public static List<Object> search(String mode, String toSearch) {
         try {
@@ -48,6 +50,12 @@ public class Requests {
                     break;
                 case SERIE_SEARCH:
                     request = HOST + "/" + SERIES_PATH + "/search?serie=" + toSearch;
+                    break;
+                case MOVIE_POPULAR:
+                    request = HOST + "/" + MOVIES_PATH + "/popular";
+                    break;
+                case MOVIE_TRENDING:
+                    request = HOST + "/" + MOVIES_PATH + "/trending";
                     break;
             }
             Log.d("Request", request);
@@ -67,17 +75,33 @@ public class Requests {
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
 
                 switch (mode) {
+                    case MOVIE_POPULAR: {
+                        FilmRepository repo = new FilmRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Object item = repo.createObject(JsonUtil.fromJson(jsonObject));
+                            items.add(item);
+                        }
+                    }
+                        break;
+                    case MOVIE_TRENDING: {
+                        FilmRepository repo = new FilmRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            JSONObject tmpObj = jsonObject.getJSONObject("movie");
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            items.add(item);
+                        }
+                    }
+                        break;
                     case MOVIE_SEARCH: {
                         FilmRepository repo = new FilmRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                             JSONObject tmpObj = jsonObject.getJSONObject("movie");
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
-
                             items.add(item);
                         }
                     }
@@ -86,13 +110,11 @@ public class Requests {
                         SerieRepository repo = new SerieRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-
                             JSONObject tmpObj = jsonObject.getJSONObject("show");
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
 
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
-
                             items.add(item);
                         }
                     }

@@ -64,9 +64,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
             if (results.get(position) instanceof Film) {
                 Film item = (Film) results.get(position);
                 if (item != null) {
-                    Object p = item.getPoster().get("thumb");
-                    String image = (String) p;
-
+                    String image = null;
+                    if (item.getPoster() != null) {
+                        Object p = item.getPoster().get("thumb");
+                        image = (String) p;
+                    }
 
                     if (image == null) {
                         Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
