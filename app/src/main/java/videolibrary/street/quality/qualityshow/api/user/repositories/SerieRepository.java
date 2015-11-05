@@ -31,7 +31,7 @@ public class SerieRepository extends ModelRepository<Serie> {
         String className = getClassName();
         String restUrl = getNameForRestUrl();
 
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "GET"), className + ".getCategories");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "GET"), className + ".getGenres");
         contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "POST"), className + ".addCategory");
         contract.addItem(new RestContractItem("/" + restUrl + "/:serieId/categories/:categoryId", "DELETE"), className + ".deleteCategory");
 
@@ -45,7 +45,7 @@ public class SerieRepository extends ModelRepository<Serie> {
     public void getCategories(int serieId, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
         params.put("id", serieId);
-        invokeStaticMethod("getCategories", params, callback);
+        invokeStaticMethod("getGenres", params, callback);
     }
 
     public void addCategory(int serieId, Category category, Adapter.JsonObjectCallback callback){

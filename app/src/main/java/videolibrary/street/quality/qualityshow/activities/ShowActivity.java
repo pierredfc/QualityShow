@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -31,10 +30,8 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
@@ -136,7 +133,7 @@ public class ShowActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
 
     private void fillView(Film film){
-        ArrayList<Category> categories=film.getCategories();
+        ArrayList<Category> categories=film.getGenres();
         String catstring="genres :";
         ImageView imagev=(ImageView)findViewById(R.id.show_image);
         Object p = film.getPoster().get("full");
