@@ -31,6 +31,7 @@ public class Requests {
     public static final String HOST = "http://de-coster.fr:4000/api";
     public static final String MOVIES_PATH = "Movies";
     public static final String SERIES_PATH = "Series";
+    public static final String MOVIE_SERIE_SEARCH = "Movie_serie_search";
     public static final String MOVIE_SEARCH = "Movie_search";
     public static final String SERIE_SEARCH = "Serie_search";
     public static final String MOVIE_POPULAR = "Movie_popular";
@@ -51,6 +52,9 @@ public class Requests {
             }
 
             switch (mode) {
+                case MOVIE_SERIE_SEARCH:
+                    request = HOST + "/Search?query=" + toSearch;
+                    break;
                 case MOVIE_SEARCH:
                     request = HOST + "/" + MOVIES_PATH + "/search?movie=" + toSearch;
                     break;
@@ -120,12 +124,29 @@ public class Requests {
                             JSONObject tmpObj = jsonObject.getJSONObject("show");
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
                             items.add(item);
                         }
                     }
                         break;
+                    case MOVIE_SERIE_SEARCH: {
+                        SerieRepository repo = new SerieRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            JSONObject tmpObj = null;
+                            if (jsonObject.has("show")) {
+                                tmpObj = jsonObject.getJSONObject("show");
+                            }
+                            if (jsonObject.has("movie")) {
+                                tmpObj = jsonObject.getJSONObject("movie");
+                            }
+                            tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                            tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            items.add(item);
+                        }
+                    }
+                    break;
                 }
 
                 return items;

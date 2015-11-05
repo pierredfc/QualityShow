@@ -55,7 +55,7 @@ public class SearchFragment extends Fragment implements RequestListener {
         super.onStart();
         query = getArguments().getString("query");
         RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-        requestAsyncTask.execute(Requests.SERIE_TRENDING, query);
+        requestAsyncTask.execute(Requests.MOVIE_SERIE_SEARCH, query);
     }
 
     @Override
