@@ -17,6 +17,7 @@ import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.ui.adapters.SearchAdapter;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
+import videolibrary.street.quality.qualityshow.utils.DividerItemDecoration;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 
@@ -63,6 +64,7 @@ public class SearchFragment extends Fragment implements RequestListener {
             no_result_foundView.setVisibility(View.VISIBLE);
         } else {
             searchAdapter = new SearchAdapter(response, (MainActivity) getActivity());
+            resultsView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             resultsView.setAdapter(searchAdapter);
         }
     }

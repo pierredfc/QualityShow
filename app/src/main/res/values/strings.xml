@@ -6,11 +6,10 @@
 
     <string name="login_information">LOGIN</string>
 
-    <string name="sign_up">S\'inscrire</string>
+
     <string name="no_account">Continuer sans compte</string>
 
     <string name="sign_in">Connectez-vous</string>
-    <string name="sign_in_activity">Se connecter</string>
     <string name="ask_account">Déjà un compte ?</string>
     <string name="logo">logo</string>
     <string name="title_activity_search">SearchActivity</string>
@@ -24,10 +23,25 @@
     <string name="slogan">EASY. TO. FOLLOW</string>
 
 
+    <!-- Fragment and Activity's titles-->
+    <string name="sign_up">S\'inscrire</string>
+    <string name="sign_in_activity">Se connecter</string>
+    <string name="agenda">Agenda</string>
+    <string name="explore">Explore</string>
+    <string name="settings">Settings</string>
+
     <!-- DRAWER -->
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
     <!-- PARCELABLE -->
     <string name="parcelable">Parcelable</string>
+
+    <!-- MENU -->
+    <string name="about">About</string>
+    <string name="logout">Log out</string>
+
+
+    <!-- ABOUT -->
+    <string name="about_text">© Quality Street</string>
 </resources>

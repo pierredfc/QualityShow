@@ -35,6 +35,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
         this.showsView.setHasFixedSize(true);
         checkUserConnected();
+
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.agenda);
+
         return rootView;
     }
 
@@ -71,7 +74,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
-        Toast.makeText(getActivity(), "Nombre de séries: " + Integer.toString(series.size()), Toast.LENGTH_SHORT).show();
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
