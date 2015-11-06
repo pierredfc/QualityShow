@@ -36,6 +36,7 @@
 
     <!-- PARCELABLE -->
     <string name="parcelable">Parcelable</string>
+    <string name="query">Query</string>
 
     <!-- MENU -->
     <string name="about">About</string>

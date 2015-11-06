@@ -14,6 +14,7 @@ import java.util.List;
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.activities.SearchActivity;
 import videolibrary.street.quality.qualityshow.ui.adapters.SearchAdapter;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
@@ -34,6 +35,7 @@ public class SearchFragment extends Fragment implements RequestListener {
         final Bundle arguments = new Bundle();
         arguments.putString("query", query);
         searchFragment.setArguments(arguments);
+
         return searchFragment;
     }
 
@@ -47,13 +49,15 @@ public class SearchFragment extends Fragment implements RequestListener {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(QualityShowApplication.getContext());
         resultsView.setLayoutManager(layoutManager);
 
+        query = getArguments().getString("query");
+        ((SearchActivity) getActivity()).getSupportActionBar().setTitle(query);
+
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        query = getArguments().getString("query");
         RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
         requestAsyncTask.execute(Requests.MOVIE_SERIE_SEARCH, query);
     }
@@ -63,7 +67,7 @@ public class SearchFragment extends Fragment implements RequestListener {
         if(response.size() == 0){
             no_result_foundView.setVisibility(View.VISIBLE);
         } else {
-            searchAdapter = new SearchAdapter(response, (MainActivity) getActivity());
+            searchAdapter = new SearchAdapter(response, (SearchActivity) getActivity());
             resultsView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             resultsView.setAdapter(searchAdapter);
         }

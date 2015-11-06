@@ -108,6 +108,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
             case R.id.add_watch:
                 this.addSerieToUser();
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

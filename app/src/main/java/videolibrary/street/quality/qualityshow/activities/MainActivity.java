@@ -6,27 +6,19 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.CustomSearchView;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
@@ -35,10 +27,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
-import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
-import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
 import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
-import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
@@ -48,7 +37,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener {
 
     private Toolbar toolbar;
-    private CustomSearchView searchView;
+    private MaterialSearchView searchView;
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
     public DrawerMenuUtils drawer;
@@ -63,6 +52,29 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         setSupportActionBar(toolbar);
 
         drawer = new DrawerMenuUtils(savedInstanceState, this, toolbar);
+        drawer.getDrawer().setSelection(2);
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
+        searchView.setCursorDrawable(R.drawable.custom_cursor);
+        searchView.setVoiceSearch(true);
+        //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(QualityShowApplication.getContext(), SearchActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString(getString(R.string.query), query);
+                intent.putExtras(extras);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -70,20 +82,22 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         transaction.addToBackStack(null);
         transaction.commit();
 
-        drawer.getDrawer().setSelection(2);
-
-        handleIntent(getIntent());
+        //handleIntent(getIntent());
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        searchView = (CustomSearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+   /*     searchView = (CustomSearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setActivity(this);
-        searchView.setIconified(true);
+        searchView.setIconified(true);*/
 
         return true;
     }
@@ -139,7 +153,10 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
+        int entryCount = getFragmentManager().getBackStackEntryCount();
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else if (entryCount > 1) {
             getFragmentManager().popBackStack();
         } else {
             askLeaveOrLogout();
