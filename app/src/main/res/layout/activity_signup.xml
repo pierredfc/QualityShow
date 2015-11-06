@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EFEFEF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <com.vlonjatg.progressactivity.ProgressActivity
+            android:id="@+id/sign_up_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            progressActivity:loadingBackgroundColor="#FFFFFF"
+            progressActivity:emptyBackgroundColor="#FFFFFF"
+            progressActivity:errorBackgroundColor="#FFFFFF">
+
+        </com.vlonjatg.progressactivity.ProgressActivity>
+    </RelativeLayout>
+
 
     <EditText
         android:layout_width="match_parent"
@@ -12,7 +31,7 @@
         android:id="@+id/emailText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="134dp"
+        android:layout_marginTop="80dp"
         android:textColor="#000"
         android:hint="Email"
         android:layout_marginLeft="5dp"
