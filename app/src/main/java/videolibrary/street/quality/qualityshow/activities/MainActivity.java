@@ -29,6 +29,7 @@ import com.strongloop.android.loopback.AccessToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.CustomSearchView;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
@@ -48,9 +49,10 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     private Toolbar toolbar;
     private User user;
-    private SearchView searchView;
+    private CustomSearchView searchView;
 
     private HomeFragment homeFragment;
+
     private ProfilFragment profilFragment;
     private RecommandationsFragment recommandationsFragment;
     private SettingsFragment settingsFragment;
@@ -78,17 +80,22 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_container, homeFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
 
         handleIntent(getIntent());
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView = (CustomSearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setActivity(this);
+        searchView.setIconified(true);
 
         return true;
     }
@@ -109,44 +116,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         }
     }
 
-    private void setDrawer(Bundle savedInstanceState) {
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withHeaderBackground(R.color.purple)
-                .addProfiles(
-                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail())
-                )
-                .build();
-
-        PrimaryDrawerItem profil = new PrimaryDrawerItem().withName("Profil");
-        SecondaryDrawerItem planning = new SecondaryDrawerItem().withName("Mon planning");
-        SecondaryDrawerItem recommandations = new SecondaryDrawerItem().withName("Recommandations");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Réglages");
-
-        SecondaryDrawerItem login;
-
-        if (user.getUsername() != "Anonyme") {
-            login = new SecondaryDrawerItem().withName("Se déconnecter");
-        } else {
-            login = new SecondaryDrawerItem().withName("Se connecter");
-        }
-
-        Drawer result = new DrawerBuilder().withActivity(this).withToolbar(toolbar)
-                .addDrawerItems(
-                        profil,
-                        planning,
-                        recommandations,
-                        new DividerDrawerItem(),
-                        settings,
-                        login
-                ).withSavedInstance(savedInstanceState)
-                .withAccountHeader(headerResult)
-                .withOnDrawerItemClickListener(this)
-                .build();
-
-        result.setSelection(planning);
-    }
-
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
         switch (position) {
@@ -154,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 profilFragment = new ProfilFragment();
                 FragmentTransaction profilTransaction = getFragmentManager().beginTransaction();
                 profilTransaction.add(R.id.frame_container, profilFragment);
-                profilTransaction.addToBackStack(null);
+           //     profilTransaction.addToBackStack(null);
                 profilTransaction.commit();
                 return true;
             case 2:
@@ -164,14 +133,14 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 recommandationsFragment = new RecommandationsFragment();
                 FragmentTransaction recommandationsTransaction = getFragmentManager().beginTransaction();
                 recommandationsTransaction.add(R.id.frame_container, recommandationsFragment);
-                recommandationsTransaction.addToBackStack(null);
+           //     recommandationsTransaction.addToBackStack(null);
                 recommandationsTransaction.commit();
                 return true;
             case 4:
                 settingsFragment = new SettingsFragment();
                 FragmentTransaction settingsTransaction = getFragmentManager().beginTransaction();
                 settingsTransaction.add(R.id.frame_container, settingsFragment);
-                settingsTransaction.addToBackStack(null);
+          //      settingsTransaction.addToBackStack(null);
                 settingsTransaction.commit();
                 return true;
             case 5:
@@ -240,19 +209,21 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            if (searchFragment != null) {
+          /*  if (searchFragment != null) {
                 transaction.remove(searchFragment);
-            }
-            if (homeFragment != null) {
+            }*/
+       /*     if (homeFragment != null) {
                 transaction.remove(homeFragment);
-            }
+            }*/
 
             searchFragment = SearchFragment.newInstance(query);
             transaction.add(R.id.frame_container, searchFragment);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack("searchFragment");
             transaction.commit();
         }
     }
+
+
 
     @Override
     public void onItemClick(Object item) {
@@ -262,20 +233,56 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
             intent.putExtra("show",(Serie) item);
         }
         if (item instanceof Film) {
-            intent.putExtra("isMovie",true);
-            intent.putExtra("show",(Film) item);
+            intent.putExtra("isMovie", true);
+            intent.putExtra("show", (Film) item);
         }
         startActivity(intent);
     }
 
+    private void setDrawer(Bundle savedInstanceState) {
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.purple)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail())
+                )
+                .build();
+
+        PrimaryDrawerItem profil = new PrimaryDrawerItem().withName("Profil");
+        SecondaryDrawerItem planning = new SecondaryDrawerItem().withName("Mon planning");
+        SecondaryDrawerItem recommandations = new SecondaryDrawerItem().withName("Recommandations");
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Réglages");
+
+        SecondaryDrawerItem login;
+
+        if (user.getUsername() != "Anonyme") {
+            login = new SecondaryDrawerItem().withName("Se déconnecter");
+        } else {
+            login = new SecondaryDrawerItem().withName("Se connecter");
+        }
+
+        Drawer result = new DrawerBuilder().withActivity(this).withToolbar(toolbar)
+                .addDrawerItems(
+                        profil,
+                        planning,
+                        recommandations,
+                        new DividerDrawerItem(),
+                        settings,
+                        login
+                ).withSavedInstance(savedInstanceState)
+                .withAccountHeader(headerResult)
+                .withOnDrawerItemClickListener(this)
+                .build();
+
+        result.setSelection(planning);
+    }
+
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
-        } else if (isTaskRoot() && getFragmentManager().getBackStackEntryCount() == 0) {
-            askLeaveOrLogout();
         } else {
-            super.onBackPressed();
+            askLeaveOrLogout();
         }
     }
 

@@ -8,7 +8,7 @@
         android:orderInCategory="100"
         android:title="@string/abc_search_hint"
         app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="videolibrary.street.quality.qualityshow.CustomSearchView"/>
 
     <item
         android:id="@+id/main_menu_settings"

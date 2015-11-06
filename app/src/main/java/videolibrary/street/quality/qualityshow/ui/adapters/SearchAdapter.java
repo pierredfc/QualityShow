@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow.adapters;
+package videolibrary.street.quality.qualityshow.ui.adapters;
 
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +15,7 @@ import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
+import videolibrary.street.quality.qualityshow.ui.holders.SearchHolder;
 
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
@@ -52,7 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
                     }
                     holder.name.setText(item.getTitle());
                     Integer year = item.getYear();
-                    if(year != null){
+                    if (year != null) {
                         holder.year.setText(Integer.toString(year));
                     } else {
                         holder.year.setText(" ");
@@ -78,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchHolder> {
                     }
                     holder.name.setText(item.getTitle());
                     Integer year = item.getYear();
-                    if(year != null){
+                    if (year != null) {
                         holder.year.setText(Integer.toString(year));
                     } else {
                         holder.year.setText(" ");
