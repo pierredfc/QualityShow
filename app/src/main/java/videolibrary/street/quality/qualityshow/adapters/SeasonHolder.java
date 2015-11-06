@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 /**
@@ -18,7 +19,8 @@ public class SeasonHolder extends RecyclerView.ViewHolder{
     public TextView number;
     public TextView episodes;
 
-
+    Saison season;
+    ClickListener clistener;
     public SeasonHolder(View itemView) {
         super(itemView);
         this.view = itemView;
@@ -27,4 +29,8 @@ public class SeasonHolder extends RecyclerView.ViewHolder{
         this.episodes = (TextView) itemView.findViewById(R.id.number_episodes);
     }
 
+    public void setView(Saison item, ClickListener clickListener) {
+        season = item;
+        clistener=clickListener;
+    }
 }
