@@ -24,7 +24,7 @@ public class Serie extends Model implements Parcelable {
     private Integer year;
     private HashMap<String, Integer> ids;
     private HashMap<String, Fanart> fanart;
-    private HashMap<String, Poster> poster;
+    private HashMap<String, String> poster;
     private HashMap<String, Airs> airs;
 
     private ArrayList<Saison> saisons;
@@ -118,11 +118,11 @@ public class Serie extends Model implements Parcelable {
         this.fanart = fanart;
     }
 
-    public HashMap<String, Poster> getPoster() {
+    public HashMap<String, String> getPoster() {
         return poster;
     }
 
-    public void setPoster(HashMap<String, Poster> poster) {
+    public void setPoster(HashMap<String, String> poster) {
         this.poster = poster;
     }
 

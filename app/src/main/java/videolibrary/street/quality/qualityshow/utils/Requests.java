@@ -149,7 +149,10 @@ public class Requests {
                     }
                     break;
                     case MOVIE_SERIE_SEARCH: {
-                        SerieRepository repo = new SerieRepository();
+                        SerieRepository srepo = new SerieRepository();
+                        FilmRepository frepo= new FilmRepository();
+
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             JSONObject tmpObj = null;
@@ -161,7 +164,14 @@ public class Requests {
                             }
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            Object item = null;
+                            if (jsonObject.has("show")) {
+                                item = srepo.createObject(JsonUtil.fromJson(tmpObj));
+
+                            }
+                            if (jsonObject.has("movie")) {
+                                item = frepo.createObject(JsonUtil.fromJson(tmpObj));
+                            }
                             items.add(item);
                         }
                     }
