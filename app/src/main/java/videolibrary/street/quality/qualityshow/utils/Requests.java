@@ -19,9 +19,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.api.user.repositories.EpisodeRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
+import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
 import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
 import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
@@ -40,7 +43,9 @@ public class Requests {
     public static final String SERIE_TRENDING = "Serie_trending";
     public static final String POPULAR_PATH = "popular";
     public static final String TRENDING_PATH = "trending";
-
+    public static final String SERIE_SEASONS = "Serie_seasons";
+    public static final String SEASONS_PATH = "seasons";
+    public static final String SEASON_PATH = "season";
     public static final String CALENDAR_HOST = "https://api-v2launch.trakt.tv/calendars/all/shows";
 
     public static List<Object> search(String mode, String toSearch) {
@@ -73,6 +78,9 @@ public class Requests {
                 case SERIE_TRENDING:
                     request = HOST + "/" + SERIES_PATH + "/" + TRENDING_PATH;
                     break;
+                case SERIE_SEASONS:
+                    request = HOST + "/" + SERIES_PATH + "/" + toSearch +"/"+SEASONS_PATH;
+                    break;
             }
             Log.d("Request", request);
 
@@ -91,6 +99,16 @@ public class Requests {
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
 
                 switch (mode) {
+                    case SERIE_SEASONS: {
+                        SaisonRepository repo = new SaisonRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            jsonObject.put("poster", jsonObject.getJSONObject("images").getJSONObject("poster"));
+                            Object item = repo.createObject(JsonUtil.fromJson(jsonObject));
+                            items.add(item);
+                        }
+                    }
+                        break;
                     case SERIE_POPULAR:
                     case MOVIE_POPULAR: {
                         FilmRepository repo = new FilmRepository();
@@ -127,8 +145,9 @@ public class Requests {
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
                             items.add(item);
                         }
+
                     }
-                        break;
+                    break;
                     case MOVIE_SERIE_SEARCH: {
                         SerieRepository repo = new SerieRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -200,6 +219,42 @@ public class Requests {
             Log.e("calendarSearch", e.getMessage());
         }
 
+        return null;
+    }
+    public static List<Episode> SeasonSearch(String idserie,String numberseason){
+        try{
+            String request = null;
+            request = HOST + "/"+SERIES_PATH +"/" + idserie + "/"+SEASON_PATH +"/"+numberseason;
+            Log.d("Request", request);
+
+            final HttpURLConnection connection = (HttpURLConnection) new URL(request).openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+            final int responseCode = connection.getResponseCode();
+
+            if(responseCode == 200){
+                String jsonStr = convertStreamToString(connection.getInputStream());
+                Log.d("Requests", jsonStr);
+                JSONArray jsonArray = new JSONArray(jsonStr);
+                List<Episode> items = new ArrayList<>();
+
+                Log.d("Requests", "JSONArray length: " + jsonArray.length());
+                EpisodeRepository repo = new EpisodeRepository();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    JSONObject tmpObj = jsonObject.getJSONObject("movie");
+                    tmpObj.put("screenshot", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                    tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
+                    Episode item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                    items.add(item);
+                }
+                return items;
+            }
+
+        } catch (Exception e){
+            Log.e("seasonsearch", e.getMessage());
+        }
         return null;
     }
 }

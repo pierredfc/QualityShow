@@ -49,60 +49,18 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="Titre du film"
-                        android:textSize="20dp"
-                        android:textColor="@color/purple"
-                        android:textStyle="bold"
-                        android:id="@+id/show_title" />
+            android:layout_height="wrap_content"
+            android:id="@+id/show_frame_container"
+            >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="right"
-                        android:text=""
-                        android:textColor="@color/md_black_1000"
-                        android:id="@+id/s_status" />
-
-
-                 </GridLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:id="@+id/synopsis"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textSize="15dp"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:id="@+id/s_genres" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textSize="15dp"
-                    android:text=""
-                    android:textColor="@color/md_black_1000"
-                    android:id="@+id/s_seasons" />
-            </LinearLayout>
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
+     <android.support.design.widget.FloatingActionButton
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/add_watch"
+         android:src="@android:drawable/ic_menu_add"
+         app:layout_anchor="@id/show_app_bar_layout"
+         app:layout_anchorGravity="bottom|right|end"
+         style="@style/CustomTheme"/>
     </android.support.design.widget.CoordinatorLayout>

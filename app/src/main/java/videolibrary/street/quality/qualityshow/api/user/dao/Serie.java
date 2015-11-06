@@ -22,7 +22,7 @@ public class Serie extends Model implements Parcelable {
     private String trailer;
     private Integer aired_episode;
     private Integer year;
-    private HashMap<String, Ids> ids;
+    private HashMap<String, Integer> ids;
     private HashMap<String, Fanart> fanart;
     private HashMap<String, Poster> poster;
     private HashMap<String, Airs> airs;
@@ -102,11 +102,11 @@ public class Serie extends Model implements Parcelable {
         this.year = year;
     }
 
-    public HashMap<String, Ids> getIds() {
+    public HashMap<String, Integer> getIds() {
         return ids;
     }
 
-    public void setIds(HashMap<String, Ids> ids) {
+    public void setIds(HashMap<String, Integer> ids) {
         this.ids = ids;
     }
 
