@@ -6,8 +6,10 @@ import android.util.Log;
 import com.strongloop.android.loopback.callbacks.ObjectCallback;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.SerieCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
@@ -136,6 +138,23 @@ public class UserHelper {
 
     public void retrieveRegisteredUser(UserListener listener){
         this.userRepository.findCurrentUser(new UserCallbacks.RetrieveRegisteredUserCallback(listener));
+    }
+
+    public boolean serieIsExist(Serie serie){
+        String serieSlug;
+        try {
+            serieSlug = String.valueOf(serie.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Serie> series = user.getSeries();
+            for (Serie tmpSerie : series) {
+                if (String.valueOf(tmpSerie.getIds().get("slug")) == serieSlug){
+                    return true;
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return false;
     }
 
 }

@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.async.CalendarRequestAsyncTask;
+import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
@@ -44,8 +46,11 @@ import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
+import videolibrary.street.quality.qualityshow.listeners.RequestListener;
+import videolibrary.street.quality.qualityshow.utils.Constants;
+import videolibrary.street.quality.qualityshow.utils.Requests;
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, ClickListener, CalendarListener {
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener, UserListener, ClickListener, CalendarListener, RequestListener {
 
     private Toolbar toolbar;
     private User user;
@@ -227,16 +232,18 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public void onItemClick(Object item) {
-        Intent intent=new Intent(this,ShowActivity.class);
+
         if (item instanceof Serie) {
-            intent.putExtra("isMovie",false);
-            intent.putExtra("show",(Serie) item);
+
+            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
+
         }
         if (item instanceof Film) {
-            intent.putExtra("isMovie", true);
-            intent.putExtra("show", (Film) item);
+            //intent.putExtra("isMovie",true);
+            //intent.putExtra("show",(Film) item);
         }
-        startActivity(intent);
+
     }
 
     private void setDrawer(Bundle savedInstanceState) {
@@ -293,5 +300,13 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     public void onCalendarRequestReceived(List<String> response) {
 
+    }
+
+    @Override
+    public void onResponseReceived(List<Object> response) {
+        Intent intent=new Intent(this,ShowActivity.class);
+        intent.putExtra("isMovie",false);
+        intent.putExtra("show",(Serie) response.get(0));
+        startActivity(intent);
     }
 }
