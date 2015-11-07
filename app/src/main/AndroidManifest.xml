@@ -46,5 +46,12 @@
 
         <activity android:name=".activities.SearchActivity"
             android:theme="@style/CustomTheme"/>
+
+        <activity android:name=".activities.ExploreActivity"
+            android:theme="@style/CustomTheme"/>
+
+        <activity android:name=".activities.SettingsActivity"
+            android:theme="@style/CustomTheme"/>
+
     </application>
 </manifest>

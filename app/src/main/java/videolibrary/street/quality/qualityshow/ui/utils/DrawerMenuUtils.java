@@ -1,7 +1,7 @@
 package videolibrary.street.quality.qualityshow.ui.utils;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,12 +23,9 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.activities.MainActivity;
+import videolibrary.street.quality.qualityshow.activities.ExploreActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
-import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
-import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 
 
 public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserListener {
@@ -102,31 +99,26 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
         switch (position) {
+            case 1:
+                /*Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
+                activity.startActivity(profileIntent);*/
+                break;
             case 2:
-               /*ProfilFragment profilFragment = new ProfilFragment();
-                FragmentTransaction profilTransaction = getFragmentManager().beginTransaction();
-                profilTransaction.add(R.id.frame_container, profilFragment);
-                     profilTransaction.addToBackStack(null);
-                profilTransaction.commit();*/
+                //HomeFragment
                 break;
             case 3:
-                //planning
+                if(!(drawer.getCurrentSelection() == 4)){
+                    Intent exploreIntent = new Intent(QualityShowApplication.getContext(), ExploreActivity.class);
+                    activity.startActivity(exploreIntent);
+                }
                 break;
             case 4:
-                /*RecommandationsFragment recommandationsFragment = new RecommandationsFragment();
-                FragmentTransaction recommandationsTransaction = getFragmentManager().beginTransaction();
-                recommandationsTransaction.add(R.id.frame_container, recommandationsFragment);
-                     recommandationsTransaction.addToBackStack(null);
-                recommandationsTransaction.commit();*/
+            /*    if(!(drawer.getCurrentSelection() == 5)){
+                    Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
+                    activity.startActivity(settingsIntent);
+                }*/
                 break;
             case 5:
-                /*SettingsFragment settingsFragment = new SettingsFragment();
-                FragmentTransaction settingsTransaction = getFragmentManager().beginTransaction();
-                settingsTransaction.add(R.id.frame_container, settingsFragment);
-                      settingsTransaction.addToBackStack(null);
-                settingsTransaction.commit();*/
-                break;
-            case 6:
                 QualityShowApplication.getUserHelper().logout(this);
                 break;
             default:
