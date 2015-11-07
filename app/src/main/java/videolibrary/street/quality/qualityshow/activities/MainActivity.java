@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String query = parent.getItemAtPosition(position).toString();
+                searchView.closeSearch();
                 startSearchActivity(query);
             }
         });
