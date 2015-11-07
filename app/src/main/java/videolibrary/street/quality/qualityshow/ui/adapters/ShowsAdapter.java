@@ -34,13 +34,18 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsHolder> {
 
     @Override
     public void onBindViewHolder(ShowsHolder holder, int position) {
-        if(position < getItemCount()){
+        if (position < getItemCount()) {
             Serie serie = series.get(position);
 
-            if(serie != null){
+            if (serie != null) {
                 Object photo = serie.getPoster().get("thumb");
 
-                Picasso.with(QualityShowApplication.getContext()).load((String) photo).into(holder.imageView);
+                Picasso.with(QualityShowApplication.getContext())
+                        .load((String) photo)
+                        .placeholder(R.drawable.undefined_poster)
+                        .error(R.drawable.undefined_poster)
+                        .into(holder.imageView);
+
                 holder.setView(serie, clickListener);
             }
         }
