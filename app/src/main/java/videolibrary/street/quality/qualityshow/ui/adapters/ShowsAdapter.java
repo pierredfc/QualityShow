@@ -38,10 +38,6 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsHolder> {
             Serie serie = series.get(position);
 
             if(serie != null){
-                // holder.episode_titleView.setText();
-               // holder.episodeView.setText(Integer.toString(serie.getYear()));
-               // holder.serie_titleView.setText(serie.getTitle());
-
                 Object photo = serie.getPoster().get("thumb");
 
                 Picasso.with(QualityShowApplication.getContext()).load((String) photo).into(holder.imageView);

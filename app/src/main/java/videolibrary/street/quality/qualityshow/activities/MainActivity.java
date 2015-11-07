@@ -1,16 +1,15 @@
 package videolibrary.street.quality.qualityshow.activities;
 
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -27,27 +26,28 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
-import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.utils.DrawerMenuUtils;
+import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
 import videolibrary.street.quality.qualityshow.utils.Requests;
+import videolibrary.street.quality.qualityshow.utils.SearchPreferences;
 
 public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private HomeFragment homeFragment;
-    private SearchFragment searchFragment;
     public DrawerMenuUtils drawer;
 
+    private SearchPreferences searchPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchPreferences = new SearchPreferences(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -55,18 +55,12 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         drawer.getDrawer().setSelection(2);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        searchView.setVoiceSearch(false);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
-        searchView.setVoiceSearch(true);
-        //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        searchView.setSuggestions(searchPreferences.getSearchPreferences());
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(QualityShowApplication.getContext(), SearchActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString(getString(R.string.query), query);
-                intent.putExtras(extras);
-                startActivity(intent);
+                startSearchActivity(query);
                 return false;
             }
 
@@ -76,29 +70,39 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             }
         });
 
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String query = parent.getItemAtPosition(position).toString();
+                searchView.closeSearch();
+                startSearchActivity(query);
+            }
+        });
+
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_container, homeFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
 
-        //handleIntent(getIntent());
+    private void startSearchActivity(String query) {
+        searchPreferences.setSearchPreferences(query);
+        searchView.setSuggestions(searchPreferences.getSearchPreferences());
+
+        Intent intent = new Intent(QualityShowApplication.getContext(), SearchActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString(getString(R.string.query), query);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
-
-   /*     searchView = (CustomSearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setActivity(this);
-        searchView.setIconified(true);*/
-
         return true;
     }
 
@@ -115,25 +119,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-
-            FragmentManager manager = getFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            searchFragment = SearchFragment.newInstance(query);
-            transaction.add(R.id.frame_container, searchFragment);
-            transaction.addToBackStack("searchFragment");
-            transaction.commit();
-        }
-    }
-
 
     @Override
     public void onItemClick(Object item) {

@@ -11,17 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.AdapterView;
 import android.widget.Button;
+=======
+>>>>>>> f3c502a4dc453bc0031fad1ba4ada55e65723962
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -36,7 +37,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
-import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
+import videolibrary.street.quality.qualityshow.fragments.ExploreFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -51,7 +52,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
     private Film film;
     private Boolean IsMovie;
     private ProfilFragment profilFragment;
-    private RecommandationsFragment recommandationsFragment;
+    private ExploreFragment exploreFragment;
     private SettingsFragment settingsFragment;
     private ShowFragment showFragment;
     private FloatingActionButton actionButtonActivity;

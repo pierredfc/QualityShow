@@ -5,6 +5,9 @@ package videolibrary.street.quality.qualityshow.utils;
  */
 public class Constants {
 
+
+    public static final Integer CACHED_SEARCHES = 15;
+
     public static class Log{
         public static final String TAG = "QualityShow";
         public static final String ERROR_MSG = "Error during : ";
