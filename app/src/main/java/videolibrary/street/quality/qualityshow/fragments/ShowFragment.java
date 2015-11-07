@@ -88,17 +88,8 @@ public class ShowFragment extends Fragment implements RequestListener
 
 
     private void fillView(Film show){
-        ImageView imagev=(ImageView)rootView.findViewById(R.id.show_image);
-        Object p = show.getPoster().get("full");
-        String image = (String) p;
-        if (image == null) {
-            Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
-            imagev.setImageDrawable(drawable);
-        } else {
-            Picasso.with(QualityShowApplication.getContext()).load(image).into(imagev);
-        }
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
-        ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getYear());
+        ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getYear().toString());
     }
 
     @Override
@@ -107,8 +98,11 @@ public class ShowFragment extends Fragment implements RequestListener
             SeasonAdapter seasonAdapter = new SeasonAdapter((ShowActivity) getActivity(),response);
             resultsView.setAdapter(seasonAdapter);
             justifyListViewHeightBasedOnChildren(resultsView);
+            resultsView.setOnItemClickListener((ShowActivity)getActivity());
         }
+
     }
+
     public void justifyListViewHeightBasedOnChildren (ListView listView) {
 
         ListAdapter adapter = listView.getAdapter();

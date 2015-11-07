@@ -13,10 +13,10 @@
         android:background="@color/background_gray">
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="75dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
             android:id="@+id/season_image_view" />
 
     <LinearLayout

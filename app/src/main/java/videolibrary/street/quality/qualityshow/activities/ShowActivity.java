@@ -11,8 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -22,12 +24,15 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.RecommandationsFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
@@ -37,7 +42,7 @@ import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener,SerieListener,ClickListener, View.OnClickListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener,SerieListener,ClickListener, View.OnClickListener, ListView.OnItemClickListener {
     private Toolbar toolbar;
     private User user;
     private Serie serie;
@@ -163,5 +168,20 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         userHelper.addSerie(user, this.serie, this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Object item = adapterView.getItemAtPosition(i);
+        if (item instanceof Saison){
+            EpisodeFragment  episodeFragment= new EpisodeFragment();
+            episodeFragment.setSeason((Saison)item);
+            episodeFragment.setSerieId(serie.getIds().get("trakt"));
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.show_frame_container, episodeFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
     }
 }

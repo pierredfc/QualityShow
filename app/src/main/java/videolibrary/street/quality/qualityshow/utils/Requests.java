@@ -253,7 +253,7 @@ public class Requests {
 
         return null;
     }
-    public static List<Episode> SeasonSearch(String idserie,String numberseason){
+    public static List<Object> SeasonSearch(String idserie,String numberseason){
         try{
             String request = null;
             request = HOST + "/"+SERIES_PATH +"/" + idserie + "/"+SEASON_PATH +"/"+numberseason;
@@ -269,16 +269,14 @@ public class Requests {
                 String jsonStr = convertStreamToString(connection.getInputStream());
                 Log.d("Requests", jsonStr);
                 JSONArray jsonArray = new JSONArray(jsonStr);
-                List<Episode> items = new ArrayList<>();
+                List<Object> items = new ArrayList<>();
 
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
                 EpisodeRepository repo = new EpisodeRepository();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    JSONObject tmpObj = jsonObject.getJSONObject("movie");
-                    tmpObj.put("screenshot", tmpObj.getJSONObject("images").getJSONObject("poster"));
-                    tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-                    Episode item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                    jsonObject.put("screenshot", jsonObject.getJSONObject("images").getJSONObject("screenshot"));
+                    Episode item = repo.createObject(JsonUtil.fromJson(jsonObject));
                     items.add(item);
                 }
                 return items;
