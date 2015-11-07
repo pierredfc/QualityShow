@@ -11,14 +11,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.SearchActivity;
 import videolibrary.street.quality.qualityshow.ui.adapters.SearchAdapter;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.utils.DividerItemDecoration;
+import videolibrary.street.quality.qualityshow.ui.utils.DividerItemDecoration;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 

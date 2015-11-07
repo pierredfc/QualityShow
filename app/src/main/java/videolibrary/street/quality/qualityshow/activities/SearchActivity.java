@@ -18,7 +18,6 @@ import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.utils.DrawerMenuUtils;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 
@@ -27,8 +26,6 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
     String query;
     Toolbar toolbar;
     SearchFragment searchFragment;
-
-    DrawerMenuUtils drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +37,6 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
         toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         FragmentManager manager = getFragmentManager();
@@ -95,5 +91,6 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
         intent.putExtra("isMovie", false);
         intent.putExtra("show", (Serie) response.get(0));
         startActivity(intent);
+        finish();
     }
 }

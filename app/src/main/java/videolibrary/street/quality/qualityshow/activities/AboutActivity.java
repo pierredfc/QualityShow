@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import com.mikepenz.materialdrawer.Drawer;
 
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.utils.DrawerMenuUtils;
+import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
 
 
 public class AboutActivity extends AppCompatActivity {

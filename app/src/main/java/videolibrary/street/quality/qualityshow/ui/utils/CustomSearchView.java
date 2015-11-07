@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow.utils;
+package videolibrary.street.quality.qualityshow.ui.utils;
 
 import android.app.Activity;
 import android.content.Context;

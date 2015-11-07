@@ -21,6 +21,8 @@
     <string name="search_hint">Search</string>
     <string name="no_result">Pas de résultats.</string>
     <string name="slogan">EASY. TO. FOLLOW</string>
+    <string name="search_prefs">Search</string>
+    <string name="search_prefs_queue">Search queue</string>
 
 
     <!-- Fragment and Activity's titles-->
