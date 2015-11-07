@@ -75,7 +75,11 @@ public class EpisodeFragment extends Fragment implements RequestListener {
                 EpisodeParentObject ep= new EpisodeParentObject();
                 ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
                 ArrayList<Object> childList=new ArrayList<>();
-                childList.add(new EpisodeChild(e.getOverview(),false));
+                String over = e.getOverview();
+                if( over==null){
+                    over="No description for this episode available";
+                }
+                childList.add(new EpisodeChild(over,false));
                 ep.setChildObjectList(childList);
                 parentObjects.add(ep);
             }
