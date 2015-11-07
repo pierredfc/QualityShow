@@ -1,4 +1,4 @@
-package videolibrary.street.quality.qualityshow.adapters;
+package videolibrary.street.quality.qualityshow.ui.holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

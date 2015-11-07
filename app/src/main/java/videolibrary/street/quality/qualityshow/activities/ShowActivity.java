@@ -70,10 +70,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
         if (IsMovie) {
             film = (Film) intent.getParcelableExtra("show");
             getSupportActionBar().setTitle(film.getTitle());
-            p = film.getPoster().get("thumb");
+            p = film.getFanart().get("thumb");
         } else {
             serie = (Serie) intent.getParcelableExtra("show");
-            p = serie.getPoster().get("thumb");
+            p = serie.getFanart().get("thumb");
             getSupportActionBar().setTitle(serie.getTitle());
         }
 
@@ -112,6 +112,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
         switch (id) {
             case R.id.add_watch:
                 this.addSerieToUser();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

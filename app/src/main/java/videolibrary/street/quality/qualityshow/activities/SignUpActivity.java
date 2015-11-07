@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.strongloop.android.loopback.AccessToken;
+import com.vlonjatg.progressactivity.ProgressActivity;
 
 import java.util.ArrayList;
 
@@ -23,11 +24,25 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
 public class SignUpActivity extends Activity implements View.OnClickListener, UserListener{
 
+    ProgressActivity progressActivity;
+
+    private View.OnClickListener errorClickListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        errorClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        };
+
+        progressActivity = (ProgressActivity) findViewById(R.id.sign_up_progress);
         findViewById(R.id.signUpButton).setOnClickListener(this);
         setTitle(getString(R.string.sign_up));
     }
@@ -47,25 +62,23 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
 
         if(!emptyMail && !emptyPwd && !emptyUsername){
+            progressActivity.showLoading();
             QualityShowApplication.getUserHelper().create(usernameEditable.toString(), mailEditable.toString(), pwdEditable.toString(), "Default", this);
         } else {
-            Toast.makeText(this, "Erreur", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please fill out all fields completely.", Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sign_up_menu, menu);
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.signup_menu_cancel) {
-            onBackPressed();
-            return true;
+        switch(id){
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
         return super.onOptionsItemSelected(item);
@@ -97,6 +110,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
             Toast.makeText(SignUpActivity.this, "Inscription réussie", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -117,7 +131,9 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
 
     @Override
     public void onError(Throwable e) {
-        Toast.makeText(SignUpActivity.this, "Erreur d'inscription, veuillez ré-essayer.", Toast.LENGTH_SHORT).show();
+        progressActivity.showError(getDrawable(R.drawable.ic_info_outline), "Erreur de connexion",
+                "We could not establish a connection with our servers.",
+                "Try Again", errorClickListener);
     }
 
 }

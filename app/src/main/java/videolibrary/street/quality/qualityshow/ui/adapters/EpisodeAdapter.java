@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/src/main/java/videolibrary/street/quality/qualityshow/adapters/EpisodeAdapter.java
 package videolibrary.street.quality.qualityshow.adapters;
 
 import android.content.Context;
@@ -101,3 +102,12 @@ public class EpisodeAdapter extends BaseExpandableListAdapter {
         protected Button button;
     }
 }
+=======
+package videolibrary.street.quality.qualityshow.ui.adapters;
+
+/**
+ * Created by Sacael on 06/11/2015.
+ */
+public class EpisodeAdapter {
+}
+>>>>>>> b6416dd5cad1c72df45c5de21b219706285e1ea2:app/src/main/java/videolibrary/street/quality/qualityshow/ui/adapters/EpisodeAdapter.java

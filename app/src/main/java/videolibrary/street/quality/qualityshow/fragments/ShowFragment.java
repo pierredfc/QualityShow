@@ -3,9 +3,6 @@ package videolibrary.street.quality.qualityshow.fragments;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,25 +14,14 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
-import videolibrary.street.quality.qualityshow.adapters.SeasonAdapter;
-import videolibrary.street.quality.qualityshow.api.user.dao.Category;
+import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
-import videolibrary.street.quality.qualityshow.api.user.dao.Ids;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
-import videolibrary.street.quality.qualityshow.api.user.helpers.FilmHelper;
-import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
-import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
-import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
-import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.utils.Requests;

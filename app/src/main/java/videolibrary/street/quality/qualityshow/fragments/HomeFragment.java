@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.adapters.PlanningAdapter;
+import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 
@@ -27,17 +27,16 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     boolean userConnected;
 
-    private PlanningAdapter showsAdapter;
+    private ShowsAdapter showsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_home, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
-
-        final GridLayoutManager layoutManager = new GridLayoutManager(QualityShowApplication.getContext(), 3);
-        this.showsView.setLayoutManager(layoutManager);
-
+        this.showsView.setHasFixedSize(true);
         checkUserConnected();
+
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.agenda);
 
         return rootView;
     }
@@ -75,10 +74,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
-        Toast.makeText(getActivity(), "Nombre de séries: " + Integer.toString(series.size()), Toast.LENGTH_SHORT).show();
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
-        showsAdapter = new PlanningAdapter(series, (MainActivity) getActivity());
+        showsAdapter = new ShowsAdapter(series, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
+        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
     }
 
     @Override

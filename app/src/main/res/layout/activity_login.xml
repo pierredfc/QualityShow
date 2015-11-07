@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/background_gray"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/AppTheme">
+    android:theme="@style/CustomTheme">
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
+
+            <com.vlonjatg.progressactivity.ProgressActivity
+                android:id="@+id/login_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                progressActivity:loadingBackgroundColor="#FFFFFF"
+                progressActivity:emptyBackgroundColor="#FFFFFF"
+                progressActivity:errorBackgroundColor="#FFFFFF">
+
+            </com.vlonjatg.progressactivity.ProgressActivity>
+        </RelativeLayout>
 
         <EditText
             android:layout_width="match_parent"
@@ -24,7 +41,8 @@
             android:layout_marginTop="150dp"
             android:theme="@style/MyETStyle"
             android:textColor="#000"
-            android:textColorHint="#000" />
+            android:textColorHint="#000"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:layout_width="match_parent"
