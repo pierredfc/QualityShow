@@ -1,10 +1,12 @@
 package videolibrary.street.quality.qualityshow.activities;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -53,6 +55,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
     private SettingsFragment settingsFragment;
     private ShowFragment showFragment;
     private FloatingActionButton actionButtonActivity;
+    public Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +93,20 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
             user = new User();
             user.setUsername("Anonyme");
         }
+
         showFragment = new ShowFragment();
         showFragment.setShow(intent.getParcelableExtra("show"));
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.show_frame_container, showFragment);
         transaction.commit();
+        fragment=showFragment;
 
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -176,15 +186,25 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Object item = adapterView.getItemAtPosition(i);
-        if (item instanceof Saison){
-            EpisodeFragment  episodeFragment= new EpisodeFragment();
-            episodeFragment.setSeason((Saison)item);
+        if (item instanceof Saison) {
+            EpisodeFragment episodeFragment = new EpisodeFragment();
+            episodeFragment.setSeason((Saison) item);
             episodeFragment.setSerieId(serie.getIds().get("trakt"));
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.show_frame_container, episodeFragment);
             transaction.addToBackStack(null);
             transaction.commit();
+            fragment = episodeFragment;
         }
+    }
+    @Override
+    public void onBackPressed() {
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        if(!getFragmentManager().popBackStackImmediate()) {
+            super.onBackPressed();
+        }
+    }
 
     }
-}
+

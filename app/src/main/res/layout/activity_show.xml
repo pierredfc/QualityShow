@@ -42,17 +42,18 @@
 
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/nested_scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
+        android:paddingTop="5dp">
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/show_frame_container"
-            >
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
      <android.support.design.widget.FloatingActionButton
