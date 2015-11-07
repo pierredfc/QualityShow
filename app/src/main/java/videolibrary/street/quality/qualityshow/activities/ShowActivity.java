@@ -12,11 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.AdapterView;
 import android.widget.Button;
-=======
->>>>>>> f3c502a4dc453bc0031fad1ba4ada55e65723962
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
