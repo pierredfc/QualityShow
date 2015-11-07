@@ -83,9 +83,11 @@ public class EpisodeFragment extends Fragment implements RequestListener {
                 ep.setChildObjectList(childList);
                 parentObjects.add(ep);
             }
-            EpisodeExpandableAdapter episodeExpandableAdapter = new EpisodeExpandableAdapter(getActivity(),parentObjects);
-            episodeExpandableAdapter.setParentAndIconExpandOnClick(true);
-            resultsView.setAdapter(episodeExpandableAdapter);
+            if (getActivity()!=null) {
+                EpisodeExpandableAdapter episodeExpandableAdapter = new EpisodeExpandableAdapter(getActivity(), parentObjects);
+                episodeExpandableAdapter.setParentAndIconExpandOnClick(true);
+                resultsView.setAdapter(episodeExpandableAdapter);
+            }
         }
     }
 }
