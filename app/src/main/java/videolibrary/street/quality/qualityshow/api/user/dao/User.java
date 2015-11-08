@@ -59,6 +59,14 @@ public class User extends com.strongloop.android.loopback.User implements Parcel
         this.series = series;
     }
 
+    public void addSerie(Serie serie){
+        this.series.add(serie);
+    }
+
+    public void deleteSerieAt(int index){
+        this.series.remove(index);
+    }
+
     @Override
     public String toString() {
         return String.format("User : " + this.getCreationParameters().toString());

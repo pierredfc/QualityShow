@@ -147,7 +147,8 @@ public class UserHelper {
             User user = this.getCurrentUser();
             List<Serie> series = user.getSeries();
             for (Serie tmpSerie : series) {
-                if (String.valueOf(tmpSerie.getIds().get("slug")) == serieSlug){
+                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                if (tmpSlug.equals(serieSlug)){
                     return true;
                 }
             }

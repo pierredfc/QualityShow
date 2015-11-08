@@ -147,6 +147,8 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
 
     @Override
     public void serieIsAdded(Serie serie) {
+        User user = QualityShowApplication.getUserHelper().getCurrentUser();
+        user.addSerie(serie);
         Toast.makeText(getApplicationContext(), "Serie added", Toast.LENGTH_SHORT).show();
     }
 
@@ -178,7 +180,12 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
     private void addSerieToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-        userHelper.addSerie(user, this.serie, this);
+        if(! userHelper.serieIsExist(this.serie)){
+            userHelper.addSerie(user, this.serie, this);
+        }else{
+            Toast.makeText(getApplicationContext(), "Serie already exist", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
