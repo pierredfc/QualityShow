@@ -112,13 +112,13 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                     activity.startActivity(exploreIntent);
                 }
                 break;
-            case 4:
+            case 5:
             /*    if(!(drawer.getCurrentSelection() == 5)){
                     Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
                     activity.startActivity(settingsIntent);
                 }*/
                 break;
-            case 5:
+            case 6:
                 QualityShowApplication.getUserHelper().logout(this);
                 break;
             default:
