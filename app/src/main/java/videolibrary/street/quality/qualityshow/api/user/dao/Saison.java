@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Saison extends Model implements Parcelable {
     private Integer aired_episodes;
-    private Integer episodes_count;
+    private Integer episode_count;
     private Integer number;
     private Integer serieId;
     private HashMap<String, Ids> ids;
@@ -29,12 +29,12 @@ public class Saison extends Model implements Parcelable {
         this.aired_episodes = aired_episodes;
     }
 
-    public Integer getEpisodes_count() {
-        return episodes_count;
+    public Integer getEpisode_count() {
+        return episode_count;
     }
 
-    public void setEpisodes_count(Integer episodes_count) {
-        this.episodes_count = episodes_count;
+    public void setEpisode_count(Integer episode_count) {
+        this.episode_count = episode_count;
     }
 
     public Integer getNumber() {
@@ -77,11 +77,21 @@ public class Saison extends Model implements Parcelable {
         this.episodes = episodes;
     }
 
+    public void addEpisode(Episode episode){
+        if(this.episodes == null)
+            this.episodes = new ArrayList<>();
+        this.episodes.add(episode);
+    }
+
+    public void deleteEpisode(int index){
+        this.episodes.remove(index);
+    }
+
     public Saison(){ }
 
     protected Saison(Parcel in) {
         aired_episodes = in.readByte() == 0x00 ? null : in.readInt();
-        episodes_count = in.readByte() == 0x00 ? null : in.readInt();
+        episode_count = in.readByte() == 0x00 ? null : in.readInt();
         number = in.readByte() == 0x00 ? null : in.readInt();
         serieId = in.readByte() == 0x00 ? null : in.readInt();
         ids = (HashMap) in.readValue(HashMap.class.getClassLoader());
@@ -107,11 +117,11 @@ public class Saison extends Model implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeInt(aired_episodes);
         }
-        if (episodes_count == null) {
+        if (episode_count == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
-            dest.writeInt(episodes_count);
+            dest.writeInt(episode_count);
         }
         if (number == null) {
             dest.writeByte((byte) (0x00));

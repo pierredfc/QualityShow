@@ -150,6 +150,17 @@ public class Serie extends Model implements Parcelable {
         this.genres = genres;
     }
 
+    public void addSaison(Saison saison){
+        if (this.saisons == null)
+            this.saisons = new ArrayList<>();
+        this.saisons.add(saison);
+    }
+
+    public void deleteSaison(int index){
+        this.saisons.remove(index);
+    }
+
+
     public Serie() {
     }
 
