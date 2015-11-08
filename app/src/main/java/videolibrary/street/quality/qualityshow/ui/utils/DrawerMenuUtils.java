@@ -102,21 +102,27 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
             case 1:
                 /*Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
                 activity.startActivity(profileIntent);*/
+                drawer.setSelection(1);
                 break;
             case 2:
-                //HomeFragment
+                if(!(drawer.getCurrentSelection() == 2)){
+
+                }
+                drawer.setSelection(2);
                 break;
             case 3:
-                if(!(drawer.getCurrentSelection() == 4)){
+                if(!(drawer.getCurrentSelection() == 3)){
                     Intent exploreIntent = new Intent(QualityShowApplication.getContext(), ExploreActivity.class);
                     activity.startActivity(exploreIntent);
                 }
+                drawer.setSelection(3);
                 break;
             case 5:
             /*    if(!(drawer.getCurrentSelection() == 5)){
                     Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
                     activity.startActivity(settingsIntent);
                 }*/
+                drawer.setSelection(5);
                 break;
             case 6:
                 QualityShowApplication.getUserHelper().logout(this);
