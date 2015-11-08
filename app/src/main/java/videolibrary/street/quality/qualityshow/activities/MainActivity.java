@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         setSupportActionBar(toolbar);
 
         drawer = new DrawerMenuUtils(savedInstanceState, this, toolbar);
-        drawer.getDrawer().setSelection(2);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setCursorDrawable(R.drawable.custom_cursor);

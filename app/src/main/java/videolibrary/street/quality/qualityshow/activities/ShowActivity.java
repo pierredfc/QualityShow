@@ -44,6 +44,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private User user;
     private Object show;
     private Boolean IsMovie;
+    private Boolean isFollow;
     private ProfilFragment profilFragment;
     private ExploreFragment exploreFragment;
     private SettingsFragment settingsFragment;
@@ -51,21 +52,40 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private FloatingActionButton actionButtonActivity;
     public Fragment fragment;
 
+    private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_show);
+
+        isFollow = false;
+
         Intent intent = getIntent();
         IsMovie = intent.getBooleanExtra("isMovie", true);
-        show=intent.getParcelableExtra("show");
+        show = intent.getParcelableExtra("show");
+
         toolbar = (Toolbar) findViewById(R.id.show_toolbar);
-        actionButtonActivity = (FloatingActionButton) findViewById(R.id.add_watch_activity);
-        actionButtonActivity.setOnClickListener(this);
         setSupportActionBar(toolbar);
-        ImageView imagev = (ImageView) findViewById(R.id.show_image);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        actionButtonActivity = (FloatingActionButton) findViewById(R.id.add_watch_activity);
+
+        user = QualityShowApplication.getUserHelper().getCurrentUser();
+        if (user == null) {
+            user = new User();
+            user.setUsername("Anonyme");
+            actionButtonActivity.setVisibility(View.GONE);
+        }
+
+        setActionButtonIcon();
+
+        actionButtonActivity.setOnClickListener(this);
+
+        ImageView imagev = (ImageView) findViewById(R.id.show_image);
+
         Object p;
+
         if (IsMovie) {
             Film film = (Film) show;
             getSupportActionBar().setTitle(film.getTitle());
@@ -76,18 +96,13 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             getSupportActionBar().setTitle(serie.getTitle());
         }
 
-
         String image = (String) p;
+
         if (image == null) {
             Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
             imagev.setImageDrawable(drawable);
         } else {
             Picasso.with(QualityShowApplication.getContext()).load(image).into(imagev);
-        }
-        user = QualityShowApplication.getUserHelper().getCurrentUser();
-        if (user == null) {
-            user = new User();
-            user.setUsername("Anonyme");
         }
 
         showFragment = new ShowFragment();
@@ -106,6 +121,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.show_menu, menu);
+        this.menu = menu;
+        if(isFollow){
+            menu.findItem(R.id.add_watch).setIcon(getDrawable(R.drawable.ic_favorite));
+        }
 
         return true;
     }
@@ -115,7 +134,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
         switch (id) {
             case R.id.add_watch:
-                this.addSerieToUser();
+                handleShows();
                 return true;
             case android.R.id.home:
                 onBackPressed();
@@ -170,18 +189,89 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void onClick(View v) {
-        this.addSerieToUser();
+        handleShows();
     }
 
-    private void addSerieToUser() {
+    private void handleShows(){
+        if(!IsMovie){
+            if(!isFollow){
+                if(this.addSerieToUser()){
+                    isFollow = true;
+                    changeIcons();
+                }
+            } else {
+                //unFollow la série
+                isFollow = false;
+                changeIcons();
+            }
+        } else {
+            if(!isFollow){
+                //   this.addFilmToUser();
+                isFollow = true;
+                changeIcons();
+            } else {
+                //unFollow le film
+                isFollow = false;
+                changeIcons();
+            }
+        }
+    }
+
+    private void changeIcons(){
+        if(isFollow){
+            actionButtonActivity.setImageDrawable(getDrawable(R.drawable.ic_favorite));
+            menu.findItem(R.id.add_watch).setIcon(getDrawable(R.drawable.ic_favorite));
+        } else {
+            actionButtonActivity.setImageDrawable(getDrawable(R.drawable.ic_action_add));
+            menu.findItem(R.id.add_watch).setIcon(getDrawable(R.drawable.ic_action_add));
+        }
+    }
+
+    private boolean addSerieToUser() {
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (!userHelper.serieIsExist((Serie)this.show)) {
+            userHelper.addSerie(user, (Serie) this.show, this);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void addFilmToUser(){
+        UserHelper userHelper = QualityShowApplication.getUserHelper();
+        User user = userHelper.getCurrentUser();
+       /* if (!userHelper.serieIsExist((Serie)this.show)) {
             userHelper.addSerie(user,(Serie)this.show, this);
         } else {
             Toast.makeText(getApplicationContext(), "Serie already exist", Toast.LENGTH_SHORT).show();
+        }@TODO*/
+    }
+
+    private void setActionButtonIcon(){
+        Boolean exist = false;
+
+        if(IsMovie){
+            ArrayList<Film> films = QualityShowApplication.getUserHelper().getCurrentUser().getFilms();
+            for(Film s: films){
+                if(s.getTitle().equals(((Film) show).getTitle())){
+                    exist = true;
+                    isFollow = true;
+                }
+            }
+        } else {
+            ArrayList<Serie> series = QualityShowApplication.getUserHelper().getCurrentUser().getSeries();
+            for(Serie s: series){
+               if(s.getTitle().equals(((Serie) show).getTitle())){
+                   exist = true;
+                   isFollow = true;
+               }
+            }
         }
 
+        if(exist){
+            actionButtonActivity.setImageDrawable(getDrawable(R.drawable.ic_favorite));
+        }
     }
 
     @Override

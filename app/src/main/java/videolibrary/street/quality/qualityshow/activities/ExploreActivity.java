@@ -41,7 +41,6 @@ public class ExploreActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawer = new DrawerMenuUtils(savedInstanceState, this, toolbar);
-        drawer.getDrawer().setSelection(2);
 
         searchView = (MaterialSearchView) findViewById(R.id.explore_search_view);
         searchView.setCursorDrawable(R.drawable.custom_cursor);

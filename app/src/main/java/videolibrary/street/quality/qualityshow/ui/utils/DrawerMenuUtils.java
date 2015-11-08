@@ -24,8 +24,10 @@ import java.util.ArrayList;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ExploreActivity;
+import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
+import videolibrary.street.quality.qualityshow.utils.Constants;
 
 
 public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserListener {
@@ -38,7 +40,6 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
     Toolbar toolbar;
     Bundle savedInstanceState;
 
-
     public DrawerMenuUtils(Bundle savedInstanceState, Activity activity, Toolbar toolbar) {
         this.savedInstanceState = savedInstanceState;
         this.activity = activity;
@@ -49,6 +50,7 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
             user = new User();
             user.setUsername("Anonyme");
         }
+
 
         setAccountHeader();
         setDrawer();
@@ -61,6 +63,7 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                 .addProfiles(
                         new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail())
                 )
+                .withSelectionListEnabledForSingleProfile(false)
                 .build();
     }
 
@@ -90,8 +93,9 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                 .withAccountHeader(accountHeader)
                 .withOnDrawerItemClickListener(this)
                 .build();
-    }
 
+        drawer.setSelection(-1);
+    }
 
     public Drawer getDrawer(){
         return drawer;
@@ -100,29 +104,28 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
         switch (position) {
             case 1:
-                /*Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
-                activity.startActivity(profileIntent);*/
-                drawer.setSelection(1);
+                /*if(!(drawer.getCurrentSelection() == 1)){
+                    Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
+                    activity.startActivity(profileIntent);
+                }*/
                 break;
             case 2:
                 if(!(drawer.getCurrentSelection() == 2)){
-
+                    Intent agendaIntent = new Intent(QualityShowApplication.getContext(), MainActivity.class);
+                    activity.startActivity(agendaIntent);
                 }
-                drawer.setSelection(2);
                 break;
             case 3:
                 if(!(drawer.getCurrentSelection() == 3)){
                     Intent exploreIntent = new Intent(QualityShowApplication.getContext(), ExploreActivity.class);
                     activity.startActivity(exploreIntent);
                 }
-                drawer.setSelection(3);
                 break;
             case 5:
             /*    if(!(drawer.getCurrentSelection() == 5)){
                     Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
                     activity.startActivity(settingsIntent);
                 }*/
-                drawer.setSelection(5);
                 break;
             case 6:
                 QualityShowApplication.getUserHelper().logout(this);
@@ -175,6 +178,6 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
 
     @Override
     public void onError(Throwable t) {
-        Toast.makeText(QualityShowApplication.getContext(), "Pas de compte connecté ?", Toast.LENGTH_LONG).show();
+        Toast.makeText(QualityShowApplication.getContext(), "No connected account ?", Toast.LENGTH_LONG).show();
     }
 }
