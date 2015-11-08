@@ -2,21 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         android:orderInCategory="100"
         android:title="@string/abc_search_hint"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/main_menu_settings"
+        android:id="@+id/main_menu_about"
         app:showAsAction="never"
-        android:title="Settings" />
-
-    <item
-        android:id="@+id/deconnexion"
-        app:showAsAction="never"
-        android:title="Leave" />
+        android:title="@string/about" />
 </menu>

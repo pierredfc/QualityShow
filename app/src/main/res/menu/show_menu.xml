@@ -2,9 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_action_share"
+        android:title="Share"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/add_watch"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_add"
         android:title="@string/add_watch"
         app:showAsAction="collapseActionView|ifRoom" />
 

@@ -37,6 +37,8 @@ public class Requests {
     public static final String MOVIE_SERIE_SEARCH = "Movie_serie_search";
     public static final String MOVIE_SEARCH = "Movie_search";
     public static final String SERIE_SEARCH = "Serie_search";
+    public static final String MOVIE_FIND = "Movie_find";
+    public static final String SERIE_FIND = "Serie_find";
     public static final String MOVIE_POPULAR = "Movie_popular";
     public static final String MOVIE_TRENDING = "Movie_trending";
     public static final String SERIE_POPULAR = "Serie_popular";
@@ -66,6 +68,12 @@ public class Requests {
                 case SERIE_SEARCH:
                     request = HOST + "/" + SERIES_PATH + "/search?serie=" + toSearch;
                     break;
+                case MOVIE_FIND:
+                    request = HOST + "/" + MOVIES_PATH + "/find?movie=" + toSearch;
+                    break;
+                case SERIE_FIND:
+                    request = HOST + "/" + SERIES_PATH + "/find?serie=" + toSearch;
+                    break;
                 case MOVIE_POPULAR:
                     request = HOST + "/" + MOVIES_PATH + "/" + POPULAR_PATH;
                     break;
@@ -79,7 +87,7 @@ public class Requests {
                     request = HOST + "/" + SERIES_PATH + "/" + TRENDING_PATH;
                     break;
                 case SERIE_SEASONS:
-                    request = HOST + "/" + SERIES_PATH + "/" + toSearch +"/"+SEASONS_PATH;
+                    request = HOST + "/" + SERIES_PATH + "/" + toSearch + "/" + SEASONS_PATH;
                     break;
             }
             Log.d("Request", request);
@@ -93,8 +101,25 @@ public class Requests {
             if (responseCode == 200) {
                 String jsonStr = convertStreamToString(connection.getInputStream());
                 Log.d("Requests", jsonStr);
-                JSONArray jsonArray = new JSONArray(jsonStr);
+
                 List<Object> items = new ArrayList<>();
+
+                if (mode == SERIE_FIND || mode == MOVIE_FIND) {
+                    JSONObject obj = new JSONObject(jsonStr);
+                    obj.put("poster", obj.getJSONObject("images").getJSONObject("poster"));
+                    obj.put("fanart", obj.getJSONObject("images").getJSONObject("fanart"));
+                    if (mode == SERIE_FIND) {
+                        Object item = new SerieRepository().createObject(JsonUtil.fromJson(obj));
+                        items.add(item);
+                    }
+                    if (mode == MOVIE_FIND) {
+                        Object item = new FilmRepository().createObject(JsonUtil.fromJson(obj));
+                        items.add(item);
+                    }
+                    return items;
+                }
+
+                JSONArray jsonArray = new JSONArray(jsonStr);
 
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
 
@@ -149,7 +174,8 @@ public class Requests {
                     }
                     break;
                     case MOVIE_SERIE_SEARCH: {
-                        SerieRepository repo = new SerieRepository();
+                        SerieRepository srepo = new SerieRepository();
+                        FilmRepository frepo= new FilmRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             JSONObject tmpObj = null;
@@ -161,11 +187,17 @@ public class Requests {
                             }
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            Object item = null;
+                            if (jsonObject.has("show")) {
+                                item = srepo.createObject(JsonUtil.fromJson(tmpObj));
+
+                            }
+                            if (jsonObject.has("movie")) {
+                                item = frepo.createObject(JsonUtil.fromJson(tmpObj));
+                            }
                             items.add(item);
                         }
                     }
-                    break;
                 }
 
                 return items;
@@ -221,7 +253,7 @@ public class Requests {
 
         return null;
     }
-    public static List<Episode> SeasonSearch(String idserie,String numberseason){
+    public static List<Object> SeasonSearch(String idserie,String numberseason){
         try{
             String request = null;
             request = HOST + "/"+SERIES_PATH +"/" + idserie + "/"+SEASON_PATH +"/"+numberseason;
@@ -237,16 +269,14 @@ public class Requests {
                 String jsonStr = convertStreamToString(connection.getInputStream());
                 Log.d("Requests", jsonStr);
                 JSONArray jsonArray = new JSONArray(jsonStr);
-                List<Episode> items = new ArrayList<>();
+                List<Object> items = new ArrayList<>();
 
                 Log.d("Requests", "JSONArray length: " + jsonArray.length());
                 EpisodeRepository repo = new EpisodeRepository();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    JSONObject tmpObj = jsonObject.getJSONObject("movie");
-                    tmpObj.put("screenshot", tmpObj.getJSONObject("images").getJSONObject("poster"));
-                    tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
-                    Episode item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                    jsonObject.put("screenshot", jsonObject.getJSONObject("images").getJSONObject("screenshot"));
+                    Episode item = repo.createObject(JsonUtil.fromJson(jsonObject));
                     items.add(item);
                 }
                 return items;

@@ -6,4 +6,6 @@
     <color name="background_gray">#EFEFEF</color>
     <color name="grayQ">#212121</color>
     <color name="greenQ">#8BC34A</color>
+    <color name="title_gray">#626260</color>
+    <color name="border_gray">#DEDEDE</color>
 </resources>

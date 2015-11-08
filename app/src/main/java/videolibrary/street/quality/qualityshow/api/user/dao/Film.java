@@ -20,9 +20,9 @@ public class Film extends Model implements Parcelable {
     private String trailer;
     private Integer year;
 
-    private HashMap<String, Poster> poster;
-    private HashMap<String, Fanart> fanart;
-    private HashMap<String, Ids> ids;
+    private HashMap<String, String> poster;
+    private HashMap<String, String> fanart;
+    private HashMap<String, Integer> ids;
 
     private ArrayList<Category> genres;
 
@@ -82,27 +82,27 @@ public class Film extends Model implements Parcelable {
         this.trailer = trailer;
     }
 
-    public HashMap<String, Poster> getPoster() {
+    public HashMap<String, String> getPoster() {
         return poster;
     }
 
-    public void setPoster(HashMap<String, Poster> poster) {
+    public void setPoster(HashMap<String, String> poster) {
         this.poster = poster;
     }
 
-    public HashMap<String, Fanart> getFanart() {
+    public HashMap<String, String> getFanart() {
         return fanart;
     }
 
-    public void setFanart(HashMap<String, Fanart> fanart) {
+    public void setFanart(HashMap<String, String> fanart) {
         this.fanart = fanart;
     }
 
-    public HashMap<String, Ids> getIds() {
+    public HashMap<String, Integer> getIds() {
         return ids;
     }
 
-    public void setIds(HashMap<String, Ids> ids) {
+    public void setIds(HashMap<String, Integer> ids) {
         this.ids = ids;
     }
 
