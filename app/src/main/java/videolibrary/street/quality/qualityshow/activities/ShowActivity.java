@@ -75,12 +75,11 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         if (user == null) {
             user = new User();
             user.setUsername("Anonyme");
-            actionButtonActivity.setVisibility(View.GONE);
+            actionButtonActivity.setVisibility(View.INVISIBLE);
+        } else {
+            setActionButtonIcon();
+            actionButtonActivity.setOnClickListener(this);
         }
-
-        setActionButtonIcon();
-
-        actionButtonActivity.setOnClickListener(this);
 
         ImageView imagev = (ImageView) findViewById(R.id.show_image);
 
@@ -122,10 +121,14 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.show_menu, menu);
         this.menu = menu;
-        if(isFollow){
-            menu.findItem(R.id.add_watch).setIcon(getDrawable(R.drawable.ic_favorite));
+        if(user.getUsername().equals("Anonyme")){
+            menu.findItem(R.id.add_watch).setVisible(false);
+            menu.findItem(R.id.share).setVisible(false);
+        } else {
+            if(isFollow){
+                menu.findItem(R.id.add_watch).setIcon(getDrawable(R.drawable.ic_favorite));
+            }
         }
-
         return true;
     }
 
