@@ -142,4 +142,35 @@ public class EpisodeCallback {
         }
     }
 
+    public static class UpdateEpisodeCallback implements Adapter.Callback{
+
+        private EpisodeListener listener;
+
+        public UpdateEpisodeCallback(EpisodeListener listener) {
+            this.listener = listener;
+        }
+
+        /**
+         * The method invoked when the call completes successfully.
+         *
+         * @param response The HTTP response body.
+         */
+        @Override
+        public void onSuccess(String response) {
+            Log.d(Constants.Log.TAG, "Episode is update");
+            this.listener.episodeIsUpdated();
+        }
+
+        /**
+         * The method invoked when an error occurs.
+         *
+         * @param t The Throwable.
+         */
+        @Override
+        public void onError(Throwable t) {
+            Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
+            this.listener.onError(t);
+        }
+    }
+
 }

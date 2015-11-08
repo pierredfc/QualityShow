@@ -34,4 +34,8 @@ public class SaisonHelper {
     public void deleteEpisode(Saison saison, Episode episode, EpisodeListener listener){
         saisonRepository.deleteEpisode((int) saison.getId(), (int) episode.getId(), new EpisodeCallback.DeleteEpisodeCallback(listener));
     }
+
+    public void updateEpisode(Saison saison, Episode episode, EpisodeListener listener){
+        saisonRepository.updateEpisode((int) saison.getId(), episode, new EpisodeCallback.UpdateEpisodeCallback(listener));
+    }
 }

@@ -12,6 +12,7 @@ public interface EpisodeListener {
     void episodeIsAdded(Episode episode);
     void getEpisodes(ArrayList<Episode> episodes);
     void episodeIsDelete();
+    void episodeIsUpdated();
 
     void onError(Throwable t);
 

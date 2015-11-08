@@ -1,10 +1,12 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
 import com.strongloop.android.loopback.ModelRepository;
+import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
 import com.strongloop.android.remoting.adapters.RestContractItem;
 
+import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
@@ -30,6 +32,7 @@ public class SaisonRepository extends ModelRepository<Saison> {
         contract.addItem(new RestContractItem("/" + restUrl + "/:id/episodes", "GET"), className + ".getEpisodes");
         contract.addItem(new RestContractItem("/" + restUrl + "/:id/episodes", "POST"), className + ".addEpisode");
         contract.addItem(new RestContractItem("/" + restUrl + "/:saispnId/episodes/:episodeId", "DELETE"), className + ".deleteEpisode");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:saispnId/episodes/:episodeId", "PUT"), className + ".updateEpisode");
 
         return contract;
     }
@@ -52,5 +55,13 @@ public class SaisonRepository extends ModelRepository<Saison> {
         params.put("saisonId", saisonId);
         params.put("episodeId", episodeId);
         invokeStaticMethod("deleteEpisode", params, callback);
+    }
+
+    public void updateEpisode(int saisonId, Episode episode, Adapter.Callback callback){
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("saisonId", saisonId);
+        params.put("episodeId", (int)episode.getId());
+        params.putAll(episode.toMap());
+        invokeStaticMethod("updateEpisode", params, callback);
     }
 }
