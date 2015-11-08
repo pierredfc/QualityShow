@@ -20,33 +20,49 @@
             android:layout_marginBottom="5dp"
             android:id="@+id/season_image_view" />
 
-    <LinearLayout
-        android:orientation="vertical"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="#fff">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saison X"
+                    android:id="@+id/number_season"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombres d'épisodes"
+                    android:id="@+id/number_episodes"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/grayQ" />
+            </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="#fff">
+        android:layout_gravity="right">
 
-
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saison X"
-            android:id="@+id/number_season"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombres d'épisodes"
-            android:id="@+id/number_episodes"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/grayQ" />
-    </LinearLayout>
-    </LinearLayout>
+            android:src="@drawable/ic_chevron_right"
+            android:id="@+id/arrow_icon"
+            android:layout_marginTop="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 </RelativeLayout>

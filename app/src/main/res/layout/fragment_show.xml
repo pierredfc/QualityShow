@@ -22,7 +22,7 @@
             android:textSize="11dp"
             android:textAllCaps="true"
             android:textColor="@color/title_gray"
-            android:id="@+id/s_status" />
+            android:id="@+id/overview_title" />
 
     </GridLayout>
 
@@ -39,12 +39,67 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/title_gray"
         android:layout_marginTop="5dp"
-        android:textSize="15dp"
-        android:text=""
+        android:padding="15dp"
+        android:textSize="11dp"
+        android:gravity="left"
         android:background="@drawable/bordertext"
-        android:textColor="@color/md_black_1000"
-        android:id="@+id/s_genres" />
+        android:id="@+id/s_aired"
+        android:textAllCaps="true"
+        android:drawableLeft = "@drawable/ic_access_time"
+        android:drawablePadding="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="11dp"
+        android:padding="15dp"
+        android:text=""
+        android:textAllCaps="true"
+        android:background="@drawable/bordertext"
+        android:textColor="@color/title_gray"
+        android:id="@+id/s_genres"
+        android:drawableLeft="@drawable/ic_theaters"
+        android:drawablePadding="5dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="5dp"
+        android:textStyle=""
+        android:layout_gravity="left"
+        android:text="Seasons"
+        android:textSize="11dp"
+        android:textAllCaps="true"
+        android:textColor="@color/title_gray"
+        android:id="@+id/title_seasons" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/border_gray" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SeasonsView"
+        android:background="#fff"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:divider="@color/border_gray"
+        android:dividerHeight="1dip"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/border_gray" />
 
 
     <TextView
@@ -54,20 +109,10 @@
         android:paddingLeft="15dp"
         android:textStyle=""
         android:layout_gravity="left"
-        android:text="Seasons"
+        android:text="Trailer"
         android:textSize="11dp"
         android:textAllCaps="true"
-        android:textColor="@color/title_gray"
-        android:id="@+id/title_seasons" />
+        android:textColor="@color/title_gray" />
 
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/SeasonsView"
-        android:background="#fff"
-        android:layout_marginTop="5dp"
-        android:layout_row="0"
-        android:layout_column="1"
-        android:divider="@drawable/list_divider"/>
 </LinearLayout>

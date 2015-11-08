@@ -3,6 +3,7 @@ package videolibrary.street.quality.qualityshow.fragments;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,17 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
+import videolibrary.street.quality.qualityshow.api.user.dao.Airs;
+import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -34,6 +41,7 @@ public class ShowFragment extends Fragment implements RequestListener {
     ListView resultsView;
     View rootView;
     Object show;
+
     Film film;
     Serie serie;
 
@@ -47,12 +55,13 @@ public class ShowFragment extends Fragment implements RequestListener {
         resultsView = (ListView)rootView.findViewById(R.id.SeasonsView);
 
         if (show instanceof Serie){
-            serie = (Serie)show;
+            serie = (Serie) show;
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_SEASONS,(serie.getIds().get("trakt")).toString());
+            requestAsyncTask.execute(Requests.SERIE_SEASONS, (serie.getIds().get("trakt")).toString());
             fillView(serie);
+
         } else if(show instanceof Film){
-            film= (Film)show;
+            film = (Film)show;
             fillView(film);
         }
 
@@ -62,13 +71,48 @@ public class ShowFragment extends Fragment implements RequestListener {
 
     private void fillView(Serie show){
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
-        //((TextView)rootView.findViewById(R.id.s_status)).setText(show.getStatus());
+        String genres = "";
+
+        ArrayList<Category> categories = serie.getGenres();
+        for(int i = 0; i < categories.size(); i++){
+            if(i == categories.size() -1){
+                genres += categories.get(i) + ".";
+            } else {
+                genres += categories.get(i) + ", ";
+            }
+        }
+        ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
+
+        String aired = "";
+
+        HashMap<String, Airs> aired_map =  serie.getAirs();
+
+        Iterator it = aired_map.entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry) it.next();
+            aired += pair.getValue();
+            switch(pair.getKey().toString()){
+                case "day":
+                    aired += ", ";
+                    break;
+                case "time":
+                    aired += " - ";
+                    break;
+                case "timezone":
+                    aired += ".";
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        ((TextView) rootView.findViewById(R.id.s_aired)).setText(aired);
+
     }
 
 
     private void fillView(Film show){
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
-       // ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getYear().toString());
     }
 
     @Override
@@ -77,7 +121,7 @@ public class ShowFragment extends Fragment implements RequestListener {
             SeasonAdapter seasonAdapter = new SeasonAdapter((ShowActivity) getActivity(),response);
             resultsView.setAdapter(seasonAdapter);
             justifyListViewHeightBasedOnChildren(resultsView);
-            resultsView.setOnItemClickListener((ShowActivity)getActivity());
+            resultsView.setOnItemClickListener((ShowActivity) getActivity());
         }
 
     }
