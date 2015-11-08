@@ -34,7 +34,7 @@ public class SeasonAdapter extends ArrayAdapter<Object> {
         }
 
         SeasonHolder holder = new SeasonHolder(convertView);
-        Saison item = (Saison)getItem(position);
+        Saison item = (Saison) getItem(position);
 
         if (item != null) {
             Object p = item.getPoster().get("thumb");
@@ -47,9 +47,9 @@ public class SeasonAdapter extends ArrayAdapter<Object> {
             } else {
                 Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
             }
-            holder.number.setText("Seasons " + item.getNumber().toString());
+            holder.number.setText("Season " + item.getNumber().toString());
 
-            holder.episodes.setText(item.getAired_episodes().toString() + " Episodes aired");
+            holder.episodes.setText(item.getAired_episodes().toString() + " episodes aired.");
             holder.setView(item, clickListener);
         }
 

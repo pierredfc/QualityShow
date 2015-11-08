@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -33,8 +30,8 @@ import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
-import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.ExploreFragment;
+import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -42,7 +39,7 @@ import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener,SerieListener,ClickListener, View.OnClickListener, ListView.OnItemClickListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener {
     private Toolbar toolbar;
     private User user;
     private Serie serie;
@@ -97,9 +94,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.show_frame_container, showFragment);
         transaction.commit();
-        fragment=showFragment;
-
-
+        fragment = showFragment;
     }
 
     @Override
@@ -177,12 +172,12 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
         this.addSerieToUser();
     }
 
-    private void addSerieToUser(){
+    private void addSerieToUser() {
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-        if(! userHelper.serieIsExist(this.serie)){
+        if (!userHelper.serieIsExist(this.serie)) {
             userHelper.addSerie(user, this.serie, this);
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "Serie already exist", Toast.LENGTH_SHORT).show();
         }
 
@@ -202,14 +197,15 @@ public class ShowActivity extends AppCompatActivity implements FilmListener,Seri
             fragment = episodeFragment;
         }
     }
+
     @Override
     public void onBackPressed() {
         // if there is a fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
-        if(!getFragmentManager().popBackStackImmediate()) {
+        if (!getFragmentManager().popBackStackImmediate()) {
             super.onBackPressed();
         }
     }
 
-    }
+}
 

@@ -29,9 +29,8 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 /**
  * Created by Sacael on 05/11/2015.
  */
-public class ShowFragment extends Fragment implements RequestListener
+public class ShowFragment extends Fragment implements RequestListener {
 
-{
     ListView resultsView;
     View rootView;
     Object show;
@@ -46,13 +45,13 @@ public class ShowFragment extends Fragment implements RequestListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (LinearLayout) inflater.inflate(R.layout.fragment_show, container, false);
         resultsView = (ListView)rootView.findViewById(R.id.SeasonsView);
+
         if (show instanceof Serie){
             serie = (Serie)show;
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
             requestAsyncTask.execute(Requests.SERIE_SEASONS,(serie.getIds().get("trakt")).toString());
             fillView(serie);
-        }
-        else if(show instanceof Film){
+        } else if(show instanceof Film){
             film= (Film)show;
             fillView(film);
         }
@@ -62,20 +61,14 @@ public class ShowFragment extends Fragment implements RequestListener
 
 
     private void fillView(Serie show){
-
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
-        ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getStatus());
+        //((TextView)rootView.findViewById(R.id.s_status)).setText(show.getStatus());
     }
-
-
-
-
-
 
 
     private void fillView(Film show){
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
-        ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getYear().toString());
+       // ((TextView)rootView.findViewById(R.id.s_status)).setText(show.getYear().toString());
     }
 
     @Override
@@ -90,7 +83,6 @@ public class ShowFragment extends Fragment implements RequestListener
     }
 
     public void justifyListViewHeightBasedOnChildren (ListView listView) {
-
         ListAdapter adapter = listView.getAdapter();
 
         if (adapter == null) {

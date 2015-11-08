@@ -3,43 +3,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/background_gray">
+
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_gray">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="15dp"
+            android:textStyle=""
             android:layout_gravity="left"
-            android:text=""
-            android:textColor="@color/md_black_1000"
+            android:text="Overview"
+            android:textSize="11dp"
+            android:textAllCaps="true"
+            android:textColor="@color/title_gray"
             android:id="@+id/s_status" />
 
-
     </GridLayout>
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="center_vertical|right"
-        android:gravity="right"
+        android:textColor="@color/md_black_1000"
+        android:layout_marginTop="5dp"
+        android:padding="15dp"
+        android:gravity="left"
+        android:background="@drawable/bordertext"
         android:id="@+id/synopsis"/>
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="15dp"
         android:text=""
+        android:background="@drawable/bordertext"
         android:textColor="@color/md_black_1000"
         android:id="@+id/s_genres" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:textStyle=""
+        android:layout_gravity="left"
+        android:text="Seasons"
+        android:textSize="11dp"
+        android:textAllCaps="true"
+        android:textColor="@color/title_gray"
+        android:id="@+id/title_seasons" />
+
+
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/SeasonsView"
+        android:background="#fff"
+        android:layout_marginTop="5dp"
         android:layout_row="0"
-        android:layout_column="1" />
+        android:layout_column="1"
+        android:divider="@drawable/list_divider"/>
 </LinearLayout>

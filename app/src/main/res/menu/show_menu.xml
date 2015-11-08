@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/add_watch"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_add"
         android:title="@string/add_watch"
         app:showAsAction="collapseActionView|ifRoom" />
 

@@ -21,6 +21,7 @@ public class SeasonHolder extends RecyclerView.ViewHolder{
 
     Saison season;
     ClickListener clistener;
+
     public SeasonHolder(View itemView) {
         super(itemView);
         this.view = itemView;
