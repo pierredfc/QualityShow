@@ -80,17 +80,23 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
 
         }
         if (item instanceof Film) {
-            //intent.putExtra("isMovie",true);
-            //intent.putExtra("show",(Film) item);
+            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+            requestAsyncTask.execute(Requests.MOVIE_FIND, String.valueOf(((Film) item).getIds().get("slug")));
+
         }
     }
 
     @Override
     public void onResponseReceived(List<Object> response) {
         Intent intent = new Intent(this, ShowActivity.class);
-        intent.putExtra("isMovie", false);
-        intent.putExtra("show", (Serie) response.get(0));
+        if(response.get(0) instanceof  Serie) {
+            intent.putExtra("isMovie", false);
+            intent.putExtra("show", (Serie) response.get(0));
+        }
+        else if(response.get(0) instanceof Film){
+            intent.putExtra("isMovie",true);
+            intent.putExtra("show",(Film)response.get(0));
+        }
         startActivity(intent);
-        finish();
     }
 }

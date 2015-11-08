@@ -42,8 +42,7 @@ import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener {
     private Toolbar toolbar;
     private User user;
-    private Serie serie;
-    private Film film;
+    private Object show;
     private Boolean IsMovie;
     private ProfilFragment profilFragment;
     private ExploreFragment exploreFragment;
@@ -55,9 +54,11 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_show);
         Intent intent = getIntent();
         IsMovie = intent.getBooleanExtra("isMovie", true);
+        show=intent.getParcelableExtra("show");
         toolbar = (Toolbar) findViewById(R.id.show_toolbar);
         actionButtonActivity = (FloatingActionButton) findViewById(R.id.add_watch_activity);
         actionButtonActivity.setOnClickListener(this);
@@ -66,11 +67,11 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Object p;
         if (IsMovie) {
-            film = (Film) intent.getParcelableExtra("show");
+            Film film = (Film) show;
             getSupportActionBar().setTitle(film.getTitle());
             p = film.getFanart().get("thumb");
         } else {
-            serie = (Serie) intent.getParcelableExtra("show");
+            Serie serie = (Serie) show;
             p = serie.getFanart().get("thumb");
             getSupportActionBar().setTitle(serie.getTitle());
         }
@@ -175,8 +176,8 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private void addSerieToUser() {
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-        if (!userHelper.serieIsExist(this.serie)) {
-            userHelper.addSerie(user, this.serie, this);
+        if (!userHelper.serieIsExist((Serie)this.show)) {
+            userHelper.addSerie(user,(Serie)this.show, this);
         } else {
             Toast.makeText(getApplicationContext(), "Serie already exist", Toast.LENGTH_SHORT).show();
         }
@@ -189,7 +190,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         if (item instanceof Saison) {
             EpisodeFragment episodeFragment = new EpisodeFragment();
             episodeFragment.setSeason((Saison) item);
-            episodeFragment.setSerieId(serie.getIds().get("trakt"));
+            episodeFragment.setSerieId(((Serie)this.show).getIds().get("trakt"));
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.show_frame_container, episodeFragment);
             transaction.addToBackStack(null);

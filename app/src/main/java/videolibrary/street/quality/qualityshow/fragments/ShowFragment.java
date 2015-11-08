@@ -42,9 +42,6 @@ public class ShowFragment extends Fragment implements RequestListener {
     View rootView;
     Object show;
 
-    Film film;
-    Serie serie;
-
     public void setShow(Object show) {
         this.show = show;
     }
@@ -55,13 +52,13 @@ public class ShowFragment extends Fragment implements RequestListener {
         resultsView = (ListView)rootView.findViewById(R.id.SeasonsView);
 
         if (show instanceof Serie){
-            serie = (Serie) show;
+            Serie serie = (Serie) show;
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
             requestAsyncTask.execute(Requests.SERIE_SEASONS, (serie.getIds().get("trakt")).toString());
             fillView(serie);
 
         } else if(show instanceof Film){
-            film = (Film)show;
+            Film film = (Film)show;
             fillView(film);
         }
 
@@ -73,7 +70,7 @@ public class ShowFragment extends Fragment implements RequestListener {
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
         String genres = "";
 
-        ArrayList<Category> categories = serie.getGenres();
+        ArrayList<Category> categories = show.getGenres();
         for(int i = 0; i < categories.size(); i++){
             if(i == categories.size() -1){
                 genres += categories.get(i) + ".";
@@ -85,7 +82,7 @@ public class ShowFragment extends Fragment implements RequestListener {
 
         String aired = "";
 
-        HashMap<String, Airs> aired_map =  serie.getAirs();
+        HashMap<String, Airs> aired_map =  show.getAirs();
 
         Iterator it = aired_map.entrySet().iterator();
         while (it.hasNext()) {
@@ -113,7 +110,21 @@ public class ShowFragment extends Fragment implements RequestListener {
 
     private void fillView(Film show){
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
+        String genres = "";
+
+        ArrayList<Category> categories = show.getGenres();
+        for(int i = 0; i < categories.size(); i++){
+            if(i == categories.size() -1){
+                genres += categories.get(i) + ".";
+            } else {
+                genres += categories.get(i) + ", ";
+            }
+        }
+        ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
+        ((TextView) rootView.findViewById(R.id.s_aired)).setText(String.valueOf(show.getYear()));
+        ((TextView) rootView.findViewById(R.id.title_seasons)).setVisibility(View.GONE);
     }
+
 
     @Override
     public void onResponseReceived(List<Object> response) {
