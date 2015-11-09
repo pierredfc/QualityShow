@@ -89,12 +89,13 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
     @Override
     public void onResponseReceived(List<Object> response) {
         Intent intent = new Intent(this, ShowActivity.class);
+        intent.putExtra("isSearch", true);
         if(response.get(0) instanceof  Serie) {
             intent.putExtra("isMovie", false);
             intent.putExtra("show", (Serie) response.get(0));
         }
         else if(response.get(0) instanceof Film){
-            intent.putExtra("isMovie",true);
+            intent.putExtra("isMovie", true);
             intent.putExtra("show",(Film)response.get(0));
         }
         startActivity(intent);

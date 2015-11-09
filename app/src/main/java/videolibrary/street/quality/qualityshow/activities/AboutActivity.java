@@ -13,7 +13,6 @@ import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
 public class AboutActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    Drawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +22,7 @@ public class AboutActivity extends AppCompatActivity {
         toolbar = (Toolbar) this.findViewById(R.id.about_toolbar);
         this.setSupportActionBar(toolbar);
 
-        drawer = new DrawerMenuUtils(savedInstanceState, this, toolbar).getDrawer();
-        drawer.setSelection(-1);
+        new DrawerMenuUtils(savedInstanceState, this, toolbar);
 
         setTitle(getString(R.string.about));
     }

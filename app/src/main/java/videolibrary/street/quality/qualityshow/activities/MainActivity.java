@@ -1,7 +1,10 @@
 package videolibrary.street.quality.qualityshow.activities;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,12 +36,13 @@ import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 import videolibrary.street.quality.qualityshow.utils.SearchPreferences;
 
-public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener {
+public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener{
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
     private HomeFragment homeFragment;
     public DrawerMenuUtils drawer;
+    AlertDialog closeDialog;
 
     private SearchPreferences searchPreferences;
 
@@ -52,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         setSupportActionBar(toolbar);
 
         drawer = new DrawerMenuUtils(savedInstanceState, this, toolbar);
-        drawer.getDrawer().setSelection(2);
 
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
@@ -124,9 +127,18 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     public void onItemClick(Object item) {
 
         if (item instanceof Serie) {
+            Intent intent = new Intent(this, ShowActivity.class);
+            intent.putExtra("isMovie", false);
+            if(QualityShowApplication.getUserHelper() != null){
+                intent.putExtra("isSearch", false);
+                intent.putExtra("show", (int)((Serie) item).getId());
+            }else {
+                intent.putExtra("show", (Serie) item);
+            }
 
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
+            startActivity(intent);
+//            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+//            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
 
         }
         if (item instanceof Film) {
@@ -149,7 +161,30 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     }
 
     private void askLeaveOrLogout() {
-        Toast.makeText(QualityShowApplication.getContext(), "askLeaveOrLogout", Toast.LENGTH_SHORT).show();
+        closeDialog = makeCloseDialog();
+        closeDialog.show();
+    }
+
+    private AlertDialog makeCloseDialog() {
+        if (closeDialog != null) {
+            return closeDialog;
+        }
+
+        closeDialog = new AlertDialog.Builder(this).create();
+        closeDialog.setTitle(getString(R.string.dialog_title));
+        closeDialog.setMessage(getString(R.string.dialog_message));
+        closeDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dialog_cancel_choice), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
+        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                onBackPressed();
+            }
+        });
+        return closeDialog;
     }
 
     @Override
@@ -214,5 +249,14 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     @Override
     public void onError(Throwable t) {
 
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
+            finish();
+        } else {
+            QualityShowApplication.getUserHelper().logout(this);
+        }
     }
 }

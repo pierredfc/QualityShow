@@ -45,6 +45,13 @@
     <string name="logout">Log out</string>
 
 
+    <!-- CLOSE DIALOG-->
+    <string name="dialog_title">Warning</string>
+    <string name="dialog_message">What do you want to do ?</string>
+    <string name="dialog_cancel_choice">Cancel</string>
+    <string name="dialog_logout_choice">Log out</string>
+    <string name="dialog_quit_choice">Quit</string>
+
     <!-- ABOUT -->
     <string name="about_text">© Quality Street</string>
 </resources>
