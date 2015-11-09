@@ -331,7 +331,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public void onBackPressed() {
         // if there is a fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
-        QualityShowApplication.getUserHelper().getCurrentUser().setSeries(user.series);
+        if(QualityShowApplication.getUserHelper().getCurrentUser() != null){
+            QualityShowApplication.getUserHelper().getCurrentUser().setSeries(user.series);
+        }
         if (!getFragmentManager().popBackStackImmediate()) {
             super.onBackPressed();
         }
