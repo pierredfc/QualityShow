@@ -1,7 +1,8 @@
 package videolibrary.street.quality.qualityshow.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +12,17 @@ import android.widget.ListAdapter;
 
 import java.util.*;
 
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.activities.MainActivity;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 
 /**
  * Created by EdouardEtudiant on 06/11/2015.
  */
-public class TabFragment extends Fragment{
+public class TabFragment extends Fragment {
 
-    private ListAdapter mAdapter;
-
-    private String mItemData = "Lorem Ipsum is simply dummy text of the printing and "
-            + "typesetting industry Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,21 +30,25 @@ public class TabFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_tab, container, false);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(
-                R.id.fragment_list_rv);
+                R.id.list_item);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        String[] listItems = mItemData.split(" ");
 
-        List<String> list = new ArrayList<String>();
-        Collections.addAll(list, listItems);
-
-        mAdapter = new ListAdapter(list);
-        recyclerView.setAdapter(mAdapter);
+        //mAdapter = new ShowsAdapter(series)
+        //recyclerView.setAdapter(mAdapter);
 
         return view;
 
     }
+
+    //@Override
+    //public void getSeries(ArrayList<Serie> series) {
+    //    QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
+    //    showsAdapter = new ShowsAdapter(series, (MainActivity) getActivity());
+    //    showsView.setAdapter(showsAdapter);
+    //    this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+    //}
 }

@@ -31,7 +31,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ExploreFragment;
-import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
+import videolibrary.street.quality.qualityshow.fragments.ProfileFragment;
 import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -44,7 +44,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private User user;
     private Object show;
     private Boolean IsMovie;
-    private ProfilFragment profilFragment;
+    private ProfileFragment profileFragment;
     private ExploreFragment exploreFragment;
     private SettingsFragment settingsFragment;
     private ShowFragment showFragment;

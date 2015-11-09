@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ExploreActivity;
+import videolibrary.street.quality.qualityshow.activities.ProfileActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
@@ -100,8 +101,8 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
         switch (position) {
             case 1:
-                /*Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
-                activity.startActivity(profileIntent);*/
+                Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
+                activity.startActivity(profileIntent);
                 drawer.setSelection(1);
                 break;
             case 2:
