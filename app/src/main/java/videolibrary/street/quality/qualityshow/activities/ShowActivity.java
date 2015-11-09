@@ -28,8 +28,11 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
+import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
+import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
@@ -39,7 +42,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener {
     private Toolbar toolbar;
     private User user;
     private Object show;
@@ -180,8 +183,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void serieIsAdded(Serie serie) {
-        User user = QualityShowApplication.getUserHelper().getCurrentUser();
-        user.addSerie(serie);
+        SerieHelper helper = new SerieHelper(getApplicationContext());
+        for (Saison s : ((Serie) show).getSaisons()){
+            helper.addSaison(serie, s, this);
+        }
         Toast.makeText(getApplicationContext(), "Serie added", Toast.LENGTH_SHORT).show();
     }
 
@@ -193,6 +198,21 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
+
+    }
+
+    @Override
+    public void saisonIsAdded(Saison saison) {
+        Toast.makeText(getApplicationContext(), "saison added", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getSaisons(ArrayList<Saison> saisons) {
+
+    }
+
+    @Override
+    public void saisonIsDeleted() {
 
     }
 

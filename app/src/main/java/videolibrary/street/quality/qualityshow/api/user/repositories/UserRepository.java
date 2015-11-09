@@ -72,6 +72,7 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
     public void getSeries(int userId, boolean categories, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
         params.put("id", userId);
+        params.put("filter[include][saisons]", "episodes");
         if(categories)
             params.put("filter[include]", "categories");
         invokeStaticMethod("getSeries", params, callback);
