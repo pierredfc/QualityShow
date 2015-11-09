@@ -27,6 +27,10 @@
             android:noHistory="true"/>
         <activity android:name=".activities.SignUpActivity"
             android:noHistory="true"/>
+
+        <activity android:name=".activities.ProfileActivity"
+            android:theme="@style/CustomTheme"/>
+        
         <activity android:name=".activities.ShowActivity"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTop"/>
