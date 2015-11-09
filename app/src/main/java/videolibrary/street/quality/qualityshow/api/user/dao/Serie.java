@@ -29,6 +29,7 @@ public class Serie extends Model implements Parcelable {
 
     private ArrayList<Saison> saisons;
     private ArrayList<Category> genres;
+    private ArrayList<Category> categories;
 
     public String getTitle() {
         return title;
@@ -149,6 +150,25 @@ public class Serie extends Model implements Parcelable {
     public void setGenres(ArrayList<Category> genres) {
         this.genres = genres;
     }
+
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addSaison(Saison saison){
+        if (this.saisons == null)
+            this.saisons = new ArrayList<>();
+        this.saisons.add(saison);
+    }
+
+    public void deleteSaison(int index){
+        this.saisons.remove(index);
+    }
+
 
     public Serie() {
     }
