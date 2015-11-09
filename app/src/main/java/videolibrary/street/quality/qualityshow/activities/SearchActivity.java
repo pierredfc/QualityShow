@@ -134,6 +134,7 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
             }
             if((this.episodeAdded == this.airedEpisodeSerie) && (this.episodeAdded != 0)){
                 Intent intent = new Intent(this, ShowActivity.class);
+                intent.putExtra("isSearch", true);
                 intent.putExtra("isMovie", false);
                 intent.putExtra("show", (Serie) this.selectedSerie);
                 startActivity(intent);

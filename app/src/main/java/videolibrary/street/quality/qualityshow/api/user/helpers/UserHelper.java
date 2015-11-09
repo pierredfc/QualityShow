@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.strongloop.android.loopback.callbacks.ObjectCallback;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,11 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.SerieCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
+import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
@@ -28,7 +31,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
  * Created by elerion on 10/26/15.
  * Class containing all function util for use User on api Server
  */
-public class UserHelper {
+public class UserHelper implements CategoryListener{
 
     private final ApiAdapter apiAdapter;
     private final UserRepository userRepository;
@@ -117,7 +120,7 @@ public class UserHelper {
     }
 
     public void addSerie(User user, Serie serie, SerieListener listener){
-        if (serie.getGenres() != null)
+        if(serie.getGenres() != null)
             serie.setCategories(serie.getGenres());
         userRepository.addSerie((int) user.getId(), serie, new SerieCallbacks.AddSerieCallback(listener));
     }
@@ -160,4 +163,23 @@ public class UserHelper {
         return false;
     }
 
+    @Override
+    public void categorieIsAdded(Category category) {
+
+    }
+
+    @Override
+    public void getCategories(ArrayList<Category> categories) {
+
+    }
+
+    @Override
+    public void categorieIsDeleted() {
+
+    }
+
+    @Override
+    public void onError(Throwable t) {
+
+    }
 }

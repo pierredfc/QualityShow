@@ -23,7 +23,7 @@ public class SerieHelper  {
 
     public SerieHelper(Context context) {
         this.adapter = new ApiAdapter(context, ApiConstants.API_URL);
-        this.serieRepository = new SerieRepository();
+        this.serieRepository = this.adapter.createRepository(SerieRepository.class);
     }
 
     public void addCategorie(Serie serie, Category category, CategoryListener listener){

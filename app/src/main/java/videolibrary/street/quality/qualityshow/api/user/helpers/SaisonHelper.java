@@ -20,7 +20,7 @@ public class SaisonHelper {
 
     public SaisonHelper(Context context) {
         this.adapter = new ApiAdapter(context, ApiConstants.API_URL);
-        this.saisonRepository = new SaisonRepository();
+        this.saisonRepository = this.adapter.createRepository(SaisonRepository.class);
     }
 
     public void getEpisodes(Saison saison, EpisodeListener listener){

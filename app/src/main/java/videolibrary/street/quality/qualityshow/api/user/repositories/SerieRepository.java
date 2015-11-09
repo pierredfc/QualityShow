@@ -31,40 +31,40 @@ public class SerieRepository extends ModelRepository<Serie> {
         String className = getClassName();
         String restUrl = getNameForRestUrl();
 
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "GET"), className + ".getGenres");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "POST"), className + ".addCategory");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:serieId/categories/:categoryId", "DELETE"), className + ".deleteCategory");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/categories", "GET"), className + ".getCategories");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/categories", "POST"), className + ".addCategory");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/categories/:categoryId", "DELETE"), className + ".deleteCategory");
 
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/saisons", "GET"), className + ".getSaisons");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/saisons", "POST"), className + ".addSaison");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:serieId/saisons/:saisonId", "DELETE"), className + ".deleteSaison");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/saisons", "GET"), className + ".getSaisons");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/saisons", "POST"), className + ".addSaison");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSerieId/saisons/:saisonId", "DELETE"), className + ".deleteSaison");
 
         return contract;
     }
 
     public void getCategories(int serieId, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", serieId);
+        params.put("urlSerieId", serieId);
         invokeStaticMethod("getGenres", params, callback);
     }
 
     public void addCategory(int serieId, Category category, Adapter.JsonObjectCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", serieId);
+        params.put("urlSerieId", serieId);
         params.putAll(category.toMap());
         invokeStaticMethod("addCategory", params, callback);
     }
 
     public void deleteCategory(int serieId, int categoryId, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("filmId", serieId);
+        params.put("urlSerieId", serieId);
         params.put("categoryId", categoryId);
         invokeStaticMethod("deleteCategory", params, callback);
     }
 
     public void getSaisons(int serieId, boolean episode, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", serieId);
+        params.put("urlSerieId", serieId);
         if (episode)
             params.put("filter[include]", "episodes");
         invokeStaticMethod("getSaisons", params, callback);
@@ -72,14 +72,14 @@ public class SerieRepository extends ModelRepository<Serie> {
 
     public void addSaison(int serieId, Saison saison, Adapter.JsonObjectCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", serieId);
+        params.put("urlSerieId", serieId);
         params.putAll(saison.toMap());
         invokeStaticMethod("addSaison", params, callback);
     }
 
     public void deleteSaison(int serieId, int saisonId, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("serieId", serieId);
+        params.put("urlSerieId", serieId);
         params.put("saisonId", saisonId);
         invokeStaticMethod("deleteSaison", params, callback);
     }

@@ -11,8 +11,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
@@ -49,15 +51,25 @@ public class SerieCallbacks {
                     Serie serie = object != null
                             ? repository.createObject(JsonUtil.fromJson(object))
                             : null;
-                    if (serie != null)
+                    if (serie != null){
+                        JSONArray array = object.getJSONArray("saisons");
+                        if (array != null){
+                            serie.setSaisons(new ArrayList<Saison>());
+                            SaisonRepository saisonRepository = new SaisonRepository();
+                            for (int j = 0; j < array.length(); j++) {
+                                Saison saison = saisonRepository.createObject(JsonUtil.fromJson(array.getJSONObject(j)));
+                                serie.addSaison(saison);
+                            }
+                        }
+                    }
                         series.add(serie);
                 }catch (JSONException e){
                     Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + GetSeriesCallback.class.getSimpleName(), e);
                     this.listener.onError(e);
                 }
-                Log.d(Constants.Log.TAG, "Series received");
-                this.listener.getSeries(series);
             }
+            Log.d(Constants.Log.TAG, "Series received");
+            this.listener.getSeries(series);
         }
 
         /**
