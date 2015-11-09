@@ -115,14 +115,17 @@ public class ShowFragment extends Fragment implements RequestListener {
         String genres = "";
 
         ArrayList<Category> categories = show.getGenres();
-        for(int i = 0; i < categories.size(); i++){
-            if(i == categories.size() -1){
-                genres += categories.get(i) + ".";
-            } else {
-                genres += categories.get(i) + ", ";
+        if (categories != null) {
+            for(int i = 0; i < categories.size(); i++){
+                if(i == categories.size() -1){
+                    genres += categories.get(i) + ".";
+                } else {
+                    genres += categories.get(i) + ", ";
+                }
             }
+            ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
         }
-        ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
+
         ((TextView) rootView.findViewById(R.id.s_aired)).setText(String.valueOf(show.getYear()));
         ((TextView) rootView.findViewById(R.id.title_seasons)).setVisibility(View.GONE);
     }

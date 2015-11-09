@@ -68,7 +68,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         if((user != null) && !isSearch){
             int showId = intent.getIntExtra("show", -1);
             if(IsMovie){
-               // show = user.getFilmById(showId); @TODO
+                show = user.getFilmById(showId);
             } else {
                 show = user.getSerieById(showId);
             }

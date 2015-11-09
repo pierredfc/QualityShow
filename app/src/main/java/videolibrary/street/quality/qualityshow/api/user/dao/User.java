@@ -84,6 +84,16 @@ public class User extends com.strongloop.android.loopback.User implements Parcel
         }
         return null;
     }
+
+    public Film getFilmById(int id){
+        for (Film film :
+                films) {
+            if ((int) film.getId() == id)
+                return film;
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return String.format("User : " + this.getCreationParameters().toString());
