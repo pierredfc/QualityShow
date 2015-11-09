@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -31,6 +32,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
@@ -42,7 +44,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener {
     private Toolbar toolbar;
     private User user;
     private Object show;
@@ -55,6 +57,8 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public Fragment fragment;
 
     private Menu menu;
+
+    private Serie userSerie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +191,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         for (Saison s : ((Serie) show).getSaisons()){
             helper.addSaison(serie, s, this);
         }
-        Toast.makeText(getApplicationContext(), "Serie added", Toast.LENGTH_SHORT).show();
+        this.userSerie = serie;
     }
 
     @Override
@@ -203,7 +207,15 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void saisonIsAdded(Saison saison) {
-        Toast.makeText(getApplicationContext(), "saison added", Toast.LENGTH_SHORT).show();
+        for (Saison s : ((Serie) show).getSaisons()) {
+            if(String.valueOf(s.getIds().get("trakt")).equals(String.valueOf(saison.getIds().get("trakt")))){
+                SaisonHelper saisonHelper = new SaisonHelper(getApplicationContext());
+                for (Episode e : s.getEpisodes()){
+                    saisonHelper.addEpisode(saison, e, this);
+                }
+            }
+        }
+        this.userSerie.addSaison(saison);
     }
 
     @Override
@@ -213,6 +225,30 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void saisonIsDeleted() {
+
+    }
+
+    @Override
+    public void episodeIsAdded(Episode episode) {
+        for (Saison s : this.userSerie.getSaisons()) {
+            if(((int)s.getId()) == ((int) episode.getSaisonid())){
+                s.addEpisode(episode);
+            }
+        }
+    }
+
+    @Override
+    public void getEpisodes(ArrayList<Episode> episodes) {
+
+    }
+
+    @Override
+    public void episodeIsDelete() {
+
+    }
+
+    @Override
+    public void episodeIsUpdated() {
 
     }
 
@@ -273,8 +309,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             userHelper.addSerie(user, (Serie) this.show, this);
             return true;
         } else {
-            int index = user.getSeries().indexOf((Serie) this.show);
-            //userHelper.deleteSerie(user, (int)((Serie) this.show).getId(), this);
             return false;
         }
     }

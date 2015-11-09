@@ -11,9 +11,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.EpisodeRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
 import videolibrary.street.quality.qualityshow.utils.Constants;
@@ -57,12 +59,30 @@ public class SerieCallbacks {
                             serie.setSaisons(new ArrayList<Saison>());
                             SaisonRepository saisonRepository = new SaisonRepository();
                             for (int j = 0; j < array.length(); j++) {
-                                Saison saison = saisonRepository.createObject(JsonUtil.fromJson(array.getJSONObject(j)));
+                                JSONObject tmpSaison = array.getJSONObject(j);
+                                Saison saison = tmpSaison != null
+                                        ? saisonRepository.createObject(JsonUtil.fromJson(tmpSaison))
+                                        : null;
+                                if (saison != null){
+                                    JSONArray episodes = tmpSaison.getJSONArray("episodes");
+                                    if (episodes != null){
+                                        saison.setEpisodes(new ArrayList<Episode>());
+                                        EpisodeRepository episodeRepository = new EpisodeRepository();
+                                        for (int k = 0; k < episodes.length(); k++) {
+                                            JSONObject tmpEpisode = episodes.getJSONObject(k);
+                                            Episode episode = tmpEpisode != null
+                                                    ? episodeRepository.createObject(JsonUtil.fromJson(tmpEpisode))
+                                                    : null;
+                                            if (episode != null)
+                                                saison.addEpisode(episode);
+                                        }
+                                    }
+                                }
                                 serie.addSaison(saison);
                             }
                         }
                     }
-                        series.add(serie);
+                    series.add(serie);
                 }catch (JSONException e){
                     Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + GetSeriesCallback.class.getSimpleName(), e);
                     this.listener.onError(e);

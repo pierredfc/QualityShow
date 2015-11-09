@@ -30,9 +30,9 @@ public class SaisonRepository extends ModelRepository<Saison> {
         String restUrl = getNameForRestUrl();
 
         contract.addItem(new RestContractItem("/" + restUrl + "/:id/episodes", "GET"), className + ".getEpisodes");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/episodes", "POST"), className + ".addEpisode");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:saispnId/episodes/:episodeId", "DELETE"), className + ".deleteEpisode");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:saispnId/episodes/:episodeId", "PUT"), className + ".updateEpisode");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSaisonId/episodes", "POST"), className + ".addEpisode");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSaisonId/episodes/:urlEpisodeId", "DELETE"), className + ".deleteEpisode");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:urlSaisonId/episodes/:urlEpisodeId", "PUT"), className + ".updateEpisode");
 
         return contract;
     }
@@ -45,22 +45,22 @@ public class SaisonRepository extends ModelRepository<Saison> {
 
     public void addEpisode(int saisonId, Episode episode, Adapter.JsonObjectCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", saisonId);
+        params.put("urlSaisonId", saisonId);
         params.putAll(episode.toMap());
         invokeStaticMethod("addEpisode", params, callback);
     }
 
     public void deleteEpisode(int saisonId, int episodeId, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("saisonId", saisonId);
-        params.put("episodeId", episodeId);
+        params.put("urlSaisonId", saisonId);
+        params.put("urlEpisodeId", episodeId);
         invokeStaticMethod("deleteEpisode", params, callback);
     }
 
     public void updateEpisode(int saisonId, Episode episode, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("saisonId", saisonId);
-        params.put("episodeId", (int)episode.getId());
+        params.put("urlSaisonId", saisonId);
+        params.put("urlEpisodeId", (int)episode.getId());
         params.putAll(episode.toMap());
         invokeStaticMethod("updateEpisode", params, callback);
     }
