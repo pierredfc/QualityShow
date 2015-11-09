@@ -117,6 +117,8 @@ public class UserHelper {
     }
 
     public void addSerie(User user, Serie serie, SerieListener listener){
+        if (serie.getGenres() != null)
+            serie.setCategories(serie.getGenres());
         userRepository.addSerie((int) user.getId(), serie, new SerieCallbacks.AddSerieCallback(listener));
     }
 

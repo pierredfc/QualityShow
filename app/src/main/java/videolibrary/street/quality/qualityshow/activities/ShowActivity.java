@@ -188,14 +188,16 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Object item = adapterView.getItemAtPosition(i);
         if (item instanceof Saison) {
-            EpisodeFragment episodeFragment = new EpisodeFragment();
-            episodeFragment.setSeason((Saison) item);
-            episodeFragment.setSerieId(((Serie)this.show).getIds().get("trakt"));
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.show_frame_container, episodeFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-            fragment = episodeFragment;
+            if(((Saison) item).getEpisodes() != null){
+                EpisodeFragment episodeFragment = new EpisodeFragment();
+                episodeFragment.setSeason((Saison) item);
+                episodeFragment.setSerieId(((Serie)this.show).getIds().get("trakt"));
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.show_frame_container, episodeFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                fragment = episodeFragment;
+            }
         }
     }
 

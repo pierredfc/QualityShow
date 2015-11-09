@@ -50,7 +50,8 @@ public class SeasonAdapter extends ArrayAdapter<Saison> {
             holder.number.setText("Season " + item.getNumber().toString());
 
             holder.episodes.setText(item.getAired_episodes().toString() + " episodes aired.");
-            holder.setView(item, clickListener);
+            if(item.getEpisodes() != null)
+                holder.setView(item, clickListener);
         }
 
         return convertView;
