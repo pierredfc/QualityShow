@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 Serie[] array_series = response.toArray(new Serie[response.size()]);
                 List<Serie> series = Arrays.asList(array_series);
 
-                showsAdapter = new ShowsAdapter(series, this);
+                showsAdapter = new ShowsAdapter(series, null, this);
                 showsView.setAdapter(showsAdapter);
                 this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             } else {

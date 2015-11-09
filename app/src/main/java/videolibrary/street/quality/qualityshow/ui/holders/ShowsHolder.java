@@ -16,23 +16,22 @@ public class ShowsHolder extends RecyclerView.ViewHolder implements View.OnClick
     public ImageView imageView;
 
     private ClickListener clickListener;
-    private Serie serie;
+    private Object show;
 
     public ShowsHolder(View itemView){
         super(itemView);
         view = itemView;
-
         imageView = (ImageView) itemView.findViewById(R.id.p_image_serie);
     }
 
-    public void setView(Serie serie, ClickListener listener){
+    public void setView(Object show, ClickListener listener){
         clickListener = listener;
-        this.serie = serie;
+        this.show = show;
         imageView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        clickListener.onItemClick(serie);
+        clickListener.onItemClick(show);
     }
 }

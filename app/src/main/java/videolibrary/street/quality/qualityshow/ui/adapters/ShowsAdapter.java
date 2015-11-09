@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.ui.holders.ShowsHolder;
@@ -20,9 +23,12 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsHolder> {
 
     ClickListener clickListener;
     List<Serie> series;
+    List<Film> films;
 
-    public ShowsAdapter(List<Serie> list_serie, ClickListener listener) {
-        series = list_serie;
+
+    public ShowsAdapter(List<Serie> list_series, List<Film> list_movies, ClickListener listener) {
+        series = list_series;
+        films = list_movies;
         clickListener = listener;
     }
 
@@ -35,26 +41,47 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsHolder> {
     @Override
     public void onBindViewHolder(ShowsHolder holder, int position) {
         if (position < getItemCount()) {
-            Serie serie = series.get(position);
+            if(series != null && films == null){
+                Serie serie = series.get(position);
 
-            if (serie != null) {
-                Object photo = serie.getPoster().get("thumb");
+                if (serie != null) {
+                    Object photo = serie.getPoster().get("thumb");
 
-                Picasso.with(QualityShowApplication.getContext())
-                        .load((String) photo)
-                        .placeholder(R.drawable.undefined_poster)
-                        .error(R.drawable.undefined_poster)
-                        .into(holder.imageView);
+                    Picasso.with(QualityShowApplication.getContext())
+                            .load((String) photo)
+                            .error(R.drawable.undefined_poster)
+                            .into(holder.imageView);
 
-                holder.setView(serie, clickListener);
+                    holder.setView(serie, clickListener);
+                }
+            } else if(films != null && series == null) {
+                Film film = films.get(position);
+
+                if (film != null) {
+                    HashMap<String, String> posters = film.getPoster();
+                    if(posters != null){
+                        Object photo = film.getPoster().get("thumb");
+
+                        Picasso.with(QualityShowApplication.getContext())
+                                .load((String) photo)
+                                .error(R.drawable.undefined_poster)
+                                .into(holder.imageView);
+
+                        holder.setView(film, clickListener);
+                    }
+                }
             }
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-        return series.size();
+        if(series != null && films == null){
+            return series.size();
+        } else if(films != null && series == null) {
+            return films.size();
+        } else {
+            return films.size() + series.size();
+        }
     }
 }

@@ -32,8 +32,6 @@ import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
-import videolibrary.street.quality.qualityshow.fragments.ExploreFragment;
-import videolibrary.street.quality.qualityshow.fragments.ProfileFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.utils.Constants;
@@ -66,9 +64,14 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         IsMovie = intent.getBooleanExtra("isMovie", true);
         user = QualityShowApplication.getUserHelper().getCurrentUser();
         boolean isSearch = intent.getBooleanExtra("isSearch", false);
+
         if((user != null) && !isSearch){
-            int serieId = intent.getIntExtra("show", -1);
-            show = user.getSerieById(serieId);
+            int showId = intent.getIntExtra("show", -1);
+            if(IsMovie){
+               // show = user.getFilmById(showId); @TODO
+            } else {
+                show = user.getSerieById(showId);
+            }
         }else {
             show = intent.getParcelableExtra("show");
         }
