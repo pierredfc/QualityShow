@@ -20,11 +20,11 @@ import videolibrary.street.quality.qualityshow.ui.holders.SeasonHolder;
 /**
  * Created by Sacael on 06/11/2015.
  */
-public class SeasonAdapter extends ArrayAdapter<Object> {
+public class SeasonAdapter extends ArrayAdapter<Saison> {
     List<Object> results;
     private ClickListener clickListener;
 
-    public SeasonAdapter(Context context,List<Object> saisons) {
+    public SeasonAdapter(Context context,List<Saison> saisons) {
         super(context,0,saisons);
     }
     @Override
@@ -50,7 +50,8 @@ public class SeasonAdapter extends ArrayAdapter<Object> {
             holder.number.setText("Season " + item.getNumber().toString());
 
             holder.episodes.setText(item.getAired_episodes().toString() + " episodes aired.");
-            holder.setView(item, clickListener);
+            if(item.getEpisodes() != null)
+                holder.setView(item, clickListener);
         }
 
         return convertView;

@@ -49,4 +49,8 @@ public class SerieHelper  {
     public void deleteSaison(Serie serie, Saison saison, SaisonListener listener){
         serieRepository.deleteSaison((int) serie.getId(), (int) saison.getId(), new SaisonCallback.DeleteSaisonCallback(listener));
     }
+
+    public void addSaisonsAndEpisodes(Serie serie){
+
+    }
 }
