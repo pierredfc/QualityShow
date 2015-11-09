@@ -70,15 +70,17 @@ public class ShowFragment extends Fragment implements RequestListener {
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
         String genres = "";
 
-        ArrayList<Category> categories = show.getGenres();
-        for(int i = 0; i < categories.size(); i++){
-            if(i == categories.size() -1){
-                genres += categories.get(i) + ".";
-            } else {
-                genres += categories.get(i) + ", ";
+        if(show.getGenres() != null){
+            ArrayList<Category> categories = show.getGenres();
+            for(int i = 0; i < categories.size(); i++){
+                if(i == categories.size() -1){
+                    genres += categories.get(i) + ".";
+                } else {
+                    genres += categories.get(i) + ", ";
+                }
             }
+            ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
         }
-        ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
 
         String aired = "";
 

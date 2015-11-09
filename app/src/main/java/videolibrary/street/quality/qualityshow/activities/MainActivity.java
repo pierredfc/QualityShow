@@ -127,9 +127,18 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     public void onItemClick(Object item) {
 
         if (item instanceof Serie) {
+            Intent intent = new Intent(this, ShowActivity.class);
+            intent.putExtra("isMovie", false);
+            if(QualityShowApplication.getUserHelper() != null){
+                intent.putExtra("isSearch", false);
+                intent.putExtra("show", (int)((Serie) item).getId());
+            }else {
+                intent.putExtra("show", (Serie) item);
+            }
 
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
+            startActivity(intent);
+//            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+//            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
 
         }
         if (item instanceof Film) {

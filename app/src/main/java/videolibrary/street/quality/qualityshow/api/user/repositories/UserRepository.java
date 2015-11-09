@@ -87,7 +87,7 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
     public void deleteSerie(int userId, int serieId, Adapter.Callback callback){
         HashMap<String, Object> params = new HashMap<>();
         params.put("userId", userId);
-        params.put("SerieId", serieId);
+        params.put("serieId", serieId);
         invokeStaticMethod("deleteSerie", params, callback);
     }
 
