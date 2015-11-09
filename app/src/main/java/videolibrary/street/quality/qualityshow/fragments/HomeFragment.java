@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onStart() {
         super.onStart();
         if(userConnected){
-            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
         }
     }
 

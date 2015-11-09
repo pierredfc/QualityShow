@@ -44,7 +44,8 @@ public class SerieCallbacks {
                 JSONObject object = null;
                 try {
                     object  = response.getJSONObject(i);
-
+                    if(object.has("categories"))
+                        object.accumulate("genres", object.get("categories"));
                     Serie serie = object != null
                             ? repository.createObject(JsonUtil.fromJson(object))
                             : null;
@@ -52,6 +53,7 @@ public class SerieCallbacks {
                         series.add(serie);
                 }catch (JSONException e){
                     Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + GetSeriesCallback.class.getSimpleName(), e);
+                    this.listener.onError(e);
                 }
                 Log.d(Constants.Log.TAG, "Series received");
                 this.listener.getSeries(series);
