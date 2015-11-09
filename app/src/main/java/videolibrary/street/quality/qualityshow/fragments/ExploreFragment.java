@@ -43,6 +43,7 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
         rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_explore, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.explore_recyclerView);
         this.showsView.setHasFixedSize(true);
+        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         checkUserConnected();
 
         itemClicked = false;
@@ -81,7 +82,6 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 showsAdapter = new ShowsAdapter(series, null, this);
                 showsView.setAdapter(showsAdapter);
-                this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             } else {
                 Intent intent = new Intent(QualityShowApplication.getContext(), ShowActivity.class);
                 intent.putExtra("isMovie", false);

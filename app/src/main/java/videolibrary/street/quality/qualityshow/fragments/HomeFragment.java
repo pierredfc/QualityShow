@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_home, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
         this.showsView.setHasFixedSize(true);
+        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         checkUserConnected();
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(R.string.agenda);
@@ -77,7 +78,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
-        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
     }
 
     @Override

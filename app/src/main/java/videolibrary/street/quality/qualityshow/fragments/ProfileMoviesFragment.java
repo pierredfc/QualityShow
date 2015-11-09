@@ -40,6 +40,7 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
         rootView = inflater.inflate(R.layout.fragment_movies_profile, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.movies_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
+        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         return rootView;
     }
@@ -70,7 +71,6 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
             QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
             showsAdapter = new ShowsAdapter(null, films, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
-            this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         }
     }
 

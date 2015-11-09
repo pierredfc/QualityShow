@@ -41,6 +41,7 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
         rootView = inflater.inflate(R.layout.fragment_shows_profile, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.shows_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
+        this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
         return rootView;
     }
@@ -71,7 +72,6 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
             QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
             showsAdapter = new ShowsAdapter(series, null, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
-            this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         }
     }
 
