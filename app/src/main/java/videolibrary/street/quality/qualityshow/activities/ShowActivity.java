@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,9 +31,6 @@ import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
-import videolibrary.street.quality.qualityshow.fragments.ExploreFragment;
-import videolibrary.street.quality.qualityshow.fragments.ProfilFragment;
-import videolibrary.street.quality.qualityshow.fragments.SettingsFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
@@ -45,9 +43,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private Object show;
     private Boolean IsMovie;
     private Boolean isFollow;
-    private ProfilFragment profilFragment;
-    private ExploreFragment exploreFragment;
-    private SettingsFragment settingsFragment;
     private ShowFragment showFragment;
     private FloatingActionButton actionButtonActivity;
     public Fragment fragment;
@@ -75,7 +70,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         if (user == null) {
             user = new User();
             user.setUsername("Anonyme");
-            actionButtonActivity.setVisibility(View.INVISIBLE);
+            CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) actionButtonActivity.getLayoutParams();
+            p.setAnchorId(View.NO_ID);
+            actionButtonActivity.setLayoutParams(p);
+            actionButtonActivity.setVisibility(View.GONE);
         } else {
             setActionButtonIcon();
             actionButtonActivity.setOnClickListener(this);

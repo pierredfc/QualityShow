@@ -169,12 +169,12 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             }
         });
 
-        closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
-        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                onBackPressed();
-            }
-        });
+        if(QualityShowApplication.getUserHelper().getCurrentUser() != null){
+            closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
+        }
+
+        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), this);
+
         return closeDialog;
     }
 
@@ -244,10 +244,15 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
-            finish();
+        if(which ==  AlertDialog.BUTTON_NEGATIVE){
+            if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
+                super.onBackPressed();
+            } else {
+                QualityShowApplication.getUserHelper().logout(this);
+            }
         } else {
-            QualityShowApplication.getUserHelper().logout(this);
+            super.onBackPressed();
         }
+
     }
 }

@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ExploreActivity;
+import videolibrary.street.quality.qualityshow.activities.LoginActivity;
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
+import videolibrary.street.quality.qualityshow.activities.SettingsActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.utils.Constants;
@@ -51,7 +53,6 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
             user.setUsername("Anonyme");
         }
 
-
         setAccountHeader();
         setDrawer();
     }
@@ -75,7 +76,7 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
 
         SecondaryDrawerItem login;
 
-        if (user.getUsername() != "Anonyme") {
+        if (QualityShowApplication.getUserHelper().getCurrentUser() == null) {
             login = new SecondaryDrawerItem().withName("Log out");
         } else {
             login = new SecondaryDrawerItem().withName("Log in");
@@ -122,13 +123,18 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                 }
                 break;
             case 5:
-            /*    if(!(drawer.getCurrentSelection() == 5)){
+                if(!(drawer.getCurrentSelection() == 5)){
                     Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
                     activity.startActivity(settingsIntent);
-                }*/
+                }
                 break;
             case 6:
-                QualityShowApplication.getUserHelper().logout(this);
+                if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
+                    Intent loginIntent = new Intent(QualityShowApplication.getContext(), LoginActivity.class);
+                    activity.startActivity(loginIntent);
+                } else {
+                    QualityShowApplication.getUserHelper().logout(this);
+                }
                 break;
             default:
                 return false;

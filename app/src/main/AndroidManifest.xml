@@ -14,7 +14,8 @@
 
         <activity
             android:name=".activities.StartActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +23,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.SignUpActivity"/>
+        <activity android:name=".activities.LoginActivity"
+            android:noHistory="true"/>
+        <activity android:name=".activities.SignUpActivity"
+            android:noHistory="true"/>
         <activity android:name=".activities.ShowActivity"
             android:theme="@style/CustomTheme"
             android:launchMode="singleTop"/>

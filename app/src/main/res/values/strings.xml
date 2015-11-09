@@ -31,6 +31,8 @@
     <string name="agenda">Agenda</string>
     <string name="explore">Explore</string>
     <string name="settings">Settings</string>
+    <string name="notifications">Notification center</string>
+    <string name="my_account">My Account</string>
 
     <!-- DRAWER -->
     <string name="drawer_open">Open</string>
@@ -44,6 +46,16 @@
     <string name="about">About</string>
     <string name="logout">Log out</string>
 
+
+    <!-- SETTINGS -->
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_account">My account</string>
+    <string name="settings_email">Email</string>
+    <string name="settings_username">Username</string>
+    <string name="settings_title">Account information</string>
+
+    <string name="settings_change_password">Change password</string>
+    <string name="settings_socail_network">Social Network</string>
 
     <!-- CLOSE DIALOG-->
     <string name="dialog_title">Warning</string>

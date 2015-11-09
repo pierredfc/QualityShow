@@ -3,7 +3,7 @@ package videolibrary.street.quality.qualityshow.fragments;
 import android.app.Fragment;
 
 /**
- * Created by Pierre on 03/11/2015.
+ * Created by Pierre on 08/11/2015.
  */
-public class SettingsFragment extends Fragment {
+public class NotificationFragment extends Fragment {
 }

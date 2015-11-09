@@ -54,10 +54,8 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onStart() {
         super.onStart();
-        if (userConnected) {
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_TRENDING, "");
-        }
+        RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+        requestAsyncTask.execute(Requests.SERIE_TRENDING, "");
     }
 
     private void checkUserConnected() {
