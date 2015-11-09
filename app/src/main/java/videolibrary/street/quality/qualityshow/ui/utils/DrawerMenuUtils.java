@@ -76,9 +76,9 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
         SecondaryDrawerItem login;
 
         if (QualityShowApplication.getUserHelper().getCurrentUser() == null) {
-            login = new SecondaryDrawerItem().withName("Log out");
-        } else {
             login = new SecondaryDrawerItem().withName("Log in");
+        } else {
+            login = new SecondaryDrawerItem().withName("Log out");
         }
 
         drawer = new DrawerBuilder().withActivity(activity).withToolbar(toolbar)
