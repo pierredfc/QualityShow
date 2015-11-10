@@ -11,17 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener, FilmListener {
 
     public SwipeRefreshLayout rootView;
     private RecyclerView showsView;
@@ -29,6 +32,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     boolean userConnected;
 
     private ShowsAdapter showsAdapter;
+
+    private List<Serie> userSerie;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,8 +52,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onStart() {
         super.onStart();
         if(userConnected){
-            User user = QualityShowApplication.getUserHelper().getCurrentUser();
-            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            //QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
         }
     }
 
@@ -79,6 +84,23 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void getSeries(ArrayList<Serie> series) {
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
+        showsView.setAdapter(showsAdapter);
+    }
+
+    @Override
+    public void filmIsAdded(Film film) {
+
+    }
+
+    @Override
+    public void filmIsDeleted() {
+
+    }
+
+    @Override
+    public void getFilms(ArrayList<Film> films) {
+        QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
+        showsAdapter = new ShowsAdapter(null, films, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
     }
 

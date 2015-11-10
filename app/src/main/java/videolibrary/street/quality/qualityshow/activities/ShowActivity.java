@@ -35,6 +35,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.FilmHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
@@ -180,7 +181,21 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void filmIsAdded(Film film) {
-
+        FilmHelper helper = new FilmHelper(getApplicationContext());
+        if(((Film) show).getGenres() != null){
+            JSONArray array = new JSONArray(((Film) show).getGenres());
+            CategoryRepository repository = new CategoryRepository();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    String cate = array.getString(i);
+                    Category category = new Category();
+                    category.setName(cate);
+                    helper.addCategorie(film, category, this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -318,9 +333,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             }
         } else {
             if(!isFollow){
-                //   this.addFilmToUser();
-                isFollow = true;
-                changeIcons();
+                if(this.addFilmToUser()){
+                    isFollow = true;
+                    changeIcons();
+                }
             } else {
                 //unFollow le film
                 isFollow = false;
@@ -360,17 +376,17 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         }
     }
 
-    private void addFilmToUser(){
+    private boolean addFilmToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
 
-        //@Todo
-        /*if (!userHelper.filmIsExist((Film)this.show)) {
+
+        if (!userHelper.filmIsExist((Film)this.show)) {
             userHelper.addFilm(user,(Film)this.show, this);
+            return true;
         } else {
-
-
-        }*/
+            return false;
+        }
     }
 
     private void setActionButtonIcon(){

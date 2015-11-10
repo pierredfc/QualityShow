@@ -163,6 +163,27 @@ public class UserHelper implements CategoryListener{
         return false;
     }
 
+    public boolean filmIsExist(Film film){
+        String filmSlug;
+        try {
+            filmSlug = String.valueOf(film.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Film> films = user.getFilms();
+            if(films != null){
+                for (Film tmpSerie : films) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(filmSlug)){
+                        return true;
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return false;
+    }
+
+
     @Override
     public void categorieIsAdded(Category category) {
 

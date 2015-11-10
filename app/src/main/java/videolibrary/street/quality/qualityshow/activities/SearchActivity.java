@@ -111,8 +111,10 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
             }
             else if(response.get(0) instanceof Film){
                 Intent intent = new Intent(this, ShowActivity.class);
+                intent.putExtra("isSearch", true);
                 intent.putExtra("isMovie",true);
                 intent.putExtra("show",(Film)response.get(0));
+                startActivity(intent);
             }else if((response.get(0) instanceof Saison) && this.selectedSerie != null){
                 for (Object o : response){
                     Saison s = (Saison)o;
@@ -127,8 +129,7 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
                     this.episodeAdded++;
                     this.episodeAddedToCurrentSaison++;
                 }
-            }
-            if((this.selectedSerie.getSaisons() != null) &&(this.episodeAddedToCurrentSaison == this.selectedSerie.getSaisons().get(this.currentSaison).getEpisode_count())){
+            }else if((this.selectedSerie.getSaisons() != null) &&(this.episodeAddedToCurrentSaison == this.selectedSerie.getSaisons().get(this.currentSaison).getEpisode_count())){
                 this.currentSaison++;
                 this.episodeAddedToCurrentSaison = 0;
             }

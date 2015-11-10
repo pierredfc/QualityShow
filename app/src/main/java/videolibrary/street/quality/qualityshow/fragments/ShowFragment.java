@@ -148,7 +148,7 @@ public class ShowFragment extends Fragment {
         String genres = "";
 
         ArrayList<Category> categories = show.getGenres();
-        if (categories != null) {
+        if (categories != null && show.getCategories() == null) {
             for(int i = 0; i < categories.size(); i++){
                 if(i == categories.size() -1){
                     genres += categories.get(i) + ".";
@@ -157,8 +157,32 @@ public class ShowFragment extends Fragment {
                 }
             }
             ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
-        }
+        }else if(show.getCategories() != null) {
+            categories = show.getGenres();
+            for (int i = 0; i < categories.size(); i++) {
+                if (i == categories.size() - 1) {
+                    String test = "";
+                    test += categories.get(i);
+                    try {
+                        JSONObject object = new JSONObject(test);
+                        genres += object.getString("name") + ". ";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    String test = "";
+                    test += categories.get(i);
+                    try {
+                        JSONObject object = new JSONObject(test);
+                        genres += object.getString("name") + ", ";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
+                }
+            }
+            ((TextView) rootView.findViewById(R.id.s_genres)).setText(genres);
+        }
         ((TextView) rootView.findViewById(R.id.s_aired)).setText(String.valueOf(show.getYear()));
         ((TextView) rootView.findViewById(R.id.title_seasons)).setVisibility(View.GONE);
     }

@@ -62,6 +62,10 @@ public class FilmsCallbacks {
                     Film film = object != null
                             ? repository.createObject(JsonUtil.fromJson(object))
                             : null;
+                    if(film != null){
+                        if(film.getCategories() != null)
+                            film.setGenres(film.getCategories());
+                    }
                     films.add(film);
                 } catch (JSONException e) {
                     e.printStackTrace();

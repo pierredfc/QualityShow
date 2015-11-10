@@ -35,7 +35,7 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
 
         String clasName = getClassName();
 
-        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:id/films", "GET"), clasName + ".getFilms");
+        contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:filmId/films", "GET"), clasName + ".getFilms");
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films", "POST"), clasName + ".addFilm");
         contract.addItem(new RestContractItem("/" + getNameForRestUrl() + "/:userId/films/:filmId", "DELETE"), clasName + ".deleteFilm");
 
@@ -48,7 +48,7 @@ public class UserRepository extends com.strongloop.android.loopback.UserReposito
 
     public void getFilms(int userId, boolean categories, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", userId);
+        params.put("filmId", userId);
         if(categories)
             params.put("filter[include]", "categories");
         invokeStaticMethod("getFilms", params, callback);
