@@ -25,6 +25,7 @@ public class Film extends Model implements Parcelable {
     private HashMap<String, Integer> ids;
 
     private ArrayList<Category> genres;
+    private ArrayList<Category> categories;
 
     public ArrayList<Category> getGenres() {
         return genres;
@@ -104,6 +105,14 @@ public class Film extends Model implements Parcelable {
 
     public void setIds(HashMap<String, Integer> ids) {
         this.ids = ids;
+    }
+
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
     }
 
     @Override

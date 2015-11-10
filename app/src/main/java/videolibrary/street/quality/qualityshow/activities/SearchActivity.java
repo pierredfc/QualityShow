@@ -113,9 +113,9 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
             }
             else if(response.get(0) instanceof Film){
                 Intent intent = new Intent(this, ShowActivity.class);
+                intent.putExtra("isSearch", true);
                 intent.putExtra("isMovie",true);
                 intent.putExtra("show",(Film)response.get(0));
-                startActivity(intent);
             }
         }
 

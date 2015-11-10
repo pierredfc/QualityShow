@@ -19,25 +19,34 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.strongloop.android.remoting.JsonUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.FilmHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.async.ShowAdderAsyncTask;
+import videolibrary.street.quality.qualityshow.api.user.repositories.CategoryRepository;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.AdderListener;
@@ -48,7 +57,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener, AdderListener,RequestListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener, AdderListener,RequestListener,CategoryListener {
     private Toolbar toolbar;
     private User user;
     private Object show;
@@ -176,7 +185,21 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void filmIsAdded(Film film) {
-
+        FilmHelper helper = new FilmHelper(getApplicationContext());
+        if(((Film) show).getGenres() != null){
+            JSONArray array = new JSONArray(((Film) show).getGenres());
+            CategoryRepository repository = new CategoryRepository();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    String cate = array.getString(i);
+                    Category category = new Category();
+                    category.setName(cate);
+                    helper.addCategorie(film, category, this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -194,6 +217,20 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         SerieHelper helper = new SerieHelper(getApplicationContext());
         for (Saison s : ((Serie) show).getSaisons()){
             helper.addSaison(serie, s, this);
+        }
+        if(((Serie) show).getGenres() != null){
+            JSONArray array = new JSONArray(((Serie) show).getGenres());
+            CategoryRepository repository = new CategoryRepository();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    String cate = array.getString(i);
+                    Category category = new Category();
+                    category.setName(cate);
+                    helper.addCategorie(serie, category, this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         this.userSerie = serie;
     }
@@ -257,6 +294,21 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     }
 
     @Override
+    public void categorieIsAdded(Category category) {
+        Toast.makeText(getApplicationContext(), "categorie added", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getCategories(ArrayList<Category> categories) {
+
+    }
+
+    @Override
+    public void categorieIsDeleted() {
+
+    }
+
+    @Override
     public void onError(Throwable t) {
         Log.e(Constants.Log.TAG, Constants.Log.ERROR_MSG + getClass().getSimpleName(), t);
     }
@@ -279,19 +331,22 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
                     changeIcons();
                 }
             } else {
-                this.deleteSerieToUser();
-                isFollow = false;
-                changeIcons();
+                if(this.deleteSerieToUser()){
+                    isFollow = false;
+                    changeIcons();
+                }
             }
         } else {
             if(!isFollow){
-                //   this.addFilmToUser();
-                isFollow = true;
-                changeIcons();
+                if(this.addFilmToUser()){
+                    isFollow = true;
+                    changeIcons();
+                }
             } else {
-                //unFollow le film
-                isFollow = false;
-                changeIcons();
+                if(this.deleteFilmToUser()){
+                    isFollow = false;
+                    changeIcons();
+                }
             }
         }
     }
@@ -321,7 +376,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (userHelper.serieIsExist((Serie)this.show)) {
-            userHelper.deleteSerie(user, (int)((Serie) this.show).getId(), this);
+            userHelper.deleteSerie(user, (int) ((Serie) this.show).getId(), this);
             return true;
         } else {
             return false;
@@ -331,13 +386,24 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private boolean addFilmToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-        if (!userHelper.movieIsExist((Film)this.show)) {
+        if (!userHelper.filmIsExist((Film)this.show)) {
+            userHelper.addFilm(user, (Film) this.show, this);
             ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
-            showAdderAsyncTask.execute(String.valueOf(((Film)show).getIds().get("trakt")),"movie");
+            showAdderAsyncTask.execute(String.valueOf(((Film) show).getIds().get("trakt")), "movie");
             return true;
         } else {
             return false;
+        }
+    }
 
+    private boolean deleteFilmToUser(){
+        UserHelper userHelper = QualityShowApplication.getUserHelper();
+        User user = userHelper.getCurrentUser();
+        if (userHelper.filmIsExist((Film) this.show)) {
+            userHelper.deleteFilm(user, (int)((Film) this.show).getId(), this);
+            return true;
+        } else {
+            return false;
         }
     }
 

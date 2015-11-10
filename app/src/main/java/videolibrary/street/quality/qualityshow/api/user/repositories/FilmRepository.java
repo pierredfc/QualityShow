@@ -27,8 +27,8 @@ public class FilmRepository extends ModelRepository<Film> {
         String className = getClassName();
         String restUrl = getNameForRestUrl();
 
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "GET"), className + ".getGenres");
-        contract.addItem(new RestContractItem("/" + restUrl + "/:id/categories", "POST"), className + ".addCategory");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:filmId/categories", "GET"), className + ".getGenres");
+        contract.addItem(new RestContractItem("/" + restUrl + "/:filmId/categories", "POST"), className + ".addCategory");
         contract.addItem(new RestContractItem("/" + restUrl + "/:filmId/categories/:categoryId", "DELETE"), className + ".deleteCategory");
 
         return contract;
@@ -36,13 +36,13 @@ public class FilmRepository extends ModelRepository<Film> {
 
     public void getCategories(int filmId, Adapter.JsonArrayCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", filmId);
+        params.put("filmId", filmId);
         invokeStaticMethod("getGenres", params, callback);
     }
 
     public void addCategory(int filmId, Category category, Adapter.JsonObjectCallback callback){
         HashMap<String, Object> params = new HashMap<>();
-        params.put("id", filmId);
+        params.put("filmId", filmId);
         params.putAll(category.toMap());
         invokeStaticMethod("addCategory", params, callback);
     }
