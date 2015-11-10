@@ -44,50 +44,86 @@ public class EpisodeFragment extends Fragment implements RequestListener {
     Integer serieId;
     View rootView;
     RecyclerView resultsView;
+    List<Episode> episodes = null;
+
     public void setSerieId(Integer serieId) {
         this.serieId = serieId;
     }
 
+    public void setEpisodes(ArrayList<Episode> episodes) {
+        episodes = episodes;
+    }
 
 
     public void setSeason(Saison season) {
         this.season = season;
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ShowActivity showActivity=(ShowActivity)getActivity();
+        ShowActivity showActivity = (ShowActivity) getActivity();
         rootView = inflater.inflate(R.layout.fragment_season, container, false);
-        resultsView = (RecyclerView)rootView.findViewById(R.id.season_episodes);
+        resultsView = (RecyclerView) rootView.findViewById(R.id.season_episodes);
         resultsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if(season!=null) {
-            SeasonRequestAsyncTask seasonRequestAsyncTask = new SeasonRequestAsyncTask(this);
-            seasonRequestAsyncTask.execute(String.valueOf(serieId), String.valueOf(season.getNumber()));
+        if (season != null) {
+            if (episodes != null) {
+                buildRecyclerFromEpisodes(episodes);
+            } else {
+                SeasonRequestAsyncTask seasonRequestAsyncTask = new SeasonRequestAsyncTask(this);
+                seasonRequestAsyncTask.execute(String.valueOf(serieId), String.valueOf(season.getNumber()));
+            }
         }
         return rootView;
     }
 
+    private void buildRecycler(List<Object> episodes) {
+        ArrayList<ParentObject> parentObjects = new ArrayList<>();
+        for (Object o : episodes) {
+            Episode e = (Episode) o;
+            EpisodeParentObject ep = new EpisodeParentObject();
+            ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
+            ArrayList<Object> childList = new ArrayList<>();
+            String over = e.getOverview();
+            if (over == null) {
+                over = "No description for this episode available";
+            }
+            childList.add(new EpisodeChild(over, false));
+            ep.setChildObjectList(childList);
+            parentObjects.add(ep);
+        }
+        if (getActivity() != null) {
+            EpisodeExpandableAdapter episodeExpandableAdapter = new EpisodeExpandableAdapter(getActivity(), parentObjects);
+            episodeExpandableAdapter.setParentAndIconExpandOnClick(true);
+            resultsView.setAdapter(episodeExpandableAdapter);
+        }
+    }
+
+    private void buildRecyclerFromEpisodes(List<Episode> episodes) {
+        ArrayList<ParentObject> parentObjects = new ArrayList<>();
+        for (Object o : episodes) {
+            Episode e = (Episode) o;
+            EpisodeParentObject ep = new EpisodeParentObject();
+            ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
+            ArrayList<Object> childList = new ArrayList<>();
+            String over = e.getOverview();
+            if (over == null) {
+                over = "No description for this episode available";
+            }
+            childList.add(new EpisodeChild(over, false));
+            ep.setChildObjectList(childList);
+            parentObjects.add(ep);
+        }
+        if (getActivity() != null) {
+            EpisodeExpandableAdapter episodeExpandableAdapter = new EpisodeExpandableAdapter(getActivity(), parentObjects);
+            episodeExpandableAdapter.setParentAndIconExpandOnClick(true);
+            resultsView.setAdapter(episodeExpandableAdapter);
+        }
+    }
+
     @Override
     public void onResponseReceived(List<Object> response) {
-        if( response != null && response.size() > 0){
-            ArrayList<ParentObject> parentObjects = new ArrayList<>();
-            for(Object o: response){
-                Episode e = (Episode)o;
-                EpisodeParentObject ep= new EpisodeParentObject();
-                ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
-                ArrayList<Object> childList=new ArrayList<>();
-                String over = e.getOverview();
-                if( over==null){
-                    over="No description for this episode available";
-                }
-                childList.add(new EpisodeChild(over,false));
-                ep.setChildObjectList(childList);
-                parentObjects.add(ep);
-            }
-            if (getActivity()!=null) {
-                EpisodeExpandableAdapter episodeExpandableAdapter = new EpisodeExpandableAdapter(getActivity(), parentObjects);
-                episodeExpandableAdapter.setParentAndIconExpandOnClick(true);
-                resultsView.setAdapter(episodeExpandableAdapter);
-            }
+        if (response != null && response.size() > 0) {
+            buildRecycler(response);
         }
     }
 }

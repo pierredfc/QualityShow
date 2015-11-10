@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,7 @@ import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Airs;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -44,7 +47,7 @@ public class ShowFragment extends Fragment implements RequestListener {
     ListView resultsView;
     View rootView;
     Object show;
-
+    ArrayList<Saison> seasons;
     public void setShow(Object show) {
         this.show = show;
     }
@@ -56,8 +59,7 @@ public class ShowFragment extends Fragment implements RequestListener {
 
         if (show instanceof Serie){
             Serie serie = (Serie) show;
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_SEASONS, (serie.getIds().get("trakt")).toString());
+            Collections.sort(((Serie) show).getSaisons(),new ComparateurSaison());
             fillView(serie);
 
         } else if(show instanceof Film){
@@ -134,7 +136,10 @@ public class ShowFragment extends Fragment implements RequestListener {
         }
 
         ((TextView) rootView.findViewById(R.id.s_aired)).setText(aired);
-
+        SeasonAdapter seasonAdapter = new SeasonAdapter((ShowActivity) getActivity(),show.getSaisons());
+        resultsView.setAdapter(seasonAdapter);
+        justifyListViewHeightBasedOnChildren(resultsView);
+        resultsView.setOnItemClickListener((ShowActivity) getActivity());
     }
 
 
@@ -186,10 +191,7 @@ public class ShowFragment extends Fragment implements RequestListener {
     @Override
     public void onResponseReceived(List<Object> response) {
         if( response != null && response.size() > 0){
-            SeasonAdapter seasonAdapter = new SeasonAdapter((ShowActivity) getActivity(),response);
-            resultsView.setAdapter(seasonAdapter);
-            justifyListViewHeightBasedOnChildren(resultsView);
-            resultsView.setOnItemClickListener((ShowActivity) getActivity());
+
         }
 
     }
@@ -212,5 +214,18 @@ public class ShowFragment extends Fragment implements RequestListener {
         par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         listView.setLayoutParams(par);
         listView.requestLayout();
+    }
+}
+class ComparateurSaison implements Comparator<Saison> {
+
+    @Override
+    public int compare(Saison saison, Saison t1) {
+        if (saison.getNumber().compareTo(t1.getNumber()) == -1) {
+            return -1;
+        } else if (saison.getNumber().compareTo(t1.getNumber()) == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -20,11 +21,11 @@ import videolibrary.street.quality.qualityshow.ui.holders.SeasonHolder;
 /**
  * Created by Sacael on 06/11/2015.
  */
-public class SeasonAdapter extends ArrayAdapter<Object> {
-    List<Object> results;
+public class SeasonAdapter extends ArrayAdapter<Saison> {
+    ArrayList<Saison> results;
     private ClickListener clickListener;
 
-    public SeasonAdapter(Context context,List<Object> saisons) {
+    public SeasonAdapter(Context context,ArrayList<Saison> saisons) {
         super(context,0,saisons);
     }
     @Override

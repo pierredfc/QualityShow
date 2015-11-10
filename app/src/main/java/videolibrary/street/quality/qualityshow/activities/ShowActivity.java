@@ -45,6 +45,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListene
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.async.ShowAdderAsyncTask;
 import videolibrary.street.quality.qualityshow.api.user.repositories.CategoryRepository;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
@@ -53,6 +54,7 @@ import videolibrary.street.quality.qualityshow.listeners.AdderListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.utils.Constants;
+import videolibrary.street.quality.qualityshow.utils.Requests;
 
 /**
  * Created by Sacael on 04/11/2015.
@@ -68,6 +70,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private ShowFragment showFragment;
     private FloatingActionButton actionButtonActivity;
     public Fragment fragment;
+    private EpisodeFragment episodeFragment;
 
     private Menu menu;
 
@@ -128,6 +131,16 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             Serie serie = (Serie) show;
             p = serie.getFanart().get("thumb");
             getSupportActionBar().setTitle(serie.getTitle());
+            UserHelper userHelper = QualityShowApplication.getUserHelper();
+            User user = userHelper.getCurrentUser();
+            if (userHelper.serieIsExist((Serie)this.show)) {
+                SerieHelper serieHelper = new SerieHelper(this);
+                serieHelper.getSaisons((Serie)this.show,false,this);
+            }
+            else{
+                RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+                requestAsyncTask.execute(Requests.SERIE_SEASONS, (serie.getIds().get("trakt")).toString());
+            }
         }
 
         String image = (String) p;
@@ -139,12 +152,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             Picasso.with(QualityShowApplication.getContext()).load(image).into(imagev);
         }
 
-        showFragment = new ShowFragment();
-        showFragment.setShow(show);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.show_frame_container, showFragment);
-        transaction.commit();
-        fragment = showFragment;
+
     }
 
     @Override
@@ -185,21 +193,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void filmIsAdded(Film film) {
-        FilmHelper helper = new FilmHelper(getApplicationContext());
-        if(((Film) show).getGenres() != null){
-            JSONArray array = new JSONArray(((Film) show).getGenres());
-            CategoryRepository repository = new CategoryRepository();
-            for (int i = 0; i < array.length(); i++) {
-                try {
-                    String cate = array.getString(i);
-                    Category category = new Category();
-                    category.setName(cate);
-                    helper.addCategorie(film, category, this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override
@@ -214,25 +207,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void serieIsAdded(Serie serie) {
-        SerieHelper helper = new SerieHelper(getApplicationContext());
-        for (Saison s : ((Serie) show).getSaisons()){
-            helper.addSaison(serie, s, this);
-        }
-        if(((Serie) show).getGenres() != null){
-            JSONArray array = new JSONArray(((Serie) show).getGenres());
-            CategoryRepository repository = new CategoryRepository();
-            for (int i = 0; i < array.length(); i++) {
-                try {
-                    String cate = array.getString(i);
-                    Category category = new Category();
-                    category.setName(cate);
-                    helper.addCategorie(serie, category, this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        this.userSerie = serie;
+
     }
 
     @Override
@@ -248,20 +223,17 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void saisonIsAdded(Saison saison) {
-        for (Saison s : ((Serie) show).getSaisons()) {
-            if(String.valueOf(s.getIds().get("trakt")).equals(String.valueOf(saison.getIds().get("trakt")))){
-                SaisonHelper saisonHelper = new SaisonHelper(getApplicationContext());
-                for (Episode e : s.getEpisodes()){
-                    saisonHelper.addEpisode(saison, e, this);
-                }
-            }
-        }
-        this.userSerie.addSaison(saison);
     }
 
     @Override
     public void getSaisons(ArrayList<Saison> saisons) {
-
+        ((Serie)show).setSaisons(saisons);
+        showFragment = new ShowFragment();
+        showFragment.setShow(show);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.show_frame_container, showFragment);
+        transaction.commit();
+        fragment = showFragment;
     }
 
     @Override
@@ -271,16 +243,16 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void episodeIsAdded(Episode episode) {
-        for (Saison s : this.userSerie.getSaisons()) {
-            if(((int)s.getId()) == ((int) episode.getSaisonid())){
-                s.addEpisode(episode);
-            }
-        }
     }
 
     @Override
     public void getEpisodes(ArrayList<Episode> episodes) {
-
+        episodeFragment.setEpisodes(episodes);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.show_frame_container, episodeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        fragment = episodeFragment;
     }
 
     @Override
@@ -441,14 +413,24 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Object item = adapterView.getItemAtPosition(i);
         if (item instanceof Saison) {
-                EpisodeFragment episodeFragment = new EpisodeFragment();
-                episodeFragment.setSeason((Saison) item);
-                episodeFragment.setSerieId(((Serie)this.show).getIds().get("trakt"));
+            episodeFragment = new EpisodeFragment();
+            episodeFragment.setSeason((Saison) item);
+            episodeFragment.setSerieId(((Serie) this.show).getIds().get("trakt"));
+            UserHelper userHelper = QualityShowApplication.getUserHelper();
+            User user = userHelper.getCurrentUser();
+            if (userHelper.serieIsExist((Serie)this.show)) {
+
+                SaisonHelper saisonHelper = new SaisonHelper(QualityShowApplication.getContext());
+                saisonHelper.getEpisodes((Saison)item,this);
+
+            }
+            else {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.show_frame_container, episodeFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 fragment = episodeFragment;
+            }
         }
     }
 
@@ -471,7 +453,18 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void onResponseReceived(List<Object> response) {
-
+        ArrayList<Saison> saisons= new ArrayList<>();
+        for(Object s :response)
+        {
+            saisons.add((Saison)s);
+        }
+        ((Serie)show).setSaisons(saisons);
+        showFragment = new ShowFragment();
+        showFragment.setShow(show);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.show_frame_container, showFragment);
+        transaction.commit();
+        fragment = showFragment;
     }
 }
 
