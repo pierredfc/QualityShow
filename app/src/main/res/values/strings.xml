@@ -7,27 +7,28 @@
     <string name="login_information">LOGIN</string>
 
 
-    <string name="no_account">Continuer sans compte</string>
+    <string name="no_account">No account mode</string>
 
-    <string name="sign_in">Connectez-vous</string>
-    <string name="ask_account">Déjà un compte ?</string>
+    <string name="sign_in">Log in</string>
+    <string name="ask_account">Already an account ?</string>
     <string name="logo">logo</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
     </string>
-    <string name="add_watch">Suivre</string>
-    <string name="search_title">Rechercher</string>
+    <string name="add_watch">Follow</string>
+    <string name="search_title">Search</string>
     <string name="search_hint">Search</string>
-    <string name="no_result">Pas de résultats.</string>
+    <string name="no_result">No results found.</string>
     <string name="slogan">EASY. TO. FOLLOW</string>
     <string name="search_prefs">Search</string>
     <string name="search_prefs_queue">Search queue</string>
+    <string name="synopsys">Synopsys</string>
 
 
     <!-- Fragment and Activity's titles-->
-    <string name="sign_up">S\'inscrire</string>
-    <string name="sign_in_activity">Se connecter</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in_activity">Sign in</string>
     <string name="agenda">Agenda</string>
     <string name="explore">Explore</string>
     <string name="settings">Settings</string>
