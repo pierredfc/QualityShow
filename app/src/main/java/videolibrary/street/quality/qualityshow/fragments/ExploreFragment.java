@@ -35,8 +35,6 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private RecyclerView showsView;
 
     boolean userConnected;
-    boolean itemClicked;
-
     private ShowsAdapter showsAdapter;
 
     @Override
@@ -46,8 +44,6 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         checkUserConnected();
-
-        itemClicked = false;
 
         ((ExploreActivity) getActivity()).getSupportActionBar().setTitle(R.string.explore);
 
@@ -77,40 +73,40 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onResponseReceived(List<Object> response) {
         if (response != null) {
-            if(!itemClicked){
-                Serie[] array_series = response.toArray(new Serie[response.size()]);
-                List<Serie> series = Arrays.asList(array_series);
+            Serie[] array_series = response.toArray(new Serie[response.size()]);
+            List<Serie> series = Arrays.asList(array_series);
 
-                showsAdapter = new ShowsAdapter(series, null, this);
-                showsView.setAdapter(showsAdapter);
-            } if(response.get(0) instanceof  Serie) {
-                Intent intent = new Intent(QualityShowApplication.getContext(), ShowActivity.class);
-                intent.putExtra("isSearch", true);
-                intent.putExtra("isMovie", false);
-                intent.putExtra("show", (Serie) response.get(0));
-                startActivity(intent);
-            }
-            else if(response.get(0) instanceof Film){
-                Intent intent = new Intent(QualityShowApplication.getContext(),ShowActivity.class);
-                intent.putExtra("isMovie",true);
-                intent.putExtra("show",(Film)response.get(0));
-                startActivity(intent);
-            }
-            }
+            showsAdapter = new ShowsAdapter(series, null, this);
+            showsView.setAdapter(showsAdapter);
         }
+    }
 
     @Override
     public void onItemClick(Object item) {
-        if (item instanceof Serie) {
+        if(item instanceof  Serie) {
+            Intent intent = new Intent(QualityShowApplication.getContext(), ShowActivity.class);
+            intent.putExtra("isSearch", true);
+            intent.putExtra("isMovie", false);
+            intent.putExtra("show", (Serie) item);
+            startActivity(intent);
+        } else if(item instanceof Film){
+            Intent intent = new Intent(QualityShowApplication.getContext(),ShowActivity.class);
+            intent.putExtra("isSearch", true);
+            intent.putExtra("isMovie", true);
+            intent.putExtra("show", (Film) item);
+            startActivity(intent);
+        }
 
+
+       /* if (item instanceof Serie) {
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
             requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
-
         }
+
         if (item instanceof Film) {
             RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
             requestAsyncTask.execute(Requests.MOVIE_FIND, String.valueOf(((Film) item).getIds().get("slug")));
 
-        }
+        }*/
     }
 }

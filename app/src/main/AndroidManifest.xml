@@ -14,8 +14,7 @@
 
         <activity
             android:name=".activities.StartActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:noHistory="true">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
