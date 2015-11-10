@@ -204,11 +204,11 @@ public class ShowAdder implements SerieListener,FilmListener,RequestListener,Sai
                     this.episodeAddedToCurrentSaison++;
                 }
             }
-            if((this.selectedSerie.getSaisons() != null) &&(this.episodeAddedToCurrentSaison == this.selectedSerie.getSaisons().get(this.currentSaison).getEpisode_count())){
+            if((this.selectedSerie!=null)&&(this.selectedSerie.getSaisons() != null) &&(this.episodeAddedToCurrentSaison == this.selectedSerie.getSaisons().get(this.currentSaison).getEpisode_count())){
                 this.currentSaison++;
                 this.episodeAddedToCurrentSaison = 0;
             }
-            if((this.episodeAdded == this.airedEpisodeSerie) && (this.episodeAdded != 0)){
+            if((this.selectedSerie!=null)&&(this.episodeAdded == this.airedEpisodeSerie) && (this.episodeAdded != 0)){
                 QualityShowApplication.getUserHelper().addSerie(QualityShowApplication.getUserHelper().getCurrentUser(), selectedSerie, this);
             }
         }

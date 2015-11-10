@@ -87,6 +87,8 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         IsMovie = intent.getBooleanExtra("isMovie", true);
         user = QualityShowApplication.getUserHelper().getCurrentUser();
         boolean isSearch = intent.getBooleanExtra("isSearch", false);
+        UserHelper userHelper = QualityShowApplication.getUserHelper();
+        User user = userHelper.getCurrentUser();
 
         if((user != null) && !isSearch){
             int showId = intent.getIntExtra("show", -1);
@@ -95,8 +97,16 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             } else {
                 show = user.getSerieById(showId);
             }
-        }else {
+
+        } else{
             show = intent.getParcelableExtra("show");
+            if (!IsMovie && userHelper.serieIsExist((Serie)this.show)) {
+                show=userHelper.getUserSerie((Serie)show);
+                isFollow = true;
+            } else if (IsMovie && userHelper.filmIsExist((Film) this.show)) {
+                show=userHelper.getUserFilm((Film) show);
+                isFollow = true;
+            }
         }
 
 
@@ -131,9 +141,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             Serie serie = (Serie) show;
             p = serie.getFanart().get("thumb");
             getSupportActionBar().setTitle(serie.getTitle());
-            UserHelper userHelper = QualityShowApplication.getUserHelper();
-            User user = userHelper.getCurrentUser();
-            if (userHelper.serieIsExist((Serie)this.show)) {
+        if (userHelper.serieIsExist((Serie)this.show)) {
                 SerieHelper serieHelper = new SerieHelper(this);
                 serieHelper.getSaisons((Serie)this.show,false,this);
             }
@@ -151,7 +159,15 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         } else {
             Picasso.with(QualityShowApplication.getContext()).load(image).into(imagev);
         }
+        if(IsMovie){
+            showFragment = new ShowFragment();
+            showFragment.setShow(show);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.add(R.id.show_frame_container, showFragment);
+            transaction.commit();
+            fragment = showFragment;
 
+        }
 
     }
 
@@ -359,7 +375,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (!userHelper.filmIsExist((Film)this.show)) {
-            userHelper.addFilm(user, (Film) this.show, this);
             ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
             showAdderAsyncTask.execute(String.valueOf(((Film) show).getIds().get("trakt")), "movie");
             return true;

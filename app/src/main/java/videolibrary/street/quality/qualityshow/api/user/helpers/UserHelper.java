@@ -162,6 +162,23 @@ public class UserHelper implements CategoryListener{
         }
         return false;
     }
+    public Serie getUserSerie(Serie serie){
+        String serieSlug;
+        try {
+            serieSlug = String.valueOf(serie.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Serie> series = user.getSeries();
+            for (Serie tmpSerie : series) {
+                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                if (tmpSlug.equals(serieSlug)){
+                    return tmpSerie;
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return null;
+    }
     public boolean movieIsExist(Film film){
         String movieSlug;
         try {
@@ -178,6 +195,23 @@ public class UserHelper implements CategoryListener{
             throw e;
         }
         return false;
+    }
+    public Film getUserFilm(Film film){
+        String movieSlug;
+        try {
+            movieSlug = String.valueOf(film.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Film> series = user.getFilms();
+            for (Film tmpSerie : series) {
+                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                if (tmpSlug.equals(movieSlug)){
+                    return tmpSerie;
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return null;
     }
 
     public boolean filmIsExist(Film film){
