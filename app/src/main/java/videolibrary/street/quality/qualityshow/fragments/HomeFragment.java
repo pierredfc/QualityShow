@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.vlonjatg.progressactivity.ProgressActivity;
-
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -133,6 +132,26 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 List<Episode> episodes = saison.getEpisodes();
                 for (int i = aired_episodes; i < episodes.size(); i++) {
                     Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired());
+                }
+                HashMap<String, String> airs = serie.getAirs();
+                Log.d("Calendar", serie.getTitle() + ": " + airs.get("day") + ", " + airs.get("time") + " - " + airs.get("timezone") + ".");
+
+                // get today and clear time of day
+                Calendar cal = Calendar.getInstance(Locale.FRANCE);
+                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+                cal.clear(Calendar.MINUTE);
+                cal.clear(Calendar.SECOND);
+                cal.clear(Calendar.MILLISECOND);
+
+                // get start of this week in milliseconds
+                cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+                long millis = cal.getTimeInMillis();
+                Log.d("Calendar", "Start of this week: " + cal.getTime() + " -> " + cal.getTimeInMillis());
+                long air = millis + getMillisOfDay(airs.get("day")) + getMillisOfTime(airs.get("time"));
+                Log.d("Calendar", "Airs: " + air);
+
+                if (air > System.currentTimeMillis()) {
+                    Log.d("Calendar", "Show not yet aired !");
                 }
             }
         }
