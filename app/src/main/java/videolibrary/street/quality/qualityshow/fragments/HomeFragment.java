@@ -24,7 +24,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener, FilmListener {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {
 
     public SwipeRefreshLayout rootView;
     private RecyclerView showsView;
@@ -53,7 +53,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onStart();
         if(userConnected){
             QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
-            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
         }
     }
 
@@ -84,23 +83,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void getSeries(ArrayList<Serie> series) {
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
-        showsView.setAdapter(showsAdapter);
-    }
-
-    @Override
-    public void filmIsAdded(Film film) {
-
-    }
-
-    @Override
-    public void filmIsDeleted() {
-
-    }
-
-    @Override
-    public void getFilms(ArrayList<Film> films) {
-        QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
-        showsAdapter = new ShowsAdapter(null, films, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
     }
 
