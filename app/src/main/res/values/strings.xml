@@ -4,10 +4,66 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="sign_up">S\'inscrire</string>
+    <string name="login_information">LOGIN</string>
+
+
     <string name="no_account">Continuer sans compte</string>
 
     <string name="sign_in">Connectez-vous</string>
     <string name="ask_account">Déjà un compte ?</string>
     <string name="logo">logo</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+    </string>
+    <string name="add_watch">Suivre</string>
+    <string name="search_title">Rechercher</string>
+    <string name="search_hint">Search</string>
+    <string name="no_result">Pas de résultats.</string>
+    <string name="slogan">EASY. TO. FOLLOW</string>
+    <string name="search_prefs">Search</string>
+    <string name="search_prefs_queue">Search queue</string>
+
+
+    <!-- Fragment and Activity's titles-->
+    <string name="sign_up">S\'inscrire</string>
+    <string name="sign_in_activity">Se connecter</string>
+    <string name="agenda">Agenda</string>
+    <string name="explore">Explore</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notification center</string>
+    <string name="my_account">My Account</string>
+
+    <!-- DRAWER -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- PARCELABLE -->
+    <string name="parcelable">Parcelable</string>
+    <string name="query">Query</string>
+
+    <!-- MENU -->
+    <string name="about">About</string>
+    <string name="logout">Log out</string>
+
+
+    <!-- SETTINGS -->
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_account">My account</string>
+    <string name="settings_email">Email</string>
+    <string name="settings_username">Username</string>
+    <string name="settings_title">Account information</string>
+
+    <string name="settings_change_password">Change password</string>
+    <string name="settings_socail_network">Social Network</string>
+
+    <!-- CLOSE DIALOG-->
+    <string name="dialog_title">Warning</string>
+    <string name="dialog_message">What do you want to do ?</string>
+    <string name="dialog_cancel_choice">Cancel</string>
+    <string name="dialog_logout_choice">Log out</string>
+    <string name="dialog_quit_choice">Quit</string>
+
+    <!-- ABOUT -->
+    <string name="about_text">© Quality Street</string>
 </resources>

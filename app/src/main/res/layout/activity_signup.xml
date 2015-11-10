@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFEF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <com.vlonjatg.progressactivity.ProgressActivity
+            android:id="@+id/sign_up_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            progressActivity:loadingBackgroundColor="#FFFFFF"
+            progressActivity:emptyBackgroundColor="#FFFFFF"
+            progressActivity:errorBackgroundColor="#FFFFFF">
+
+        </com.vlonjatg.progressactivity.ProgressActivity>
+    </RelativeLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:textColor="#000"
+        android:hint="Email"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColorHint="#000" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/nameText"
+        android:layout_below="@+id/emailText"
+        android:layout_centerHorizontal="true"
+        android:hint="Username"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColorHint="#000"
+        android:textColor="#000"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/pwdText"
+        android:layout_below="@+id/nameText"
+        android:layout_alignStart="@+id/nameText"
+        android:hint="Password"
+        android:textColorHint="#000"
+        android:textColor="#000"
+        android:fontFamily="sans-serif"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="S&apos;inscrire"
+        android:id="@+id/signUpButton"
+        android:layout_below="@+id/pwdText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:background="@color/purple"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+</RelativeLayout>

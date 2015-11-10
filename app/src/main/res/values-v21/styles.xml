@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+
+    <style name="AppTheme" parent="android:Theme.Material">
+
     </style>
+
+
+    <style name="Theme.NoActionBar" parent="android:Theme.Material">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MyBtnStyle" parent="android:Theme.Material">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:background">@color/purple</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
+    <style name="MyETStyle" parent="android:Theme.Material">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:background">#fff</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

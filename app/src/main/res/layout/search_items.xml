@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayQ">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="98dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/search_image_view" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="#fff">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom de la série"
+                android:id="@+id/search_name_view"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year"
+                android:id="@+id/search_year_view"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/grayQ" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_right"
+                android:id="@+id/arrow_icon"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

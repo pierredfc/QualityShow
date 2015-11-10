@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple">#4A148C</color>
-    <color name="background_gray">#1C1C1C</color>
+    <color name="purple">#673AB7</color>
+    <color name="d_purple">#512DA8</color>
+    <color name="accent_purple">#9C27B0</color>
+    <color name="background_gray">#EFEFEF</color>
+    <color name="grayQ">#212121</color>
+    <color name="greenQ">#8BC34A</color>
+    <color name="title_gray">#626260</color>
+    <color name="border_gray">#DEDEDE</color>
 </resources>

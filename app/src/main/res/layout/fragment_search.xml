@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_search"
+    android:theme="@style/CustomTheme"
+    android:background="@color/background_gray">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_result"
+        android:id="@+id/no_result_found"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_resultsView"
+        android:divider="#eeeeee"
+        android:scrollbars="none"
+        android:dividerHeight="1dp"
+        android:textFilterEnabled="false" >
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
