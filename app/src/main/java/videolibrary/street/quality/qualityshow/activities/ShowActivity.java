@@ -437,11 +437,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             UserHelper userHelper = QualityShowApplication.getUserHelper();
             User user = userHelper.getCurrentUser();
 
-            if (user != null){
-                if(userHelper.serieIsExist((Serie)this.show)) {
+            if(user != null && userHelper.serieIsExist((Serie)this.show)) {
                     SaisonHelper saisonHelper = new SaisonHelper(QualityShowApplication.getContext());
                     saisonHelper.getEpisodes((Saison)item, this);
-                }
             }
             else {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
