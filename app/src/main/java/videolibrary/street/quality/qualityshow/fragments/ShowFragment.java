@@ -112,28 +112,9 @@ public class ShowFragment extends Fragment implements RequestListener {
             ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
         }
 
-        String aired = "";
 
-        HashMap<String, Airs> aired_map =  show.getAirs();
-
-        Iterator it = aired_map.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry) it.next();
-            aired += pair.getValue();
-            switch(pair.getKey().toString()){
-                case "day":
-                    aired += ", ";
-                    break;
-                case "time":
-                    aired += " - ";
-                    break;
-                case "timezone":
-                    aired += ".";
-                    break;
-                default:
-                    break;
-            }
-        }
+        HashMap<String, String> airsMap = show.getAirs();
+        String aired = airsMap.get("day") + ", " + airsMap.get("time") + " - " + airsMap.get("timezone") + ".";
 
         ((TextView) rootView.findViewById(R.id.s_aired)).setText(aired);
         SeasonAdapter seasonAdapter = new SeasonAdapter((ShowActivity) getActivity(),show.getSaisons());

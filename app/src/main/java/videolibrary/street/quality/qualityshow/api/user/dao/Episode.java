@@ -18,6 +18,8 @@ public class Episode extends Model implements Parcelable {
     private Boolean see;
     private HashMap<String, Screenshot> screenshot;
     private HashMap<String, Ids> ids;
+    private String first_aired;
+
 
     public String getTitle() {
         return title;
@@ -75,7 +77,17 @@ public class Episode extends Model implements Parcelable {
         this.see = see;
     }
 
-    public Episode(){ }
+    public String getFirst_aired() {
+        return first_aired;
+    }
+
+    public void setFirst_aired(String first_aired) {
+        this.first_aired = first_aired;
+    }
+
+    public Episode() {
+    }
+
 
     protected Episode(Parcel in) {
         title = in.readString();
@@ -86,6 +98,7 @@ public class Episode extends Model implements Parcelable {
         see = seeVal == 0x02 ? null : seeVal != 0x00;
         screenshot = (HashMap) in.readValue(HashMap.class.getClassLoader());
         ids = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        first_aired = in.readString();
     }
 
     @Override
@@ -116,6 +129,7 @@ public class Episode extends Model implements Parcelable {
         }
         dest.writeValue(screenshot);
         dest.writeValue(ids);
+        dest.writeString(first_aired);
     }
 
     @SuppressWarnings("unused")
