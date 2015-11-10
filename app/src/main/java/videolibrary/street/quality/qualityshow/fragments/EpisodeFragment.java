@@ -39,7 +39,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 /**
  * Created by Sacael on 06/11/2015.
  */
-public class EpisodeFragment extends Fragment{
+public class EpisodeFragment extends Fragment implements RequestListener {
     Saison season;
     Integer serieId;
     View rootView;
@@ -60,8 +60,17 @@ public class EpisodeFragment extends Fragment{
         resultsView = (RecyclerView)rootView.findViewById(R.id.season_episodes);
         resultsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if(season!=null) {
+            SeasonRequestAsyncTask seasonRequestAsyncTask = new SeasonRequestAsyncTask(this);
+            seasonRequestAsyncTask.execute(String.valueOf(serieId), String.valueOf(season.getNumber()));
+        }
+        return rootView;
+    }
+
+    @Override
+    public void onResponseReceived(List<Object> response) {
+        if( response != null && response.size() > 0){
             ArrayList<ParentObject> parentObjects = new ArrayList<>();
-            for(Object o: season.getEpisodes()){
+            for(Object o: response){
                 Episode e = (Episode)o;
                 EpisodeParentObject ep= new EpisodeParentObject();
                 ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
@@ -80,6 +89,5 @@ public class EpisodeFragment extends Fragment{
                 resultsView.setAdapter(episodeExpandableAdapter);
             }
         }
-        return rootView;
     }
 }

@@ -18,6 +18,7 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ExploreActivity;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -82,20 +83,34 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 showsAdapter = new ShowsAdapter(series, null, this);
                 showsView.setAdapter(showsAdapter);
-            } else {
+            } if(response.get(0) instanceof  Serie) {
                 Intent intent = new Intent(QualityShowApplication.getContext(), ShowActivity.class);
+                intent.putExtra("isSearch", true);
                 intent.putExtra("isMovie", false);
                 intent.putExtra("show", (Serie) response.get(0));
                 startActivity(intent);
-                itemClicked = false;
+            }
+            else if(response.get(0) instanceof Film){
+                Intent intent = new Intent(QualityShowApplication.getContext(),ShowActivity.class);
+                intent.putExtra("isMovie",true);
+                intent.putExtra("show",(Film)response.get(0));
+                startActivity(intent);
+            }
             }
         }
-    }
 
     @Override
     public void onItemClick(Object item) {
-        itemClicked = true;
-        RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-        requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
+        if (item instanceof Serie) {
+
+            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
+
+        }
+        if (item instanceof Film) {
+            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
+            requestAsyncTask.execute(Requests.MOVIE_FIND, String.valueOf(((Film) item).getIds().get("slug")));
+
+        }
     }
 }

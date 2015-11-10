@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
@@ -36,15 +37,18 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListene
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.async.ShowAdderAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
+import videolibrary.street.quality.qualityshow.listeners.AdderListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
+import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener, AdderListener,RequestListener {
     private Toolbar toolbar;
     private User user;
     private Object show;
@@ -306,7 +310,8 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (!userHelper.serieIsExist((Serie)this.show)) {
-            userHelper.addSerie(user, (Serie) this.show, this);
+            ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
+            showAdderAsyncTask.execute(String.valueOf(((Serie)show).getIds().get("trakt")),"serie");
             return true;
         } else {
             return false;
@@ -323,17 +328,17 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         }
     }
 
-    private void addFilmToUser(){
+    private boolean addFilmToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-
-        //@Todo
-        /*if (!userHelper.filmIsExist((Film)this.show)) {
-            userHelper.addFilm(user,(Film)this.show, this);
+        if (!userHelper.movieIsExist((Film)this.show)) {
+            ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
+            showAdderAsyncTask.execute(String.valueOf(((Film)show).getIds().get("trakt")),"movie");
+            return true;
         } else {
+            return false;
 
-
-        }*/
+        }
     }
 
     private void setActionButtonIcon(){
@@ -370,7 +375,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Object item = adapterView.getItemAtPosition(i);
         if (item instanceof Saison) {
-            if(((Saison) item).getEpisodes() != null){
                 EpisodeFragment episodeFragment = new EpisodeFragment();
                 episodeFragment.setSeason((Saison) item);
                 episodeFragment.setSerieId(((Serie)this.show).getIds().get("trakt"));
@@ -379,7 +383,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
                 transaction.addToBackStack(null);
                 transaction.commit();
                 fragment = episodeFragment;
-            }
         }
     }
 
@@ -395,5 +398,14 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         }
     }
 
+    @Override
+    public void onshowAdded(Boolean response) {
+
+    }
+
+    @Override
+    public void onResponseReceived(List<Object> response) {
+
+    }
 }
 

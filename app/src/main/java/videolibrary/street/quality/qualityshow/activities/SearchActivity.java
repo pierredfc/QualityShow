@@ -105,38 +105,16 @@ public class SearchActivity extends AppCompatActivity implements ClickListener, 
     public void onResponseReceived(List<Object> response) {
         if(response.size() > 0){
             if(response.get(0) instanceof  Serie) {
-                this.selectedSerie = (Serie) response.get(0);
-                requestAsyncTask.execute(Requests.SERIE_SEASONS, (this.selectedSerie.getIds().get("trakt")).toString());
-
+                Intent intent = new Intent(this, ShowActivity.class);
+                intent.putExtra("isSearch", true);
+                intent.putExtra("isMovie", false);
+                intent.putExtra("show", (Serie) response.get(0));
+                startActivity(intent);
             }
             else if(response.get(0) instanceof Film){
                 Intent intent = new Intent(this, ShowActivity.class);
                 intent.putExtra("isMovie",true);
                 intent.putExtra("show",(Film)response.get(0));
-            }else if((response.get(0) instanceof Saison) && this.selectedSerie != null){
-                for (Object o : response){
-                    Saison s = (Saison)o;
-                    this.airedEpisodeSerie += s.getEpisode_count();
-                    this.selectedSerie.addSaison(s);
-                    SeasonRequestAsyncTask seasonRequestAsyncTask = new SeasonRequestAsyncTask(this);
-                    seasonRequestAsyncTask.execute(String.valueOf(this.selectedSerie.getIds().get("trakt")), String.valueOf(s.getNumber()));
-                }
-            }else if(response.get(0) instanceof Episode){
-                for(Object o : response){
-                    this.selectedSerie.getSaisons().get(this.currentSaison).addEpisode((Episode) o);
-                    this.episodeAdded++;
-                    this.episodeAddedToCurrentSaison++;
-                }
-            }
-            if((this.selectedSerie.getSaisons() != null) &&(this.episodeAddedToCurrentSaison == this.selectedSerie.getSaisons().get(this.currentSaison).getEpisode_count())){
-                this.currentSaison++;
-                this.episodeAddedToCurrentSaison = 0;
-            }
-            if((this.episodeAdded == this.airedEpisodeSerie) && (this.episodeAdded != 0)){
-                Intent intent = new Intent(this, ShowActivity.class);
-                intent.putExtra("isSearch", true);
-                intent.putExtra("isMovie", false);
-                intent.putExtra("show", (Serie) this.selectedSerie);
                 startActivity(intent);
             }
         }

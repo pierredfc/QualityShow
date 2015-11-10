@@ -20,11 +20,11 @@ import videolibrary.street.quality.qualityshow.ui.holders.SeasonHolder;
 /**
  * Created by Sacael on 06/11/2015.
  */
-public class SeasonAdapter extends ArrayAdapter<Saison> {
+public class SeasonAdapter extends ArrayAdapter<Object> {
     List<Object> results;
     private ClickListener clickListener;
 
-    public SeasonAdapter(Context context,List<Saison> saisons) {
+    public SeasonAdapter(Context context,List<Object> saisons) {
         super(context,0,saisons);
     }
     @Override
