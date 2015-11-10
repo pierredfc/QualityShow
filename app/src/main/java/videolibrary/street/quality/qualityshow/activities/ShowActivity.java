@@ -19,11 +19,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.strongloop.android.remoting.JsonUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
@@ -32,10 +38,12 @@ import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
+import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
+import videolibrary.street.quality.qualityshow.api.user.repositories.CategoryRepository;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -44,7 +52,7 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 /**
  * Created by Sacael on 04/11/2015.
  */
-public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener {
+public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener, CategoryListener {
     private Toolbar toolbar;
     private User user;
     private Object show;
@@ -191,6 +199,20 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         for (Saison s : ((Serie) show).getSaisons()){
             helper.addSaison(serie, s, this);
         }
+        if(((Serie) show).getGenres() != null){
+            JSONArray array = new JSONArray(((Serie) show).getGenres());
+            CategoryRepository repository = new CategoryRepository();
+            for (int i = 0; i < array.length(); i++) {
+                try {
+                    String cate = array.getString(i);
+                    Category category = new Category();
+                    category.setName(cate);
+                    helper.addCategorie(serie, category, this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         this.userSerie = serie;
     }
 
@@ -249,6 +271,21 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void episodeIsUpdated() {
+
+    }
+
+    @Override
+    public void categorieIsAdded(Category category) {
+        Toast.makeText(getApplicationContext(), "categorie added", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getCategories(ArrayList<Category> categories) {
+
+    }
+
+    @Override
+    public void categorieIsDeleted() {
 
     }
 

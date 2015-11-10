@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,13 +78,38 @@ public class ShowFragment extends Fragment {
         ((TextView)rootView.findViewById(R.id.synopsis)).setText(show.getOverview());
         String genres = "";
 
-        if(show.getGenres() != null){
+        if(show.getGenres() != null && show.getCategories() == null){
             ArrayList<Category> categories = show.getGenres();
             for(int i = 0; i < categories.size(); i++){
                 if(i == categories.size() -1){
                     genres += categories.get(i) + ".";
                 } else {
                     genres += categories.get(i) + ", ";
+                }
+            }
+            ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);
+        }else if(show.getCategories() != null){
+            ArrayList<Category> categories = show.getGenres();
+            for(int i = 0; i < categories.size(); i++){
+                if(i == categories.size() -1){
+                    String test = "";
+                    test += categories.get(i);
+                    try {
+                        JSONObject object = new JSONObject(test);
+                        genres += object.getString("name") + ". ";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    String test = "";
+                    test += categories.get(i);
+                    try {
+                        JSONObject object = new JSONObject(test);
+                        genres += object.getString("name") + ", ";
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
             ((TextView)rootView.findViewById(R.id.s_genres)).setText(genres);

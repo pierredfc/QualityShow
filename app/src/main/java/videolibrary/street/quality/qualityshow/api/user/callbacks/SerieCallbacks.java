@@ -48,12 +48,12 @@ public class SerieCallbacks {
                 JSONObject object = null;
                 try {
                     object  = response.getJSONObject(i);
-                    if(object.has("categories"))
-                        object.accumulate("genres", object.get("categories"));
                     Serie serie = object != null
                             ? repository.createObject(JsonUtil.fromJson(object))
                             : null;
                     if (serie != null){
+                        if(serie.getCategories() != null)
+                            serie.setGenres(serie.getCategories());
                         JSONArray array = object.getJSONArray("saisons");
                         if (array != null){
                             serie.setSaisons(new ArrayList<Saison>());
