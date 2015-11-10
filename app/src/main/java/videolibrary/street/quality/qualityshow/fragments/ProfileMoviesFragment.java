@@ -49,7 +49,7 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     public void onStart() {
         super.onStart();
         if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
         }
     }
 
