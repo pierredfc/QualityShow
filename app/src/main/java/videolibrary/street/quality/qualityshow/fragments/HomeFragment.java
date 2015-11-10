@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vlonjatg.progressactivity.ProgressActivity;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +42,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {
 
-    public SwipeRefreshLayout rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
 
     boolean userConnected;
@@ -51,7 +53,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_home, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -67,6 +69,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onStart();
         if(userConnected){
             QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            rootView.showLoading();
         }
     }
 
@@ -98,6 +101,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
+        rootView.showContent();
         getNextAir(series);
     }
 
