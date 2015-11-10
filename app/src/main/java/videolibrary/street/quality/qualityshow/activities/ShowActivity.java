@@ -327,9 +327,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
                     changeIcons();
                 }
             } else {
-                this.deleteSerieToUser();
-                isFollow = false;
-                changeIcons();
+                if(this.deleteSerieToUser()){
+                    isFollow = false;
+                    changeIcons();
+                }
             }
         } else {
             if(!isFollow){
@@ -338,9 +339,10 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
                     changeIcons();
                 }
             } else {
-                //unFollow le film
-                isFollow = false;
-                changeIcons();
+                if(this.deleteFilmToUser()){
+                    isFollow = false;
+                    changeIcons();
+                }
             }
         }
     }
@@ -369,7 +371,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (userHelper.serieIsExist((Serie)this.show)) {
-            userHelper.deleteSerie(user, (int)((Serie) this.show).getId(), this);
+            userHelper.deleteSerie(user, (int) ((Serie) this.show).getId(), this);
             return true;
         } else {
             return false;
@@ -379,10 +381,19 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
     private boolean addFilmToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
-
-
         if (!userHelper.filmIsExist((Film)this.show)) {
-            userHelper.addFilm(user,(Film)this.show, this);
+            userHelper.addFilm(user, (Film) this.show, this);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean deleteFilmToUser(){
+        UserHelper userHelper = QualityShowApplication.getUserHelper();
+        User user = userHelper.getCurrentUser();
+        if (userHelper.filmIsExist((Film) this.show)) {
+            userHelper.deleteFilm(user, (int)((Film) this.show).getId(), this);
             return true;
         } else {
             return false;
