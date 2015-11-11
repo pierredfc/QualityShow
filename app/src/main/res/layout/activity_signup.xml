@@ -4,11 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
+    android:background="@color/background_gray"
     android:id="@+id/sign_up_progress"
-    progressActivity:loadingBackgroundColor="#FFFFFF"
-    progressActivity:emptyBackgroundColor="#FFFFFF"
-    progressActivity:errorBackgroundColor="#FFFFFF">
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
 
     <EditText
         android:layout_width="match_parent"

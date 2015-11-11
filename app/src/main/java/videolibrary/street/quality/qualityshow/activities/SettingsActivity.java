@@ -104,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
                 .withActivity(this)
                 .withHeaderBackground(R.color.grayQ)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail())
+                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail()).withIcon(R.drawable.iconprofile)
                 )
                 .withSelectionListEnabledForSingleProfile(false)
                 .build();

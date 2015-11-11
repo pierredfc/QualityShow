@@ -30,8 +30,8 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 /**
  * Created by Pierre on 03/11/2015.
  */
-public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestListener, ClickListener {
-    public SwipeRefreshLayout rootView;
+public class ExploreFragment extends Fragment implements RequestListener, ClickListener {
+    public View rootView;
     private RecyclerView showsView;
 
     boolean userConnected;
@@ -39,7 +39,7 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_explore, container, false);
+        rootView = inflater.inflate(R.layout.fragment_explore, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.explore_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -63,11 +63,6 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } else {
             userConnected = true;
         }
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 
     @Override

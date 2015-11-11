@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
+    android:background="@color/background_gray"
     android:id="@+id/login_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/CustomTheme"
-    progressActivity:loadingBackgroundColor="#FFFFFF"
-    progressActivity:emptyBackgroundColor="#FFFFFF"
-    progressActivity:errorBackgroundColor="#FFFFFF">
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
 
 
     <LinearLayout

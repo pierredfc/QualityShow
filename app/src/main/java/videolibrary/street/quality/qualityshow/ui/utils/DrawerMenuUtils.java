@@ -61,7 +61,7 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                 .withActivity(activity)
                 .withHeaderBackground(R.color.grayQ)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail())
+                        new ProfileDrawerItem().withName(user.getUsername()).withEmail(user.getEmail()).withIcon(R.drawable.iconprofile)
                 )
                 .withSelectionListEnabledForSingleProfile(false)
                 .build();
