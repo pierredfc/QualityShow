@@ -108,11 +108,35 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="15dp"
         android:textStyle=""
+        android:id="@+id/trailer"
         android:layout_gravity="left"
         android:text="@string/trailer"
         android:textSize="11dp"
         android:textAllCaps="true"
         android:textColor="@color/title_gray" />
+    <RelativeLayout
+        android:id="@+id/webvideo_layout2"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        >
 
+
+        <ImageView
+            android:id="@+id/img_thumnail"
+            android:layout_width="250dp"
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/iv_play_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@android:drawable/ic_media_play" />
+    </RelativeLayout>
 
 </LinearLayout>

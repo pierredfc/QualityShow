@@ -1,7 +1,9 @@
 package videolibrary.street.quality.qualityshow.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -19,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,11 +47,12 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 /**
  * Created by Sacael on 05/11/2015.
  */
-public class ShowFragment extends Fragment implements RequestListener {
+public class ShowFragment extends Fragment implements RequestListener,View.OnClickListener {
 
     ListView resultsView;
     View rootView;
     Object show;
+    String videoId;
     ArrayList<Saison> seasons;
     public void setShow(Object show) {
         this.show = show;
@@ -65,6 +71,33 @@ public class ShowFragment extends Fragment implements RequestListener {
         } else if(show instanceof Film){
             Film film = (Film)show;
             fillView(film);
+        }
+
+
+        try
+        {   if(show instanceof Serie){
+            videoId=extractYoutubeId(((Serie) show).getTrailer());
+            }
+            else{
+            videoId=extractYoutubeId(((Film) show).getTrailer());
+        }
+
+
+            String img_url="http://img.youtube.com/vi/"+videoId+"/0.jpg"; // this is link which will give u thumnail image of that video
+
+            // picasso jar file download image for u and set image in imagview
+
+            Picasso.with(QualityShowApplication.getContext())
+                    .load(img_url)
+                    .placeholder(R.drawable.ic_action_add)
+                    .into((ImageView) rootView.findViewById(R.id.img_thumnail));
+            ((RelativeLayout)rootView.findViewById(R.id.webvideo_layout2)).setOnClickListener(this);
+
+        }
+        catch (MalformedURLException e)
+        {
+           rootView.findViewById(R.id.webvideo_layout2).setVisibility(View.GONE);
+            rootView.findViewById(R.id.trailer).setVisibility(View.GONE);
         }
 
         return rootView;
@@ -195,6 +228,24 @@ public class ShowFragment extends Fragment implements RequestListener {
         par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         listView.setLayoutParams(par);
         listView.requestLayout();
+    }
+    public String extractYoutubeId(String url) throws MalformedURLException {
+        String query = new URL(url).getQuery();
+        String[] param = query.split("&");
+        String id = null;
+        for (String row : param) {
+            String[] param1 = row.split("=");
+            if (param1[0].equals("v")) {
+                id = param1[1];
+            }
+        }
+        return id;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + videoId));
+        startActivity(intent);
     }
 }
 class ComparateurSaison implements Comparator<Saison> {
