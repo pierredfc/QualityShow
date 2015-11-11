@@ -128,7 +128,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 int aired_episodes = saison.getAired_episodes();
                 List<Episode> episodes = saison.getEpisodes();
                 for (int i = aired_episodes; i < episodes.size(); i++) {
-                    Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired());
+                    if (episodes.get(i).getFirst_aired(i) != null) {
+                        Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired());
+                    }
                 }
             }
         }
