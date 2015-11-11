@@ -63,7 +63,7 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
     }
 
     public void setEpisodes(ArrayList<Episode> episodes) {
-        episodes = episodes;
+        this.episodes = episodes;
     }
 
 
@@ -109,7 +109,7 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
             {
                 e.setSee(false);
             }
-            childList.add(new EpisodeChild(over, date,e.getSee(),e));
+            childList.add(new EpisodeChild(over, date, e.getSee(), e));
             ep.setChildObjectList(childList);
             parentObjects.add(ep);
         }
@@ -191,12 +191,11 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
             SaisonHelper saisonHelper = new SaisonHelper(QualityShowApplication.getContext());
             CheckBox cb = (CheckBox) view;
             if (cb.isChecked()) {
-                saisonHelper.addEpisode(season, ((EpisodeChild) cb.getTag()).getEpisode(), this);
+                saisonHelper.setSeeEpisode(season, ((EpisodeChild) cb.getTag()).getEpisode(), true, this);
             } else {
-                saisonHelper.deleteEpisode(season, ((EpisodeChild) cb.getTag()).getEpisode(), this);
+                saisonHelper.setSeeEpisode(season, ((EpisodeChild) cb.getTag()).getEpisode(), false, this);
             }
             ((EpisodeChild) cb.getTag()).setSeen(cb.isChecked());
-            ((EpisodeChild) cb.getTag()).getEpisode().setSee(cb.isChecked());
         }
     }
 }

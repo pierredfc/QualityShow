@@ -12,7 +12,6 @@ public class EpisodeChild {
     private String date;
     private boolean seen;
 
-
     public boolean isSeen() {
         return seen;
     }

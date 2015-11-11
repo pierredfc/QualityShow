@@ -66,7 +66,7 @@ public class EpisodeExpandableAdapter extends ExpandableRecyclerAdapter<EpisodeP
 
     @Override
     public void onBindChildViewHolder(final EpisodeChildHolder episodeChildHolder, int i, Object o) {
-        EpisodeChild episodeChild=(EpisodeChild) o;
+        EpisodeChild episodeChild = (EpisodeChild) o;
         episodeChildHolder.synopsys.setText(episodeChild.getOverview());
         episodeChildHolder.date_episode.setText(episodeChild.getDate());
         episodeChildHolder.episodeSeen.setChecked(episodeChild.isSeen());

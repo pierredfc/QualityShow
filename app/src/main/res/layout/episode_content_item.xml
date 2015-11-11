@@ -41,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:padding="15dp"
         android:id="@+id/date_episode"
-        android:background="@drawable/bordertext"
+        android:background="@drawable/bordertext" 
         android:drawableLeft="@drawable/ic_access_time"
         android:drawablePadding="5dp"/>
 
