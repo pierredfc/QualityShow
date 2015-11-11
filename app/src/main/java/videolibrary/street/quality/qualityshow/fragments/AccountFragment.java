@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.activities.AboutActivity;
 import videolibrary.street.quality.qualityshow.activities.LoginActivity;
 import videolibrary.street.quality.qualityshow.activities.SettingsActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
@@ -53,11 +52,7 @@ public class AccountFragment extends Fragment {
         });
 
 
-
         ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_account);
-/*
-        ((SettingsActivity) getActivity()).getDrawer().getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
-        ((SettingsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         return rootView;
     }

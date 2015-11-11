@@ -17,7 +17,7 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.utils.CitationHelper;
+import videolibrary.street.quality.qualityshow.helpers.CitationHelper;
 
 public class StartActivity extends Activity implements View.OnClickListener, UserListener {
 
@@ -48,7 +48,7 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
 
             switch(button.getId()){
                 case R.id.no_account_button:
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, ExploreActivity.class));
                     break;
                 case R.id.sign_up_button:
                     startActivity(new Intent(this, SignUpActivity.class));
