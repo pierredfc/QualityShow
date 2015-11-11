@@ -17,6 +17,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
@@ -68,8 +69,14 @@ public class EpisodeExpandableAdapter extends ExpandableRecyclerAdapter<EpisodeP
         EpisodeChild episodeChild = (EpisodeChild) o;
         episodeChildHolder.synopsys.setText(episodeChild.getOverview());
         episodeChildHolder.date_episode.setText(episodeChild.getDate());
-        episodeChildHolder.episodeSeen.setChecked(episodeChild.isSeen());
-        episodeChildHolder.episodeSeen.setOnClickListener(clickListener);
-        episodeChildHolder.episodeSeen.setTag(episodeChild);
+
+        if(QualityShowApplication.getUserHelper().getCurrentUser() != null){
+            episodeChildHolder.episodeSeen.setChecked(episodeChild.isSeen());
+            episodeChildHolder.episodeSeen.setOnClickListener(clickListener);
+            episodeChildHolder.episodeSeen.setTag(episodeChild);
+            episodeChildHolder.episodeSeen.setVisibility(View.VISIBLE);
+        } else {
+            episodeChildHolder.episodeSeen.setVisibility(View.GONE);
+        }
     }
 }
