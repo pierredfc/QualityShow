@@ -5,7 +5,9 @@ package videolibrary.street.quality.qualityshow.ui.holders;
  */
 public class EpisodeChild {
     private String overview;
+    private String date;
     private boolean seen;
+
 
     public boolean isSeen() {
         return seen;
@@ -16,7 +18,6 @@ public class EpisodeChild {
     }
 
     public String getOverview() {
-
         return overview;
     }
 
@@ -24,8 +25,17 @@ public class EpisodeChild {
         this.overview = overview;
     }
 
-    public EpisodeChild(String overview,boolean seen){
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public EpisodeChild(String overview, String date, boolean seen){
         this.overview=overview;
+        this.date = date;
         this.seen=seen;
     }
 }

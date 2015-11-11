@@ -87,7 +87,13 @@ public class EpisodeFragment extends Fragment implements RequestListener {
             if (over == null) {
                 over = "No description for this episode available";
             }
-            childList.add(new EpisodeChild(over, false));
+            String date = e.getFirst_aired();
+            if(date == null){
+                date = "No output date available.";
+            } else {
+                date = date.split("[T]")[0];
+            }
+            childList.add(new EpisodeChild(over, date, false));
             ep.setChildObjectList(childList);
             parentObjects.add(ep);
         }
@@ -109,7 +115,13 @@ public class EpisodeFragment extends Fragment implements RequestListener {
             if (over == null) {
                 over = "No description for this episode available";
             }
-            childList.add(new EpisodeChild(over, false));
+            String date = e.getFirst_aired();
+            if(date == null){
+                date = "No output date available.";
+            } else {
+                date = date.split("[T]")[0];
+            }
+            childList.add(new EpisodeChild(over, date, false));
             ep.setChildObjectList(childList);
             parentObjects.add(ep);
         }

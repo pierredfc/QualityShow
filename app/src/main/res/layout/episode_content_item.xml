@@ -4,14 +4,47 @@
     android:layout_height="wrap_content"
     android:background="@color/background_gray">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:textStyle=""
+        android:layout_gravity="left"
+        android:text="Overview"
+        android:textSize="11dp"
+        android:textAllCaps="true"
+        android:textColor="@color/title_gray"
+        android:id="@+id/overview_title" />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/synopsys"
-        android:layout_margin="15dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
         android:textColor="@android:color/black"
-        android:id="@+id/synopsys_episode" />
+        android:id="@+id/synopsys_episode"
+        android:background="@drawable/bordertext"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="11dp"
+        android:textAllCaps="true"
+        android:text="Ceci est un test"
+        android:textColor="@color/title_gray"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:id="@+id/date_episode"
+        android:background="@drawable/bordertext"
+        android:drawableLeft="@drawable/ic_access_time"
+        android:drawablePadding="5dp"/>
+
 
     <CheckBox
         android:id="@+id/child_list_item_episode_viewd_check_box"
@@ -20,8 +53,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:text="Seen"
-        android:layout_gravity="right"
+        android:layout_gravity="center"
         android:textColor="@android:color/black"
-        android:shadowColor="@android:color/holo_purple" />
+        android:shadowColor="@color/purple" />
 
 </LinearLayout>

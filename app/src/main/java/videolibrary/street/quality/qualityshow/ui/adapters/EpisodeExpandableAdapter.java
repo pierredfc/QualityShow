@@ -1,5 +1,6 @@
 package videolibrary.street.quality.qualityshow.ui.adapters;
 
+import android.util.Log;
 import android.widget.BaseExpandableListAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -54,13 +55,17 @@ public class EpisodeExpandableAdapter extends ExpandableRecyclerAdapter<EpisodeP
     @Override
     public void onBindParentViewHolder(EpisodeParentHolder episodeParentHolder, int i, Object o) {
         EpisodeParentObject episode = (EpisodeParentObject) o;
-        episodeParentHolder.episodeTitle.setText(episode.getTitle());
+
+        String[] tokens = episode.getTitle().split("[:]");
+        episodeParentHolder.numeroEpisode.setText(tokens[0]);
+        episodeParentHolder.episodeTitle.setText(tokens[1]);
     }
 
     @Override
     public void onBindChildViewHolder(EpisodeChildHolder episodeChildHolder, int i, Object o) {
         EpisodeChild episodeChild=(EpisodeChild) o;
         episodeChildHolder.synopsys.setText(episodeChild.getOverview());
+        episodeChildHolder.date_episode.setText(episodeChild.getDate());
         episodeChildHolder.episodeSeen.setChecked(episodeChild.isSeen());
     }
 }
