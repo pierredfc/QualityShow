@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -106,74 +107,35 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void getNextAir(ArrayList<Serie> series) {
         for (Serie serie : series) {
-//            HashMap<String, String> airs = serie.getAirs();
-//            Log.d("Calendar", serie.getTitle() + ": " + airs.get("day") + ", " + airs.get("time") + " - " + airs.get("timezone") + ".");
-//
-//            // get today and clear time of day
-//            Calendar cal = Calendar.getInstance(Locale.FRANCE);
-//            cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-//            cal.clear(Calendar.MINUTE);
-//            cal.clear(Calendar.SECOND);
-//            cal.clear(Calendar.MILLISECOND);
-//
-//            // get start of this week in milliseconds
-//            cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-//            long millis = cal.getTimeInMillis();
-//            Log.d("Calendar", "Start of this week: " + cal.getTime() + " -> " + cal.getTimeInMillis());
-//            long air = millis + getMillisOfDay(airs.get("day")) + getMillisOfTime(airs.get("time"));
-//            Log.d("Calendar", "Airs: " + air);
-//
-//            if (air > System.currentTimeMillis()) {
-//                Log.d("Calendar", "Show not yet aired !");
-//            }
-
             for (Saison saison : serie.getSaisons()) {
                 int aired_episodes = saison.getAired_episodes();
                 List<Episode> episodes = saison.getEpisodes();
                 for (int i = aired_episodes; i < episodes.size(); i++) {
-                    Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired());
-                }
-                HashMap<String, String> airs = serie.getAirs();
-                Log.d("Calendar", serie.getTitle() + ": " + airs.get("day") + ", " + airs.get("time") + " - " + airs.get("timezone") + ".");
+                    if (episodes.get(i).getFirst_aired() != null) {
+                        Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired() + " in " + getDayDiff(episodes.get(i).getFirst_aired()) + " days");
 
-                // get today and clear time of day
-                Calendar cal = Calendar.getInstance(Locale.FRANCE);
-                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
-                cal.clear(Calendar.MINUTE);
-                cal.clear(Calendar.SECOND);
-                cal.clear(Calendar.MILLISECOND);
-
-                // get start of this week in milliseconds
-                cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-                long millis = cal.getTimeInMillis();
-                Log.d("Calendar", "Start of this week: " + cal.getTime() + " -> " + cal.getTimeInMillis());
-                long air = millis + getMillisOfDay(airs.get("day")) + getMillisOfTime(airs.get("time"));
-                Log.d("Calendar", "Airs: " + air);
-
-                if (air > System.currentTimeMillis()) {
-                    Log.d("Calendar", "Show not yet aired !");
+                    }
                 }
             }
         }
     }
 
-    private static long getMillisOfDay(String day){
-        final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        for (int i = 0; i < days.length; i++) {
-            if (days[i].equals(day)) {
-                return i * 24 * 60 * 60 * 1000;
-            }
+    public static int getDayDiff(String strThatDay) {
+        strThatDay = strThatDay.replace("Z", "+01:00");
+        Calendar thatDay = Calendar.getInstance(TimeZone.getDefault(), Locale.FRANCE) ;
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.FRANCE);
+        try {
+            Date date = dateformat.parse(strThatDay);
+            thatDay.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        return 0;
-    }
+//        Log.d("DayDiff", thatDay.toString());
 
-    private static long getMillisOfTime(String time) {
-        if (time == null)
-            return 0;
-        String[] parts = time.split(":");
-        int hours = Integer.parseInt(parts[0]);
-        int minutes = Integer.parseInt(parts[1]);
-        return hours * (60 + minutes) * 60 * 1000;
+        Calendar today = Calendar.getInstance();
+
+        long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
+        return (int)(diff / (24 * 60 * 60 * 1000));
     }
 
     @Override
