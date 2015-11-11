@@ -21,6 +21,8 @@ import android.widget.ScrollView;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -79,6 +81,7 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
         resultsView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (season != null) {
             if (episodes != null) {
+                Collections.sort(episodes,new ComparateurEpisode());
                 buildRecyclerFromEpisodes(episodes);
             } else {
                 SeasonRequestAsyncTask seasonRequestAsyncTask = new SeasonRequestAsyncTask(this);
@@ -196,6 +199,19 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
                 saisonHelper.setSeeEpisode(season, ((EpisodeChild) cb.getTag()).getEpisode(), false, this);
             }
             ((EpisodeChild) cb.getTag()).setSeen(cb.isChecked());
+        }
+    }
+    class ComparateurEpisode implements Comparator<Episode> {
+
+        @Override
+        public int compare(Episode episode, Episode episode1) {
+            if (episode.getNumber().compareTo(episode1.getNumber()) == -1) {
+                return -1;
+            } else if (episode.getNumber().compareTo(episode1.getNumber()) == 1) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }
