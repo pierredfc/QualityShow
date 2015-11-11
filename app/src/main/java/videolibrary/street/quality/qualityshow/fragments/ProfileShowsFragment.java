@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vlonjatg.progressactivity.ProgressActivity;
+
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -24,7 +26,7 @@ import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
  */
 public class ProfileShowsFragment extends Fragment implements SerieListener {
 
-    public View rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
 
     private ShowsAdapter showsAdapter;
@@ -38,7 +40,7 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_shows_profile, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_shows_profile, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.shows_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -50,7 +52,8 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
     public void onStart() {
         super.onStart();
         if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            rootView.showLoading();
         }
     }
 
@@ -72,6 +75,7 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
             QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
             showsAdapter = new ShowsAdapter(series, null, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
+            rootView.showContent();
         }
     }
 

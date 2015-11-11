@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vlonjatg.progressactivity.ProgressActivity;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +41,7 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, SerieListener {
 
-    public SwipeRefreshLayout rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
 
     boolean userConnected;
@@ -51,7 +52,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = (SwipeRefreshLayout) inflater.inflate(R.layout.fragment_home, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_home, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.show_listView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onStart();
         if(userConnected){
             QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            rootView.showLoading();
         }
     }
 
@@ -98,6 +100,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
+        rootView.showContent();
         getNextAir(series);
     }
 
@@ -131,6 +134,26 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if (episodes.get(i).getFirst_aired() != null) {
                         Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired());
                     }
+                }
+                HashMap<String, String> airs = serie.getAirs();
+                Log.d("Calendar", serie.getTitle() + ": " + airs.get("day") + ", " + airs.get("time") + " - " + airs.get("timezone") + ".");
+
+                // get today and clear time of day
+                Calendar cal = Calendar.getInstance(Locale.FRANCE);
+                cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+                cal.clear(Calendar.MINUTE);
+                cal.clear(Calendar.SECOND);
+                cal.clear(Calendar.MILLISECOND);
+
+                // get start of this week in milliseconds
+                cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+                long millis = cal.getTimeInMillis();
+                Log.d("Calendar", "Start of this week: " + cal.getTime() + " -> " + cal.getTimeInMillis());
+                long air = millis + getMillisOfDay(airs.get("day")) + getMillisOfTime(airs.get("time"));
+                Log.d("Calendar", "Airs: " + air);
+
+                if (air > System.currentTimeMillis()) {
+                    Log.d("Calendar", "Show not yet aired !");
                 }
             }
         }

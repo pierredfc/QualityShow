@@ -38,4 +38,9 @@ public class SaisonHelper {
     public void updateEpisode(Saison saison, Episode episode, EpisodeListener listener){
         saisonRepository.updateEpisode((int) saison.getId(), episode, new EpisodeCallback.UpdateEpisodeCallback(listener));
     }
+
+    public void setSeeEpisode(Saison saison, Episode episode, boolean seen, EpisodeListener listener){
+        episode.setSee(seen);
+        saisonRepository.updateEpisode((int) saison.getId(), episode, new EpisodeCallback.UpdateEpisodeCallback(listener));
+    }
 }

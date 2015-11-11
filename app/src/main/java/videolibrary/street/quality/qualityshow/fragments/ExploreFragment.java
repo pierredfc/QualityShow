@@ -96,17 +96,5 @@ public class ExploreFragment extends Fragment implements SwipeRefreshLayout.OnRe
             intent.putExtra("show", (Film) item);
             startActivity(intent);
         }
-
-
-       /* if (item instanceof Serie) {
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
-        }
-
-        if (item instanceof Film) {
-            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-            requestAsyncTask.execute(Requests.MOVIE_FIND, String.valueOf(((Film) item).getIds().get("slug")));
-
-        }*/
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.vlonjatg.progressactivity.ProgressActivity;
+
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -24,7 +26,7 @@ import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
  */
 public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
-    public View rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
 
     private ShowsAdapter showsAdapter;
@@ -37,7 +39,7 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_movies_profile, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_movies_profile, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.movies_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -49,7 +51,8 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     public void onStart() {
         super.onStart();
         if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            rootView.showLoading();
         }
     }
 
@@ -71,6 +74,7 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
             QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
             showsAdapter = new ShowsAdapter(null, films, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
+            rootView.showContent();
         }
     }
 

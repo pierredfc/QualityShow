@@ -22,25 +22,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_account"
-                android:background="@drawable/bordertext"
-                android:layout_marginTop="5dp"
+                android:textColor="@android:color/black"
+                android:background="@drawable/background_textview"
+                android:textSize="14sp"
                 android:padding="10dp"
-                android:textColor="#000"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/settings_account"
-                android:drawableLeft="@drawable/ic_person"
-                android:drawablePadding="5dp"/>
+                android:id="@+id/settings_account" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_notifications"
-                android:background="@drawable/bordertext"
+                android:background="@drawable/background_textview"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
                 android:padding="10dp"
-                android:textColor="#000"
-                android:id="@+id/settings_notifications"
-                android:drawableLeft="@drawable/ic_notifications"
-                android:drawablePadding="5dp"/>
+                android:id="@+id/settings_notifications" />
         </LinearLayout>
     </FrameLayout>
 
