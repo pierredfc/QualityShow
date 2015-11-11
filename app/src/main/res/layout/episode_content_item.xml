@@ -5,14 +5,23 @@
     android:background="@color/background_gray">
 
 
+    <CheckBox
+        android:id="@+id/child_list_item_episode_viewd_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/seen"
+        android:layout_gravity="right"
+        android:textColor="@android:color/black"
+        android:shadowColor="@color/purple" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:paddingLeft="15dp"
         android:textStyle=""
         android:layout_gravity="left"
-        android:text="Overview"
+        android:text="@string/overview"
         android:textSize="11dp"
         android:textAllCaps="true"
         android:textColor="@color/title_gray"
@@ -36,25 +45,12 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="11dp"
         android:textAllCaps="true"
-        android:text="Ceci est un test"
         android:textColor="@color/title_gray"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-3dp"
         android:padding="15dp"
         android:id="@+id/date_episode"
-        android:background="@drawable/bordertext" 
+        android:background="@drawable/bordertext"
         android:drawableLeft="@drawable/ic_access_time"
         android:drawablePadding="5dp"/>
-
-
-    <CheckBox
-        android:id="@+id/child_list_item_episode_viewd_check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="8dp"
-        android:text="Seen"
-        android:layout_gravity="center"
-        android:textColor="@android:color/black"
-        android:shadowColor="@color/purple" />
 
 </LinearLayout>

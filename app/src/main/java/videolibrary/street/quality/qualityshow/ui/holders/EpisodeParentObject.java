@@ -12,6 +12,15 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 public class EpisodeParentObject implements ParentObject {
     private List<Object> mChildrenList;
     private String title;
+    private String number;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public String getTitle() {
         return title;

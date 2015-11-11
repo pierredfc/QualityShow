@@ -59,9 +59,8 @@ public class EpisodeExpandableAdapter extends ExpandableRecyclerAdapter<EpisodeP
     public void onBindParentViewHolder(EpisodeParentHolder episodeParentHolder, int i, Object o) {
         EpisodeParentObject episode = (EpisodeParentObject) o;
 
-        String[] tokens = episode.getTitle().split("[:]");
-        episodeParentHolder.numeroEpisode.setText(tokens[0]);
-        episodeParentHolder.episodeTitle.setText(tokens[1]);
+        episodeParentHolder.numeroEpisode.setText(episode.getNumber());
+        episodeParentHolder.episodeTitle.setText(episode.getTitle());
     }
 
     @Override

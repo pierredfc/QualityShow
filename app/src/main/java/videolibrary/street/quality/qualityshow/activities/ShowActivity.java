@@ -85,10 +85,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
         Intent intent = getIntent();
         IsMovie = intent.getBooleanExtra("isMovie", true);
-        user = QualityShowApplication.getUserHelper().getCurrentUser();
         boolean isSearch = intent.getBooleanExtra("isSearch", false);
         UserHelper userHelper = QualityShowApplication.getUserHelper();
-        User user = userHelper.getCurrentUser();
+        user = userHelper.getCurrentUser();
 
         if((user != null) && !isSearch){
             int showId = intent.getIntExtra("show", -1);
@@ -120,8 +119,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
 
         if (user == null) {
-            user = new User();
-            user.setUsername("Anonyme");
             CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) actionButtonActivity.getLayoutParams();
             p.setAnchorId(View.NO_ID);
             actionButtonActivity.setLayoutParams(p);
@@ -162,6 +159,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         } else {
             Picasso.with(QualityShowApplication.getContext()).load(image).into(imagev);
         }
+
         if(IsMovie){
             showFragment = new ShowFragment();
             showFragment.setShow(show);
@@ -169,7 +167,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             transaction.add(R.id.show_frame_container, showFragment);
             transaction.commit();
             fragment = showFragment;
-
         }
 
     }

@@ -96,7 +96,8 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
         for (Object o : episodes) {
             Episode e = (Episode) o;
             EpisodeParentObject ep = new EpisodeParentObject();
-            ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
+            ep.setNumber(String.format("%02d", e.getNumber()));
+            ep.setTitle(e.getTitle());
             ArrayList<Object> childList = new ArrayList<>();
             String over = e.getOverview();
             if (over == null) {
@@ -128,7 +129,8 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
         for (Object o : episodes) {
             Episode e = (Episode) o;
             EpisodeParentObject ep = new EpisodeParentObject();
-            ep.setTitle(String.format("E%02d: %s", e.getNumber(), e.getTitle()));
+            ep.setNumber(String.format("%02d", e.getNumber()));
+            ep.setTitle(e.getTitle());
             ArrayList<Object> childList = new ArrayList<>();
             String over = e.getOverview();
             if (over == null) {
