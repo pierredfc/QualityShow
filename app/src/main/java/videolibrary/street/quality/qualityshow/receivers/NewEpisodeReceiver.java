@@ -16,13 +16,16 @@ import videolibrary.street.quality.qualityshow.utils.Constants;
 public class NewEpisodeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        final String serie = intent.getExtras().getString(Constants.NEW_EPISODE_RECEIVER);
-        Log.d("onReceive, serie", serie);
+        final String informations = intent.getExtras().getString(Constants.NEW_EPISODE_RECEIVER);
+        Log.d("New Episode out", informations);
 
         SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.notification_prefs), Context.MODE_PRIVATE);
         boolean sound = prefs.getBoolean("sound", false);
         boolean vibrate = prefs.getBoolean("vibrate", false);
+        boolean enable = prefs.getBoolean("enable", false);
 
-        NotificationHelper.displayNotification(serie, vibrate, sound);
+        if(enable){
+            NotificationHelper.displayNotification(informations, vibrate, sound);
+        }
     }
 }

@@ -22,7 +22,7 @@ public class NotificationHelper {
         final Context context = QualityShowApplication.getContext();
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.qualityshow_icon)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(serie + " is out !")
                 .setAutoCancel(true);

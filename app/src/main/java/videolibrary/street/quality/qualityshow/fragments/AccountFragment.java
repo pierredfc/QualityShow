@@ -53,9 +53,6 @@ public class AccountFragment extends Fragment {
 
 
         ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_account);
-/*
-        ((SettingsActivity) getActivity()).getDrawer().getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
-        ((SettingsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         return rootView;
     }
