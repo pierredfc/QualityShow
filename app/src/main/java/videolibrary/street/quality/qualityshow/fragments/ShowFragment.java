@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -96,8 +97,8 @@ public class ShowFragment extends Fragment implements RequestListener,View.OnCli
         }
         catch (MalformedURLException e)
         {
-           rootView.findViewById(R.id.webvideo_layout2).setVisibility(View.GONE);
-            rootView.findViewById(R.id.trailer).setVisibility(View.GONE);
+                rootView.findViewById(R.id.webvideo_layout2).setVisibility(View.GONE);
+                rootView.findViewById(R.id.trailer).setVisibility(View.GONE);
         }
 
         return rootView;
@@ -244,8 +245,13 @@ public class ShowFragment extends Fragment implements RequestListener,View.OnCli
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + videoId));
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + videoId));
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(QualityShowApplication.getContext(), "Install the youtube app to see the trailer.", Toast.LENGTH_LONG).show();
+
+        }
     }
 }
 class ComparateurSaison implements Comparator<Saison> {
