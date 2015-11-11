@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vlonjatg.progressactivity.ProgressActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +33,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
  * Created by Pierre on 03/11/2015.
  */
 public class ExploreFragment extends Fragment implements RequestListener, ClickListener {
-    public View rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
 
     boolean userConnected;
@@ -39,7 +41,7 @@ public class ExploreFragment extends Fragment implements RequestListener, ClickL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_explore, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_explore, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.explore_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -55,6 +57,7 @@ public class ExploreFragment extends Fragment implements RequestListener, ClickL
         super.onStart();
         RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
         requestAsyncTask.execute(Requests.SERIE_TRENDING, "");
+        rootView.showLoading();
     }
 
     private void checkUserConnected() {
@@ -74,6 +77,7 @@ public class ExploreFragment extends Fragment implements RequestListener, ClickL
             showsAdapter = new ShowsAdapter(series, null, this);
             showsView.setAdapter(showsAdapter);
         }
+        rootView.showContent();
     }
 
     @Override
