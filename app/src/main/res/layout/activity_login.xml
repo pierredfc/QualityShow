@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
+    android:id="@+id/login_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/CustomTheme">
+    android:theme="@style/CustomTheme"
+    progressActivity:loadingBackgroundColor="#FFFFFF"
+    progressActivity:emptyBackgroundColor="#FFFFFF"
+    progressActivity:errorBackgroundColor="#FFFFFF">
 
 
     <LinearLayout
@@ -14,22 +18,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
-
-            <com.vlonjatg.progressactivity.ProgressActivity
-                android:id="@+id/login_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                progressActivity:loadingBackgroundColor="#FFFFFF"
-                progressActivity:emptyBackgroundColor="#FFFFFF"
-                progressActivity:errorBackgroundColor="#FFFFFF">
-
-            </com.vlonjatg.progressactivity.ProgressActivity>
-        </RelativeLayout>
 
         <EditText
             android:layout_width="match_parent"
@@ -65,4 +53,4 @@
             android:textColor="#fff" />
 
     </LinearLayout>
-</RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

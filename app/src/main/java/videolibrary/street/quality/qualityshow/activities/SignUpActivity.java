@@ -65,7 +65,7 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
             progressActivity.showLoading();
             QualityShowApplication.getUserHelper().create(usernameEditable.toString(), mailEditable.toString(), pwdEditable.toString(), "Default", this);
         } else {
-            Toast.makeText(this, "Please fill out all fields completely.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.fill_out), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -82,6 +82,21 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void userIsCreated(boolean user) {
+        if(user){
+            Toast.makeText(SignUpActivity.this, getString(R.string.success_signup), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        progressActivity.showError(getDrawable(R.drawable.ic_info_outline), getString(R.string.internet_error), getString(R.string.internet_error_msg), getString(R.string.tryagain), errorClickListener);
     }
 
     @Override
@@ -104,15 +119,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
 
     }
 
-    @Override
-    public void userIsCreated(boolean user) {
-        if(user){
-            Toast.makeText(SignUpActivity.this, "Inscription réussie", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
 
     @Override
     public void userIsLogout() {
@@ -129,11 +135,6 @@ public class SignUpActivity extends Activity implements View.OnClickListener, Us
 
     }
 
-    @Override
-    public void onError(Throwable e) {
-        progressActivity.showError(getDrawable(R.drawable.ic_info_outline), "Erreur de connexion",
-                "We could not establish a connection with our servers.",
-                "Try Again", errorClickListener);
-    }
+
 
 }

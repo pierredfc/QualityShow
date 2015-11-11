@@ -3,12 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
     <string name="login_information">LOGIN</string>
-
-
     <string name="no_account">No account mode</string>
-
     <string name="sign_in">Log in</string>
     <string name="ask_account">Already an account ?</string>
     <string name="logo">logo</string>
@@ -28,7 +24,13 @@
     <string name="overview">Overview</string>
     <string name="seasons">Seasons</string>
     <string name="trailer">Trailer</string>
+    <string name="fill_out">Please fill out all fields completely.</string>
+    <string name="success_signup">Successful Registration</string>
 
+    <!-- PROGRESSBAR -->
+    <string name="internet_error">Internet connexion error</string>
+    <string name="internet_error_msg">We could not establish a connection with our servers.</string>
+    <string name="tryagain">Try again</string>
 
     <!-- Fragment and Activity's titles-->
     <string name="sign_up">Sign up</string>

@@ -62,40 +62,12 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
     }
 
     @Override
-    public void getAllUsers(ArrayList<User> users) {
-
-    }
-
-    @Override
     public void isLogged(AccessToken accessToken, User user) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void userIsUpdated(boolean isUpdated) {
 
-    }
-
-    @Override
-    public void userIsDeleted(boolean isDeleted) {
-
-    }
-
-    @Override
-    public void userIsCreated(boolean user) {
-
-    }
-
-    @Override
-    public void userIsLogout() {
-
-    }
-
-    @Override
-    public void userIsFind(User user) {
-
-    }
 
     @Override
     public void userIsRetrieved(User user) {
@@ -123,5 +95,35 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
         findViewById(R.id.no_account_button).setOnClickListener(this);
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in).setOnClickListener(this);
+    }
+
+    @Override
+    public void getAllUsers(ArrayList<User> users) {
+
+    }
+
+    @Override
+    public void userIsUpdated(boolean isUpdated) {
+
+    }
+
+    @Override
+    public void userIsDeleted(boolean isDeleted) {
+
+    }
+
+    @Override
+    public void userIsCreated(boolean user) {
+
+    }
+
+    @Override
+    public void userIsLogout() {
+
+    }
+
+    @Override
+    public void userIsFind(User user) {
+
     }
 }
