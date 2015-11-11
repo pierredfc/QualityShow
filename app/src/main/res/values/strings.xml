@@ -36,7 +36,7 @@
     <string name="agenda">Agenda</string>
     <string name="explore">Explore</string>
     <string name="settings">Settings</string>
-    <string name="notifications">Notification center</string>
+    <string name="notifications">Notifications settings</string>
     <string name="my_account">My Account</string>
 
     <!-- DRAWER -->
@@ -58,6 +58,7 @@
     <string name="settings_email">Email</string>
     <string name="settings_username">Username</string>
     <string name="settings_title">Account information</string>
+    <string name="notification_prefs">Notifications SharedPreferences</string>
 
     <string name="settings_change_password">Change password</string>
     <string name="settings_socail_network">Social Network</string>
@@ -68,6 +69,14 @@
     <string name="dialog_cancel_choice">Cancel</string>
     <string name="dialog_logout_choice">Log out</string>
     <string name="dialog_quit_choice">Quit</string>
+
+    <!-- NOTIFICATION -->
+    <string name="notification_sound">Sound</string>
+    <string name="notification_subsound">Emit sound on incoming notifications</string>
+    <string name="notification_vibrate">Vibrate</string>
+    <string name="notification_subvibrate">Vibrate on incoming notifications</string>
+    <string name="notification_new_episode">New episode</string>
+    <string name="notification_sub_new_episode">Notify for new episodes</string>
 
     <!-- ABOUT -->
     <string name="about_text">© Quality Street</string>

@@ -48,7 +48,7 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
 
             switch(button.getId()){
                 case R.id.no_account_button:
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, ExploreActivity.class));
                     break;
                 case R.id.sign_up_button:
                     startActivity(new Intent(this, SignUpActivity.class));

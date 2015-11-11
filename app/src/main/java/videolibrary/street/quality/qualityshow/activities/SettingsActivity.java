@@ -130,6 +130,8 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
                 })
                 .build();
 
+        drawer.setSelection(5);
+
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
