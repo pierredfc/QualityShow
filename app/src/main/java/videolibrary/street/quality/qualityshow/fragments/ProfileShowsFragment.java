@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vlonjatg.progressactivity.ProgressActivity;
@@ -28,7 +29,7 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
 
     public ProgressActivity rootView;
     private RecyclerView showsView;
-
+    private TextView no_showsView;
     private ShowsAdapter showsAdapter;
 
     public static ProfileShowsFragment newInstance() {
@@ -44,6 +45,8 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
         showsView = (RecyclerView) rootView.findViewById(R.id.shows_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        no_showsView = (TextView) rootView.findViewById(R.id.no_series);
 
         return rootView;
     }
@@ -70,13 +73,13 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
     @Override
     public void getSeries(ArrayList<Serie> series) {
         if(series.size() == 0){
-            Toast.makeText(getActivity(), "No series on your account.", Toast.LENGTH_SHORT).show();
+            no_showsView.setVisibility(View.VISIBLE);
         } else {
             QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
             showsAdapter = new ShowsAdapter(series, null, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
-            rootView.showContent();
         }
+        rootView.showContent();
     }
 
     @Override

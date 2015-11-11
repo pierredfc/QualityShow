@@ -12,8 +12,12 @@ import com.vlonjatg.progressactivity.ProgressActivity;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 
 /**
@@ -56,8 +60,15 @@ public class ProfileAboutFragment extends Fragment{
             user.setUsername("Anonyme");
             user.setEmail("anonyme@qualityshow.fr");
         } else {
-            showsFollowedView.setText(Integer.toString(user.getSeries().size()));
-            moviesSeenView.setText(Integer.toString(user.getFilms().size()));
+            ArrayList<Serie> series = user.getSeries();
+            if(series != null){
+                showsFollowedView.setText(Integer.toString(series.size()));
+            }
+
+            ArrayList<Film> films = user.getFilms();
+            if(films != null){
+                moviesSeenView.setText(Integer.toString(films.size()));
+            }
         }
 
         emailView.setText(user.getEmail());

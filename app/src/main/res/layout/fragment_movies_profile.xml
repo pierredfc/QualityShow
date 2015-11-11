@@ -10,6 +10,16 @@
     progressActivity:emptyBackgroundColor="#FFFFFF"
     progressActivity:errorBackgroundColor="#FFFFFF">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_movies"
+        android:text="@string/no_movies"
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:textColor="#fff"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,6 +10,22 @@
     progressActivity:emptyBackgroundColor="#FFFFFF"
     progressActivity:errorBackgroundColor="#FFFFFF">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_series"
+            android:text="@string/no_series"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:textColor="#fff"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

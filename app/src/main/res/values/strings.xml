@@ -61,6 +61,8 @@
     <string name="number">0</string>
     <string name="shows_followed">Shows followed</string>
     <string name="movies_followed">Movies followed</string>
+    <string name="no_movies">No movies followed on your account.</string>
+    <string name="no_series">No series followed on your account.</string>
 
     <!-- SETTINGS -->
     <string name="settings_notifications">Notifications</string>

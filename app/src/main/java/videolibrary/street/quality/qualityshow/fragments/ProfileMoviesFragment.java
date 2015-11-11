@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vlonjatg.progressactivity.ProgressActivity;
@@ -28,6 +29,7 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
     public ProgressActivity rootView;
     private RecyclerView showsView;
+    private TextView no_moviesView;
 
     private ShowsAdapter showsAdapter;
 
@@ -43,6 +45,8 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
         showsView = (RecyclerView) rootView.findViewById(R.id.movies_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        no_moviesView = (TextView) rootView.findViewById(R.id.no_movies);
 
         return rootView;
     }
@@ -69,13 +73,13 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     @Override
     public void getFilms(ArrayList<Film> films) {
         if(films.size() == 0){
-            Toast.makeText(getActivity(), "No movies on your account.", Toast.LENGTH_SHORT).show();
+            no_moviesView.setVisibility(View.VISIBLE);
         } else {
             QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
             showsAdapter = new ShowsAdapter(null, films, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
-            rootView.showContent();
         }
+        rootView.showContent();
     }
 
     @Override
