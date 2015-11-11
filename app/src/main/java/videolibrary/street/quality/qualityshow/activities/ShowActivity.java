@@ -432,6 +432,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         Object item = adapterView.getItemAtPosition(i);
         if (item instanceof Saison) {
             episodeFragment = new EpisodeFragment();
+            episodeFragment.setSerie((Serie) show);
             episodeFragment.setSeason((Saison) item);
             episodeFragment.setSerieId(((Serie) this.show).getIds().get("trakt"));
             UserHelper userHelper = QualityShowApplication.getUserHelper();

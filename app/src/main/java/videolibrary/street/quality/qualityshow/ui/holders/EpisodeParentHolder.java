@@ -13,9 +13,12 @@ import videolibrary.street.quality.qualityshow.R;
  */
 public class EpisodeParentHolder extends ParentViewHolder {
     public TextView episodeTitle;
+    public TextView numeroEpisode;
+
     public EpisodeParentHolder(View itemView) {
         super(itemView);
 
         episodeTitle = (TextView) itemView.findViewById(R.id.title_episode);
+        numeroEpisode = (TextView) itemView.findViewById(R.id.numero_episode);
     }
 }

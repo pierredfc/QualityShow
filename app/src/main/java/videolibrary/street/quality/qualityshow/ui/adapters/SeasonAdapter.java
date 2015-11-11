@@ -41,13 +41,8 @@ public class SeasonAdapter extends ArrayAdapter<Saison> {
             Object p = item.getPoster().get("thumb");
             String image = (String) p;
 
+            Picasso.with(QualityShowApplication.getContext()).load(image).placeholder(R.drawable.undefined_poster).into(holder.image);
 
-            if (image == null) {
-                Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
-                holder.image.setImageDrawable(drawable);
-            } else {
-                Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
-            }
             holder.number.setText("Season " + item.getNumber().toString());
 
             holder.episodes.setText(item.getAired_episodes().toString() + " episodes aired.");

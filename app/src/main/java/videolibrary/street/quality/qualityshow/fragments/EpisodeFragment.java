@@ -49,6 +49,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
  */
 public class EpisodeFragment extends Fragment implements RequestListener, View.OnClickListener,EpisodeListener {
     Saison season;
+    Serie serie;
     Integer serieId =null;
     View rootView;
     RecyclerView resultsView;
@@ -56,6 +57,9 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
 
     public void setSerieId(Integer serieId) {
         this.serieId = serieId;
+    }
+    public void setSerie(Serie serie1){
+        serie=serie1;
     }
 
     public void setEpisodes(ArrayList<Episode> episodes) {
@@ -95,7 +99,17 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
             if (over == null) {
                 over = "No description for this episode available";
             }
-            childList.add(new EpisodeChild(over, false,e));
+            String date = e.getFirst_aired();
+            if(date == null){
+                date = "No output date available.";
+            } else {
+                date = date.split("[T]")[0];
+            }
+            if(e.getSee()==null)
+            {
+                e.setSee(false);
+            }
+            childList.add(new EpisodeChild(over, date,e.getSee(),e));
             ep.setChildObjectList(childList);
             parentObjects.add(ep);
         }
@@ -117,7 +131,17 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
             if (over == null) {
                 over = "No description for this episode available";
             }
-            childList.add(new EpisodeChild(over,e.getSee(),e));
+            String date = e.getFirst_aired();
+            if(date == null){
+                date = "No output date available.";
+            } else {
+                date = date.split("[T]")[0];
+            }
+            if(e.getSee()==null)
+            {
+                e.setSee(false);
+            }
+            childList.add(new EpisodeChild(over, date,e.getSee(),e));
             ep.setChildObjectList(childList);
             parentObjects.add(ep);
         }
@@ -163,7 +187,7 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
 
     @Override
     public void onClick(View view) {
-        if (serieId != null && QualityShowApplication.getUserHelper().getCurrentUser()!=null && QualityShowApplication.getUserHelper().getCurrentUser().getSerieById(serieId)!=null) {
+        if (serieId != null && QualityShowApplication.getUserHelper().getCurrentUser()!=null &&QualityShowApplication.getUserHelper().serieIsExist(serie)) {
             SaisonHelper saisonHelper = new SaisonHelper(QualityShowApplication.getContext());
             CheckBox cb = (CheckBox) view;
             if (cb.isChecked()) {

@@ -9,7 +9,9 @@ public class EpisodeChild {
 
     private Episode episode;
     private String overview;
+    private String date;
     private boolean seen;
+
 
     public boolean isSeen() {
         return seen;
@@ -20,7 +22,6 @@ public class EpisodeChild {
     }
 
     public String getOverview() {
-
         return overview;
     }
 
@@ -28,9 +29,18 @@ public class EpisodeChild {
         this.overview = overview;
     }
 
-    public EpisodeChild(String overview,boolean seen,Episode e){
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public EpisodeChild(String overview, String date, boolean seen,Episode e){
         this.episode = e;
         this.overview=overview;
+        this.date = date;
         this.seen=seen;
     }
     public Episode getEpisode() {

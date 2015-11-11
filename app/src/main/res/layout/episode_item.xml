@@ -17,6 +17,19 @@
         android:textColor="#000"
         android:textStyle="bold"
         android:textSize="15dp"
+        android:id="@+id/numero_episode"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="?android:attr/selectableItemBackground"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:layout_toRightOf="@+id/numero_episode"
         android:id="@+id/title_episode"
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
