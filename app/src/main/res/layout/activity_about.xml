@@ -17,7 +17,7 @@
         android:id="@+id/about_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grayQ">
+        android:background="@color/background_gray">
 
 
         <ImageView
@@ -33,6 +33,6 @@
             android:text="@string/about_text"
             android:id="@+id/textView"
             android:layout_gravity="center"
-            android:textColor="#fff"/>
+            android:textColor="@color/greenQ"/>
     </FrameLayout>
 </RelativeLayout>

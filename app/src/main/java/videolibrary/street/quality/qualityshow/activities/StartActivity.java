@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.strongloop.android.loopback.AccessToken;
+import com.vlonjatg.progressactivity.ProgressActivity;
 
 import java.util.ArrayList;
 
@@ -23,16 +24,19 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
 
     TextView citation;
     CitationHelper citationHelper;
-    ProgressBar progressBar;
+    ProgressActivity progressActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        this.progressActivity = (ProgressActivity) findViewById(R.id.activity_start);
         this.citation = (TextView) findViewById(R.id.start_citation);
         this.citationHelper = new CitationHelper();
         this.citation.setText(this.citationHelper.getCitation());
+
+        progressActivity.showLoading();
 
         QualityShowApplication.getUserHelper().retrieveRegisteredUser(this);
         findViewById(R.id.no_account_button).setOnClickListener(this);
@@ -68,30 +72,19 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
     }
 
 
-
     @Override
     public void userIsRetrieved(User user) {
-        stopProgressBar();
         if(user == null){
-            findViewById(R.id.no_account_button).setOnClickListener(this);
-            findViewById(R.id.sign_up_button).setOnClickListener(this);
-            findViewById(R.id.sign_in).setOnClickListener(this);
+            progressActivity.showContent();
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }
 
-    private void stopProgressBar(){
-        progressBar = (ProgressBar) findViewById(R.id.start_progressBar);
-        progressBar.setProgress(0);
-        progressBar.setVisibility(View.GONE);
-    }
-
     @Override
     public void onError(Throwable t) {
-        stopProgressBar();
-
+        progressActivity.showContent();
         findViewById(R.id.no_account_button).setOnClickListener(this);
         findViewById(R.id.sign_up_button).setOnClickListener(this);
         findViewById(R.id.sign_in).setOnClickListener(this);
