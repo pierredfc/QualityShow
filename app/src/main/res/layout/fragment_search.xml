@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_search"
     android:theme="@style/CustomTheme"
-    android:background="@color/grayQ">
+    android:background="@color/background_gray">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,8 +15,9 @@
         android:id="@+id/no_result_found"
         android:visibility="gone"
         android:layout_margin="15dp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_gravity="center_horizontal" />
 
     <android.support.v7.widget.RecyclerView

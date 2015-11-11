@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.LoginActivity;
 import videolibrary.street.quality.qualityshow.activities.SettingsActivity;
+import videolibrary.street.quality.qualityshow.activities.SignUpActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 
 
@@ -28,6 +31,8 @@ public class AccountFragment extends Fragment {
     private TextView socialNetwork;
     private ImageView twitterView;
     private Button logInButton;
+    private Button signUpButton;
+    private TextView or;
 
     private User user;
 
@@ -40,6 +45,7 @@ public class AccountFragment extends Fragment {
         usernameView = (TextView) rootView.findViewById(R.id.settings_username_response);
         changePassword = (TextView) rootView.findViewById(R.id.settings_change_password);
         socialNetwork = (TextView) rootView.findViewById(R.id.settings_socail_network);
+        or = (TextView) rootView.findViewById(R.id.or);
         twitterView = (ImageView) rootView.findViewById(R.id.twitter_icon);
         logInButton = (Button) rootView.findViewById(R.id.login_button);
 
@@ -51,6 +57,15 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        signUpButton = (Button) rootView.findViewById(R.id.signup_button);
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QualityShowApplication.getContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_account);
 
@@ -69,7 +84,10 @@ public class AccountFragment extends Fragment {
             changePassword.setVisibility(View.GONE);
             socialNetwork.setVisibility(View.GONE);
             twitterView.setVisibility(View.GONE);
+            or.setVisibility(View.VISIBLE);
             logInButton.setVisibility(View.VISIBLE);
+            signUpButton.setVisibility(View.VISIBLE);
+
         }
 
         emailView.setText(user.getEmail());

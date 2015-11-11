@@ -51,6 +51,16 @@
     <string name="about">About</string>
     <string name="logout">Log out</string>
 
+    <!-- HINT -->
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+
+
+    <!-- PROFILE -->
+    <string name="number">0</string>
+    <string name="shows_followed">Shows followed</string>
+    <string name="movies_followed">Movies followed</string>
 
     <!-- SETTINGS -->
     <string name="settings_notifications">Notifications</string>
@@ -62,6 +72,7 @@
 
     <string name="settings_change_password">Change password</string>
     <string name="settings_socail_network">Social Network</string>
+    <string name="or">OR</string>
 
     <!-- CLOSE DIALOG-->
     <string name="dialog_title">Warning</string>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     progressActivity:loadingBackgroundColor="@color/grayQ"
@@ -9,108 +10,159 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
         android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bordertext">
+        card_view:cardBackgroundColor="#000"
+        android:id="@+id/about_cv"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:text="Email"
-                android:id="@+id/about_profile_email" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:text="Email"
+                    android:id="@+id/about_profile_email" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:padding="5dp"
-                android:layout_marginLeft="29dp"
-                android:textColor="@color/title_gray"
-                android:id="@+id/about_profile_email_response" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_marginLeft="29dp"
+                    android:textColor="@color/greenQ"
+                    android:id="@+id/about_profile_email_response" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:text="Username"
+                    android:id="@+id/about_profile_username" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:padding="5dp"
+                    android:layout_marginLeft="29dp"
+                    android:textColor="@color/greenQ"
+                    android:id="@+id/about_profile_username_response" />
         </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:text="Username"
-                android:id="@+id/about_profile_username" />
+                card_view:cardBackgroundColor="#000"
+                android:id="@+id/about_cv2"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="2dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number"
+                        android:padding="5dp"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/greenQ"
+                        android:id="@+id/about_profile_shows_followed_response" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textColor="#fff"
+                        android:text="@string/shows_followed"
+                        android:layout_gravity="center"
+                        android:id="@+id/about_profile_shows_followed" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Username"
-                android:padding="5dp"
-                android:layout_marginLeft="29dp"
-                android:textColor="@color/title_gray"
-                android:id="@+id/about_profile_username_response" />
+                card_view:cardBackgroundColor="#000"
+                android:id="@+id/about_cv3"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardElevation="2dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number"
+                        android:textSize="30sp"
+                        android:padding="5dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/greenQ"
+                        android:layout_gravity="center"
+                        android:id="@+id/about_profile_movies_seen_response" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textColor="#fff"
+                        android:text="@string/movies_followed"
+                        android:layout_gravity="center"
+                        android:id="@+id/about_profile_movies_seen" />
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:text="Shows followed : "
-                android:id="@+id/about_profile_shows_followed" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shows followed : "
-                android:padding="5dp"
-                android:layout_marginLeft="29dp"
-                android:textColor="@color/title_gray"
-                android:id="@+id/about_profile_shows_followed_response" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:text="Movies seen : "
-                android:id="@+id/about_profile_movies_seen" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Movies seen : "
-                android:padding="5dp"
-                android:layout_marginLeft="29dp"
-                android:textColor="@color/title_gray"
-                android:id="@+id/about_profile_movies_seen_response" />
-        </LinearLayout>
     </LinearLayout>
-
-
 
 </com.vlonjatg.progressactivity.ProgressActivity>

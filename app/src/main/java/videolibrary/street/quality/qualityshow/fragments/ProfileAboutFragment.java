@@ -43,8 +43,6 @@ public class ProfileAboutFragment extends Fragment{
         showsFollowedView = (TextView) rootView.findViewById(R.id.about_profile_shows_followed_response);
         moviesSeenView = (TextView) rootView.findViewById(R.id.about_profile_movies_seen_response);
 
-
-
         return rootView;
     }
 
@@ -53,16 +51,16 @@ public class ProfileAboutFragment extends Fragment{
         super.onStart();
         user = QualityShowApplication.getUserHelper().getCurrentUser();
 
-
         if (user == null) {
             user = new User();
             user.setUsername("Anonyme");
             user.setEmail("anonyme@qualityshow.fr");
+        } else {
+            showsFollowedView.setText(Integer.toString(user.getSeries().size()));
+            moviesSeenView.setText(Integer.toString(user.getFilms().size()));
         }
 
         emailView.setText(user.getEmail());
         usernameView.setText(user.getUsername());
-        showsFollowedView.setText(Integer.toString(user.getSeries().size()));
-        moviesSeenView.setText(Integer.toString(user.getFilms().size()));
     }
 }

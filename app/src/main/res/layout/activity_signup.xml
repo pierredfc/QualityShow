@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:textColor="#000"
-        android:hint="Email"
+        android:hint="@string/email_hint"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColorHint="#000" />
@@ -46,7 +46,7 @@
         android:id="@+id/nameText"
         android:layout_below="@+id/emailText"
         android:layout_centerHorizontal="true"
-        android:hint="Username"
+        android:hint="@string/username_hint"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColorHint="#000"
@@ -60,7 +60,7 @@
         android:id="@+id/pwdText"
         android:layout_below="@+id/nameText"
         android:layout_alignStart="@+id/nameText"
-        android:hint="Password"
+        android:hint="@string/password_hint"
         android:textColorHint="#000"
         android:textColor="#000"
         android:fontFamily="sans-serif"/>
@@ -68,7 +68,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="S&apos;inscrire"
+        android:text="@string/sign_up"
         android:id="@+id/signUpButton"
         android:layout_below="@+id/pwdText"
         android:layout_centerHorizontal="true"
