@@ -4,6 +4,8 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+
 /**
  * Created by Sacael on 07/11/2015.
  */
@@ -28,4 +30,6 @@ public class EpisodeParentObject implements ParentObject {
     public void setChildObjectList(List<Object> list) {
         mChildrenList=list;
     }
+
+
 }
