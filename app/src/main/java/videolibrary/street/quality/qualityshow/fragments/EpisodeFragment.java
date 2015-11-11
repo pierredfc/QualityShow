@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
@@ -182,7 +183,7 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
 
     @Override
     public void episodeIsUpdated() {
-
+        //Toast.makeText(getActivity().getApplicationContext(), "Episode is update", Toast.LENGTH_SHORT).show();
     }
 
     @Override

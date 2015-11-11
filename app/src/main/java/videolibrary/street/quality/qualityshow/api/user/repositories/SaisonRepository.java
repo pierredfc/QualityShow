@@ -62,6 +62,9 @@ public class SaisonRepository extends ModelRepository<Saison> {
         params.put("urlSaisonId", saisonId);
         params.put("urlEpisodeId", (int)episode.getId());
         params.putAll(episode.toMap());
+        params.remove("see");
+        params.remove("See");
+        params.put("See", episode.getSee());
         invokeStaticMethod("updateEpisode", params, callback);
     }
 }
