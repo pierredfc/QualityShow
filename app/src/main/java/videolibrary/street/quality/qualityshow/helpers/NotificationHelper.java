@@ -24,7 +24,7 @@ public class NotificationHelper {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(serie + " is out !")
+                .setContentText("The new episode of " + serie + " is out")
                 .setAutoCancel(true);
 
         final Intent newIntent = new Intent(context, StartActivity.class);

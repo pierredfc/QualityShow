@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -82,22 +83,22 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
     }
 
     private void buildDrawer(Bundle savedInstanceState) {
-        PrimaryDrawerItem profil = new PrimaryDrawerItem().withName("Profile");
-        SecondaryDrawerItem planning = new SecondaryDrawerItem().withName("Agenda");
-        SecondaryDrawerItem recommandations = new SecondaryDrawerItem().withName("Explore");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Settings");
+        PrimaryDrawerItem profil = new PrimaryDrawerItem().withName("Profile").withIcon(CommunityMaterial.Icon.cmd_account_circle);
+        SecondaryDrawerItem planning = new SecondaryDrawerItem().withName("Agenda").withIcon(CommunityMaterial.Icon.cmd_calendar);
+        SecondaryDrawerItem recommandations = new SecondaryDrawerItem().withName("Explore").withIcon(CommunityMaterial.Icon.cmd_compass);
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withName("Settings").withIcon(CommunityMaterial.Icon.cmd_settings);
 
         SecondaryDrawerItem login;
         User user = QualityShowApplication.getUserHelper().getCurrentUser();
 
 
         if (user == null) {
-            login = new SecondaryDrawerItem().withName("Log in");
+            login = new SecondaryDrawerItem().withName("Log in").withIcon(CommunityMaterial.Icon.cmd_login);
             user = new User();
             user.setUsername("Anonyme");
             user.setEmail("anonyme@qualityshow.fr");
         } else {
-            login = new SecondaryDrawerItem().withName("Log out");
+            login = new SecondaryDrawerItem().withName("Log out").withIcon(CommunityMaterial.Icon.cmd_logout);
         }
 
         AccountHeader accountHeader = new AccountHeaderBuilder()
@@ -130,8 +131,6 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
                 })
                 .build();
 
-        drawer.setSelection(5);
-
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
@@ -155,35 +154,28 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
                 }
             }
         });
+
+        drawer.setSelection(settings, false);
     }
 
     @Override
     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
         switch (i) {
             case 1:
-
-                if (!(drawer.getCurrentSelection() == 1)) {
-                    Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
-                    startActivity(profileIntent);
-                }
+                Intent profileIntent = new Intent(QualityShowApplication.getContext(), ProfileActivity.class);
+                startActivity(profileIntent);
                 break;
             case 2:
-                if (!(drawer.getCurrentSelection() == 2)) {
-                    Intent agendaIntent = new Intent(QualityShowApplication.getContext(), MainActivity.class);
-                    startActivity(agendaIntent);
-                }
+                Intent agendaIntent = new Intent(QualityShowApplication.getContext(), MainActivity.class);
+                startActivity(agendaIntent);
                 break;
             case 3:
-                if (!(drawer.getCurrentSelection() == 3)) {
-                    Intent exploreIntent = new Intent(QualityShowApplication.getContext(), ExploreActivity.class);
-                    startActivity(exploreIntent);
-                }
+                Intent exploreIntent = new Intent(QualityShowApplication.getContext(), ExploreActivity.class);
+                startActivity(exploreIntent);
                 break;
             case 5:
-                if (!(drawer.getCurrentSelection() == 5)) {
-                    Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
-                    startActivity(settingsIntent);
-                }
+                Intent settingsIntent = new Intent(QualityShowApplication.getContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
                 break;
             case 6:
                 if (QualityShowApplication.getUserHelper().getCurrentUser() == null) {
