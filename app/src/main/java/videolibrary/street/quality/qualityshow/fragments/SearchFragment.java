@@ -2,6 +2,7 @@ package videolibrary.street.quality.qualityshow.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class SearchFragment extends Fragment implements RequestListener {
         no_result_foundView = (TextView) rootView.findViewById(R.id.no_result_found);
         no_result_foundView.setVisibility(View.GONE);
 
+        resultsView.setHasFixedSize(true);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(QualityShowApplication.getContext());
         resultsView.setLayoutManager(layoutManager);
 
@@ -67,7 +70,7 @@ public class SearchFragment extends Fragment implements RequestListener {
             no_result_foundView.setVisibility(View.VISIBLE);
         } else {
             searchAdapter = new SearchAdapter(response, (SearchActivity) getActivity());
-            resultsView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+       //     resultsView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             resultsView.setAdapter(searchAdapter);
         }
     }
