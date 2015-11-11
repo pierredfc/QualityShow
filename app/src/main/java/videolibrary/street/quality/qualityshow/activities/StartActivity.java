@@ -17,7 +17,7 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.utils.CitationHelper;
+import videolibrary.street.quality.qualityshow.helpers.CitationHelper;
 
 public class StartActivity extends Activity implements View.OnClickListener, UserListener {
 
