@@ -216,6 +216,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void filmIsAdded(Film film) {
+        QualityShowApplication.getUserHelper().getCurrentUser().addFilm(film);
     }
 
     @Override
@@ -368,7 +369,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     private boolean addSerieToUser() {
         UserHelper userHelper = QualityShowApplication.getUserHelper();
-        User user = userHelper.getCurrentUser();
         if (!userHelper.serieIsExist((Serie)this.show)) {
             ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
             showAdderAsyncTask.execute(String.valueOf(((Serie)show).getIds().get("trakt")),"serie");
@@ -381,6 +381,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (userHelper.serieIsExist((Serie)this.show)) {
+            user.deleteSerie((Serie)this.show);
             userHelper.deleteSerie(user, (int) ((Serie) this.show).getId(), this);
             return true;
         } else {
@@ -390,7 +391,6 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     private boolean addFilmToUser(){
         UserHelper userHelper = QualityShowApplication.getUserHelper();
-        User user = userHelper.getCurrentUser();
         if (!userHelper.filmIsExist((Film)this.show)) {
             ShowAdderAsyncTask showAdderAsyncTask=new ShowAdderAsyncTask(this);
             showAdderAsyncTask.execute(String.valueOf(((Film) show).getIds().get("trakt")), "movie");
@@ -404,6 +404,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         User user = userHelper.getCurrentUser();
         if (userHelper.filmIsExist((Film) this.show)) {
+            user.deleteFilm((Film)this.show);
             userHelper.deleteFilm(user, (int)((Film) this.show).getId(), this);
             return true;
         } else {

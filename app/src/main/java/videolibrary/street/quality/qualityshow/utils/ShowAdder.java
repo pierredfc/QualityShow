@@ -57,6 +57,7 @@ public class ShowAdder implements SerieListener,FilmListener,RequestListener,Sai
     @Override
     public void filmIsAdded(Film film) {
         FilmHelper helper = new FilmHelper(QualityShowApplication.getContext());
+        QualityShowApplication.getUserHelper().getCurrentUser().addFilm(film);
         if(((Film) selectedfilm).getGenres() != null){
             JSONArray array = new JSONArray(((Film) selectedfilm).getGenres());
             CategoryRepository repository = new CategoryRepository();
