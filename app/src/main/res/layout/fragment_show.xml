@@ -141,6 +141,29 @@
                 android:layout_centerInParent="true"
                 android:src="@android:drawable/ic_media_play" />
 
-    </RelativeLayout>
 
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="15dp"
+        android:textStyle=""
+        android:id="@+id/related"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="left"
+        android:text="@string/related"
+        android:textSize="11dp"
+        android:textAllCaps="true"
+        android:textColor="@color/title_gray" />
+    <android.support.v17.leanback.widget.HorizontalGridView
+        android:layout_width="fill_parent"
+        android:padding="15dp"
+        android:layout_height="wrap_content"
+        android:minHeight="180dp"
+        android:background="@drawable/bordertext"
+        android:id="@+id/related_shows"
+        android:textFilterEnabled="false" >
+
+    </android.support.v17.leanback.widget.HorizontalGridView>
 </LinearLayout>

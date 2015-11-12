@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +36,13 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.activities.SearchActivity;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Airs;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
+import videolibrary.street.quality.qualityshow.ui.adapters.RelatedAdapter;
+import videolibrary.street.quality.qualityshow.ui.adapters.SearchAdapter;
 import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -51,6 +56,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 public class ShowFragment extends Fragment implements RequestListener,View.OnClickListener {
 
     ListView resultsView;
+    RecyclerView relatedView;
     View rootView;
     Object show;
     String videoId;
@@ -58,20 +64,26 @@ public class ShowFragment extends Fragment implements RequestListener,View.OnCli
     public void setShow(Object show) {
         this.show = show;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (LinearLayout) inflater.inflate(R.layout.fragment_show, container, false);
         resultsView = (ListView)rootView.findViewById(R.id.SeasonsView);
+        relatedView = (RecyclerView)rootView.findViewById(R.id.related_shows);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(QualityShowApplication.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        relatedView.setLayoutManager(linearLayoutManager);
+        RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
 
         if (show instanceof Serie){
             Serie serie = (Serie) show;
             Collections.sort(((Serie) show).getSaisons(),new ComparateurSaison());
             fillView(serie);
+            requestAsyncTask.execute(Requests.SERIES_RELATED,String.valueOf(((Serie) show).getIds().get("slug")));
 
         } else if(show instanceof Film){
             Film film = (Film)show;
             fillView(film);
+            requestAsyncTask.execute(Requests.MOVIES_RELATED, String.valueOf(((Film) show).getIds().get("slug")));
         }
 
 
@@ -206,7 +218,8 @@ public class ShowFragment extends Fragment implements RequestListener,View.OnCli
     @Override
     public void onResponseReceived(List<Object> response) {
         if( response != null && response.size() > 0){
-
+            RelatedAdapter relatedAdapter = new RelatedAdapter(response, (ShowActivity) getActivity());
+            relatedView.setAdapter(relatedAdapter);
         }
 
     }

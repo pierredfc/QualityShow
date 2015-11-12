@@ -13,6 +13,7 @@
         "Material is the metaphor.\n\n"
     </string>
     <string name="add_watch">Follow</string>
+    <string name="related">Related</string>
     <string name="search_title">Search</string>
     <string name="search_hint">Search</string>
     <string name="no_result">No results found.</string>
