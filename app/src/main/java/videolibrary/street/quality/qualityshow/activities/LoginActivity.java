@@ -87,7 +87,7 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
 
         if (!emptyMail && !emptyPwd) {
             progressActivity.showLoading();
-            QualityShowApplication.getUserHelper().login(mailEditable.toString(), pwdEditable.toString(), this);
+            QualityShowApplication.getUserHelper().login(mailEditable.toString().trim(), pwdEditable.toString(), this);
         } else {
             Toast.makeText(this, getString(R.string.fill_out), Toast.LENGTH_LONG).show();
         }
