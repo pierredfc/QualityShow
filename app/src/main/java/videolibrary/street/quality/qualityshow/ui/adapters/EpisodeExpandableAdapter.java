@@ -1,26 +1,17 @@
 package videolibrary.street.quality.qualityshow.ui.adapters;
 
-import android.util.Log;
-import android.widget.BaseExpandableListAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
-import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
-import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.ui.holders.EpisodeChild;
 import videolibrary.street.quality.qualityshow.ui.holders.EpisodeChildHolder;
 import videolibrary.street.quality.qualityshow.ui.holders.EpisodeParentHolder;
@@ -46,7 +37,7 @@ public class EpisodeExpandableAdapter extends ExpandableRecyclerAdapter<EpisodeP
 
     @Override
     public EpisodeParentHolder onCreateParentViewHolder(ViewGroup viewGroup) {
-        View view = mInflater.inflate(R.layout.episode_item, viewGroup, false);
+        View view = mInflater.inflate(R.layout.episode_parent_item, viewGroup, false);
         return new EpisodeParentHolder(view);
     }
 

@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.vlonjatg.progressactivity.ProgressActivity
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/home_progress"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background_gray"
-    progressActivity:loadingBackgroundColor="@color/background_gray"
-    progressActivity:emptyBackgroundColor="@color/background_gray"
-    progressActivity:errorBackgroundColor="@color/background_gray">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/calendar_view"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/calendar_episode"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_gray">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/show_listView"
-            />
-
-    </RelativeLayout>
-
-</com.vlonjatg.progressactivity.ProgressActivity>
+        android:layout_height="wrap_content"
+        android:transcriptMode="alwaysScroll"
+        android:cacheColorHint="#00000000"
+        android:listSelector="@android:color/transparent"/>
+</LinearLayout>

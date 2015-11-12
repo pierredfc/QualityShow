@@ -18,7 +18,6 @@ import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.activities.ShowActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
@@ -60,7 +59,6 @@ public class EpisodeFragment extends Fragment implements RequestListener, View.O
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ShowActivity showActivity = (ShowActivity) getActivity();
         rootView = inflater.inflate(R.layout.fragment_season, container, false);
         resultsView = (RecyclerView) rootView.findViewById(R.id.season_episodes);
         resultsView.setLayoutManager(new LinearLayoutManager(getActivity()));
