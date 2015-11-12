@@ -62,7 +62,7 @@ import videolibrary.street.quality.qualityshow.utils.Requests;
 public class ShowActivity extends AppCompatActivity implements FilmListener, SerieListener, ClickListener, View.OnClickListener, ListView.OnItemClickListener, SaisonListener, EpisodeListener, AdderListener,RequestListener,CategoryListener {
     private Toolbar toolbar;
     private User user;
-    private Object show;
+    private Object show = null;
     private Boolean IsMovie;
 
     private Boolean isFollow;
@@ -82,9 +82,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         setContentView(R.layout.activity_show);
 
         isFollow = false;
-
         Intent intent = getIntent();
-        IsMovie = intent.getBooleanExtra("isMovie", true);
+
+        IsMovie = intent.getBooleanExtra("isMovie", false);
         boolean isSearch = intent.getBooleanExtra("isSearch", false);
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         user = userHelper.getCurrentUser();
@@ -310,7 +310,17 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
 
     @Override
     public void onItemClick(Object item) {
-
+        if(item instanceof  Serie || item instanceof Film) {
+            QualityShowApplication.getShow();
+            Intent intent = new Intent(this, TransfertActivity.class);
+            if(item instanceof  Serie){
+                intent.putExtra("show",(Serie)item);
+            }
+            if(item instanceof  Film){
+                intent.putExtra("show",(Film)item);
+            }
+            startActivity(intent);
+        }
     }
 
     @Override

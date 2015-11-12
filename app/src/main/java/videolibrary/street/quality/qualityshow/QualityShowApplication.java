@@ -10,6 +10,7 @@ public class QualityShowApplication extends Application {
 
     private static Context sContext;
     private static UserHelper userHelper;
+    private static Object show;
 
     public void onCreate(){
         super.onCreate();
@@ -25,7 +26,7 @@ public class QualityShowApplication extends Application {
     public static Context getContext() {
         return sContext;
     }
-
+    public static Object getShow(){return show;}
     public static UserHelper getUserHelper(){
         return userHelper;
     }

@@ -29,7 +29,10 @@
         <activity android:name=".activities.SignUpActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".activities.TransfertActivity"
+            android:theme="@style/CustomTheme"
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.ProfileActivity"
             android:theme="@style/CustomTheme"
             android:screenOrientation="portrait"/>

@@ -151,11 +151,13 @@ public class UserHelper implements CategoryListener{
             serieSlug = String.valueOf(serie.getIds().get("slug"));
             User user = this.getCurrentUser();
             List<Serie> series = user.getSeries();
+            if (series!=null){
             for (Serie tmpSerie : series) {
                 String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
                 if (tmpSlug.equals(serieSlug)){
                     return true;
                 }
+            }
             }
         }catch (Exception e){
             throw e;
@@ -168,10 +170,12 @@ public class UserHelper implements CategoryListener{
             serieSlug = String.valueOf(serie.getIds().get("slug"));
             User user = this.getCurrentUser();
             List<Serie> series = user.getSeries();
-            for (Serie tmpSerie : series) {
-                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
-                if (tmpSlug.equals(serieSlug)){
-                    return tmpSerie;
+            if (series!=null) {
+                for (Serie tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(serieSlug)) {
+                        return tmpSerie;
+                    }
                 }
             }
         }catch (Exception e){
@@ -185,10 +189,12 @@ public class UserHelper implements CategoryListener{
             movieSlug = String.valueOf(film.getIds().get("slug"));
             User user = this.getCurrentUser();
             List<Film> series = user.getFilms();
-            for (Film tmpSerie : series) {
-                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
-                if (tmpSlug.equals(movieSlug)){
-                    return true;
+            if(series != null) {
+                for (Film tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(movieSlug)) {
+                        return true;
+                    }
                 }
             }
         }catch (Exception e){
@@ -202,10 +208,12 @@ public class UserHelper implements CategoryListener{
             movieSlug = String.valueOf(film.getIds().get("slug"));
             User user = this.getCurrentUser();
             List<Film> series = user.getFilms();
-            for (Film tmpSerie : series) {
-                String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
-                if (tmpSlug.equals(movieSlug)){
-                    return tmpSerie;
+            if (series!=null) {
+                for (Film tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(movieSlug)) {
+                        return tmpSerie;
+                    }
                 }
             }
         }catch (Exception e){
