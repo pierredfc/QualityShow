@@ -93,6 +93,24 @@ public class User extends com.strongloop.android.loopback.User implements Parcel
         return null;
     }
 
+    public void addFilm(Film film){
+        if(this.films == null)
+            this.films = new ArrayList<Film>();
+        this.films.add(film);
+    }
+
+    public void deleteFilm(Film film){
+        for (int i = 0; i < this.films.size(); i++) {
+            if (String.valueOf(this.films.get(i).getIds().get("slug")).equals(String.valueOf(film.getIds().get("slug")))){
+                this.deleteFilmAt(i);
+            }
+        }
+    }
+
+    public void deleteFilmAt(int index){
+        this.films.remove(index);
+    }
+
     @Override
     public String toString() {
         return String.format("User : " + this.getCreationParameters().toString());
