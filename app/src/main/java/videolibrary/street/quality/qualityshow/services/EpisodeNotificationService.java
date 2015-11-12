@@ -22,6 +22,9 @@ public class EpisodeNotificationService extends Service implements SerieListener
     private AlarmPreferences alarmPreferences;
     private AlarmListener alarmListener;
 
+    public EpisodeNotificationService() {
+    }
+
     public EpisodeNotificationService(AlarmListener listener){
         alarmListener = listener;
     }

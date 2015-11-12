@@ -14,7 +14,8 @@
 
         <activity
             android:name=".activities.StartActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,20 +24,25 @@
         </activity>
 
         <activity android:name=".activities.LoginActivity"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.SignUpActivity"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.ProfileActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.ShowActivity"
             android:theme="@style/CustomTheme"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.MainActivity"
             android:theme="@style/CustomTheme"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -48,18 +54,24 @@
         </activity>
 
         <activity android:name=".activities.AboutActivity"
-                  android:theme="@style/CustomTheme"/>
+                  android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.SearchActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.ExploreActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".activities.SettingsActivity"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".receivers.NewEpisodeReceiver"/>
+
+        <service android:name=".services.EpisodeNotificationService"/>
 
     </application>
 </manifest>
