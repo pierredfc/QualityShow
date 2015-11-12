@@ -28,6 +28,7 @@ import videolibrary.street.quality.qualityshow.activities.LoginActivity;
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.activities.ProfileActivity;
 import videolibrary.street.quality.qualityshow.activities.SettingsActivity;
+import videolibrary.street.quality.qualityshow.activities.StartActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 
@@ -133,6 +134,9 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                     activity.startActivity(loginIntent);
                 } else {
                     QualityShowApplication.getUserHelper().logout(this);
+                    Intent intent = new Intent(QualityShowApplication.getContext(), StartActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    activity.startActivity(intent);
                 }
                 break;
             default:
