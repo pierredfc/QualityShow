@@ -19,6 +19,7 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ProfileActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 
@@ -33,6 +34,8 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
     private ShowsAdapter showsAdapter;
 
+    private User user;
+
     public static ProfileMoviesFragment newInstance() {
         final ProfileMoviesFragment profileMoviesFragment = new ProfileMoviesFragment();
         return profileMoviesFragment;
@@ -46,6 +49,8 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
+        this.user = QualityShowApplication.getUserHelper().getCurrentUser();
+
         no_moviesView = (TextView) rootView.findViewById(R.id.no_movies);
 
         return rootView;
@@ -55,8 +60,12 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     public void onStart() {
         super.onStart();
         if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
-            rootView.showLoading();
+            if(user.getFilms() != null && user.getFilms().size() > 0){
+                this.showFilms(user.getFilms());
+            }else{
+                QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+                rootView.showLoading();
+            }
         }
     }
 
@@ -72,6 +81,10 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
     @Override
     public void getFilms(ArrayList<Film> films) {
+        this.showFilms(films);
+    }
+
+    private void showFilms(ArrayList<Film> films){
         if(films.size() == 0){
             no_moviesView.setVisibility(View.VISIBLE);
         } else {
