@@ -84,7 +84,7 @@ public class ShowFragment extends Fragment implements RequestListener,View.OnCli
         }
 
 
-            String img_url="http://img.youtube.com/vi/"+videoId+"/0.jpg"; // this is link which will give u thumnail image of that video
+            String img_url="http://img.youtube.com/vi/"+videoId+"/0.jpg"; // this is the link which will give you thumbnail image of that video
 
             // picasso jar file download image for u and set image in imagview
 

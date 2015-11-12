@@ -136,10 +136,17 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             Film film = (Film) show;
             getSupportActionBar().setTitle(film.getTitle());
             p = film.getFanart().get("thumb");
+            if (p == null){
+                p = film.getPoster().get("thumb");
+            }
         } else {
             Serie serie = (Serie) show;
             p = serie.getFanart().get("thumb");
             getSupportActionBar().setTitle(serie.getTitle());
+
+            if (p == null){
+                p=serie.getPoster().get("thumb");
+            }
 
             if (userHelper.getCurrentUser() != null && userHelper.serieIsExist((Serie)this.show)) {
                 SerieHelper serieHelper = new SerieHelper(this);
