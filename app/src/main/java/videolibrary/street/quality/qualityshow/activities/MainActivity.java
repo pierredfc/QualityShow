@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.mikepenz.materialdrawer.Drawer;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
@@ -170,9 +171,12 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     @Override
     public void onBackPressed() {
         int entryCount = getFragmentManager().getBackStackEntryCount();
+        Drawer draw=drawer.getDrawer();
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        } else if (entryCount > 1) {
+        }else if(draw.isDrawerOpen()) {
+            draw.closeDrawer();
+        }else if (entryCount > 1) {
             getFragmentManager().popBackStack();
         } else {
             askLeaveOrLogout();

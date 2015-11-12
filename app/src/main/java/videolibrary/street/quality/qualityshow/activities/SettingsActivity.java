@@ -235,4 +235,12 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
     public void onError(Throwable t) {
         Toast.makeText(QualityShowApplication.getContext(), "No connected account ?", Toast.LENGTH_LONG).show();
     }
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen()){
+            drawer.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
 }

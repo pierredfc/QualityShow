@@ -11,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.mikepenz.materialdrawer.Drawer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,6 +146,15 @@ public class ProfileActivity extends AppCompatActivity implements ClickListener 
             return mFragmentTitleList.get(position);
         }
 
+    }
+    public void onBackPressed() {
+        Drawer draw = drawer.getDrawer();
+        if(draw.isDrawerOpen()){
+            draw.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 }
 
