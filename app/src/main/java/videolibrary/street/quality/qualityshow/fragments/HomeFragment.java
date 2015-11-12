@@ -164,6 +164,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
+        user.setSeries(series);
         showNextAir(series);
     }
 
