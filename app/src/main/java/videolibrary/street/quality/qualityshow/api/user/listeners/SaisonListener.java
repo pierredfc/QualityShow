@@ -2,7 +2,6 @@ package videolibrary.street.quality.qualityshow.api.user.listeners;
 
 import java.util.ArrayList;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 
 /**

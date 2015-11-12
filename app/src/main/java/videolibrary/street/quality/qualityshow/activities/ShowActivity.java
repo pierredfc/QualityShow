@@ -19,11 +19,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.strongloop.android.remoting.JsonUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +31,6 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
-import videolibrary.street.quality.qualityshow.api.user.helpers.FilmHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
@@ -47,7 +41,6 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.async.ShowAdderAsyncTask;
-import videolibrary.street.quality.qualityshow.api.user.repositories.CategoryRepository;
 import videolibrary.street.quality.qualityshow.fragments.EpisodeFragment;
 import videolibrary.street.quality.qualityshow.fragments.ShowFragment;
 import videolibrary.street.quality.qualityshow.listeners.AdderListener;

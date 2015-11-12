@@ -3,7 +3,6 @@ package videolibrary.street.quality.qualityshow.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.vlonjatg.progressactivity.ProgressActivity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +24,6 @@ import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
-import videolibrary.street.quality.qualityshow.ui.utils.DividerItemDecoration;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 /**

@@ -2,12 +2,10 @@ package videolibrary.street.quality.qualityshow.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,30 +22,25 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.activities.SearchActivity;
 import videolibrary.street.quality.qualityshow.activities.ShowActivity;
-import videolibrary.street.quality.qualityshow.api.user.dao.Airs;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
-import videolibrary.street.quality.qualityshow.ui.adapters.RelatedAdapter;
-import videolibrary.street.quality.qualityshow.ui.adapters.SearchAdapter;
-import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
+import videolibrary.street.quality.qualityshow.ui.adapters.RelatedAdapter;
+import videolibrary.street.quality.qualityshow.ui.adapters.SeasonAdapter;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 /**
