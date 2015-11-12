@@ -31,6 +31,7 @@ import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment implements SerieListener {
 
     private ShowsAdapter showsAdapter;
 
-    private List<Serie> userSerie;
+    User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +64,13 @@ public class HomeFragment extends Fragment implements SerieListener {
     public void onStart() {
         super.onStart();
         if (userConnected) {
-            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
-            rootView.showLoading();
+            user = QualityShowApplication.getUserHelper().getCurrentUser();
+            if(user.series != null){
+                this.showSeries(user.getSeries());
+            }else{
+                QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+                rootView.showLoading();
+            }
         }
     }
 
@@ -78,7 +84,12 @@ public class HomeFragment extends Fragment implements SerieListener {
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
-        QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
+        //QualityShowApplication.getUserHelper().getCurrentUser().setSeries(series);
+        user.setSeries(series);
+        this.showSeries(user.getSeries());
+    }
+
+    public void showSeries(ArrayList<Serie> series){
         showsAdapter = new ShowsAdapter(series, null, (MainActivity) getActivity());
         showsView.setAdapter(showsAdapter);
         rootView.showContent();
@@ -87,12 +98,16 @@ public class HomeFragment extends Fragment implements SerieListener {
 
     private void getNextAir(ArrayList<Serie> series) {
         for (Serie serie : series) {
-            for (Saison saison : serie.getSaisons()) {
-                int aired_episodes = saison.getAired_episodes();
-                List<Episode> episodes = saison.getEpisodes();
-                for (int i = aired_episodes; i < episodes.size(); i++) {
-                    if (episodes.get(i).getFirst_aired() != null) {
-                        Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired() + " in " + getDayDiff(episodes.get(i).getFirst_aired()) + " days");
+            if(serie.getSaisons() != null){
+                for (Saison saison : serie.getSaisons()) {
+                    if(saison.getEpisodes() != null){
+                        int aired_episodes = saison.getAired_episodes();
+                        List<Episode> episodes = saison.getEpisodes();
+                        for (int i = aired_episodes; i < episodes.size(); i++) {
+                            if (episodes.get(i).getFirst_aired() != null) {
+                                Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired() + " in " + getDayDiff(episodes.get(i).getFirst_aired()) + " days");
+                            }
+                        }
                     }
                 }
             }

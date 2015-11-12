@@ -86,6 +86,7 @@ public class ShowAdder implements SerieListener,FilmListener,RequestListener,Sai
     @Override
     public void serieIsAdded(Serie serie) {
         SerieHelper helper = new SerieHelper(QualityShowApplication.getContext());
+        QualityShowApplication.getUserHelper().getCurrentUser().addSerie(serie);
         for (Saison s : ((Serie) selectedSerie).getSaisons()){
             helper.addSaison(serie, s, this);
         }
