@@ -58,14 +58,18 @@ public class CalendarEpisodeAdapter extends ExpandableRecyclerAdapter<CalendarPa
     @Override
     public void onBindChildViewHolder(final CalendarChildHolder calendarChildHolder, int i, Object o) {
         CalendarChild calendarChild = (CalendarChild) o;
-        calendarChildHolder.episodeEntry.setText(calendarChild.getEpisode().getTitle());
-        calendarChildHolder.calendarSaisonEntry.setText("Season " + calendarChild.getSeasonNumber());
-        calendarChildHolder.calendarSerieName.setText(calendarChild.getSerieTitle());
-        if (calendarChild.getThumb() == null) {
+        calendarChildHolder.serieName.setText(calendarChild.getSerieTitle());
+        calendarChildHolder.saisonNumber.setText("Season " + calendarChild.getSeasonNumber());
+        calendarChildHolder.episodeNumber.setText("episode " + calendarChild.getEpisode().getNumber());
+        calendarChildHolder.episodeName.setText(calendarChild.getEpisode().getTitle());
+
+        Object p = calendarChild.getSaison().getPoster().get("thumb");
+        String image = (String) p;
+        if (image == null) {
             Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
             calendarChildHolder.image.setImageDrawable(drawable);
         } else {
-            Picasso.with(QualityShowApplication.getContext()).load(calendarChild.getThumb()).into(calendarChildHolder.image);
+            Picasso.with(QualityShowApplication.getContext()).load(image).into(calendarChildHolder.image);
         }
     }
 }

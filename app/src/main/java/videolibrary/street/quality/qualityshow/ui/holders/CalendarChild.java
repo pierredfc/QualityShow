@@ -1,6 +1,7 @@
 package videolibrary.street.quality.qualityshow.ui.holders;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 
 /**
  * Created by Baptiste on 11/12/2015.
@@ -9,16 +10,16 @@ public class CalendarChild {
 
     private String serieTitle;
     private Integer seasonNumber;
-    private Episode episode;
     private Integer daysLeft;
-    private String thumb;
+    private Saison saison;
+    private Episode episode;
 
-    public CalendarChild(String serieTitle, Integer seasonNumber, Episode episode, Integer daysLeft, String thumb) {
+    public CalendarChild(String serieTitle, Integer seasonNumber, Integer daysLeft, Saison saison, Episode episode) {
         this.serieTitle = serieTitle;
         this.seasonNumber = seasonNumber;
-        this.episode = episode;
         this.daysLeft = daysLeft;
-        this.thumb = thumb;
+        this.saison = saison;
+        this.episode = episode;
     }
 
     public String getSerieTitle() {
@@ -37,14 +38,6 @@ public class CalendarChild {
         this.seasonNumber = seasonNumber;
     }
 
-    public Episode getEpisode() {
-        return episode;
-    }
-
-    public void setEpisode(Episode episode) {
-        this.episode = episode;
-    }
-
     public Integer getDaysLeft() {
         return daysLeft;
     }
@@ -53,11 +46,19 @@ public class CalendarChild {
         this.daysLeft = daysLeft;
     }
 
-    public String getThumb() {
-        return thumb;
+    public Saison getSaison() {
+        return saison;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setSaison(Saison saison) {
+        this.saison = saison;
+    }
+
+    public Episode getEpisode() {
+        return episode;
+    }
+
+    public void setEpisode(Episode episode) {
+        this.episode = episode;
     }
 }

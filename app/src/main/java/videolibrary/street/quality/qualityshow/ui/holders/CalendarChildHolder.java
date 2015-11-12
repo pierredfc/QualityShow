@@ -13,18 +13,20 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
  * Created by Baptiste on 11/12/2015.
  */
 public class CalendarChildHolder extends ChildViewHolder {
-    public TextView episodeEntry;
-    public TextView calendarSerieName;
-    public TextView calendarSaisonEntry;
+    public TextView serieName;
+    public TextView saisonNumber;
+    public TextView episodeNumber;
+    public TextView episodeName;
     public Episode episode;
     public ImageView image;
 
     public CalendarChildHolder(View itemView) {
         super(itemView);
 
-        episodeEntry = (TextView) itemView.findViewById(R.id.calendar_episode_entry);
-        calendarSerieName = (TextView) itemView.findViewById(R.id.calendar_serie_name);
-        calendarSaisonEntry = (TextView) itemView.findViewById(R.id.calendar_saison_entry);
+        episodeNumber = (TextView) itemView.findViewById(R.id.calendar_episode_entry);
+        serieName = (TextView) itemView.findViewById(R.id.calendar_serie_name);
+        saisonNumber = (TextView) itemView.findViewById(R.id.calendar_saison_entry);
+        episodeName = (TextView) itemView.findViewById(R.id.calendar_episode_name_entry);
         image = (ImageView) itemView.findViewById(R.id.calendar_image_view);
     }
     public void setView(Episode episode) {

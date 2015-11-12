@@ -22,7 +22,7 @@
         android:textColor="@android:color/black"
         android:layout_toRightOf="@+id/calendar_image_view"
         android:layout_alignParentTop="true"
-        android:text="Serie's name"
+        android:text="Serie"
         android:textSize="18sp"
         android:textStyle="bold"
         />
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendar_saison_entry"
         android:textColor="@color/grayQ"
-        android:text="Saison"
+        android:text="Season"
         android:layout_toRightOf="@+id/calendar_image_view"
         android:layout_below="@+id/calendar_serie_name"
         />
@@ -42,10 +42,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendar_episode_entry"
         android:textColor="@color/grayQ"
-        android:text="EP"
+        android:text="Episode number"
         android:layout_marginLeft="4dp"
         android:layout_toRightOf="@+id/calendar_saison_entry"
         android:layout_below="@+id/calendar_serie_name"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendar_episode_name_entry"
+        android:textColor="@color/grayQ"
+        android:text="episode"
+        android:layout_marginTop="1dp"
+        android:layout_toRightOf="@+id/calendar_image_view"
+        android:layout_below="@+id/calendar_saison_entry"
         />
 
 </RelativeLayout>

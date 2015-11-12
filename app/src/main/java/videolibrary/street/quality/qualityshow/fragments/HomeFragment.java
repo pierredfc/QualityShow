@@ -92,9 +92,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
                     int daysLeft = getDaysLeft(episodes.get(i).getFirst_aired());
                     if (daysLeft < 0)
                         continue;
-                    Object p = saison.getPoster().get("thumb");
-                    String image = (String) p;
-                    CalendarChild calendarChild = new CalendarChild(serie.getTitle(), saison.getNumber(), episodes.get(i), daysLeft, image);
+
+                    CalendarChild calendarChild = new CalendarChild(serie.getTitle(), saison.getNumber(), daysLeft, saison, episodes.get(i));
                     Log.d("Calendar", serie.getTitle() + " " + episodes.get(i).getTitle() + " " + episodes.get(i).getFirst_aired() + " in " + calendarChild.getDaysLeft() + " days");
                     insertIntoParent(parentObjects, calendarChild);
                 }
