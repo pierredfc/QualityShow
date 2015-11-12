@@ -1,16 +1,12 @@
 package videolibrary.street.quality.qualityshow.api.user.helpers;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.strongloop.android.loopback.callbacks.ObjectCallback;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.SerieCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
@@ -25,7 +21,6 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiAdapter;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
-import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by elerion on 10/26/15.

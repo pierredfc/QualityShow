@@ -1,7 +1,5 @@
 package videolibrary.street.quality.qualityshow.utils;
 
-import android.content.Intent;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -9,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
-import videolibrary.street.quality.qualityshow.activities.ShowActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
@@ -18,7 +15,6 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.helpers.FilmHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SaisonHelper;
 import videolibrary.street.quality.qualityshow.api.user.helpers.SerieHelper;
-import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.CategoryListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.EpisodeListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;

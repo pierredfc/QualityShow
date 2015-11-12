@@ -2,8 +2,6 @@ package videolibrary.street.quality.qualityshow.utils;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.strongloop.android.remoting.JsonUtil;
 
 import org.json.JSONArray;
@@ -13,22 +11,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.repositories.EpisodeRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
 
 public class Requests {
     public static final String HOST = "http://de-coster.fr:4000/api";

@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 

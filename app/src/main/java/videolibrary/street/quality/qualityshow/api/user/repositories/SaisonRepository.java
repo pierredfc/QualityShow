@@ -1,12 +1,10 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
 import com.strongloop.android.loopback.ModelRepository;
-import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
 import com.strongloop.android.remoting.adapters.RestContractItem;
 
-import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;

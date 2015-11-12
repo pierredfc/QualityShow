@@ -16,7 +16,6 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.ui.holders.RelatedHolder;
-import videolibrary.street.quality.qualityshow.ui.holders.SearchHolder;
 
 /**
  * Created by Sacael on 12/11/2015.

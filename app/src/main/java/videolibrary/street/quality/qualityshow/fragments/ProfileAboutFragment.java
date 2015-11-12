@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.vlonjatg.progressactivity.ProgressActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;

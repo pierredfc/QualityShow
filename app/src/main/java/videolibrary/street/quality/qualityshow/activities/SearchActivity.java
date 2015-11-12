@@ -6,23 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
-import videolibrary.street.quality.qualityshow.async.SeasonRequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.SearchFragment;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
-import videolibrary.street.quality.qualityshow.utils.Constants;
 import videolibrary.street.quality.qualityshow.utils.Requests;
 
 

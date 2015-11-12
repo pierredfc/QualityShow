@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
                     if (episodes.get(i).getFirst_aired() == null)
                         continue;
                     int daysLeft = getDaysLeft(episodes.get(i).getFirst_aired());
-                    if (daysLeft < 0)
+                    if (daysLeft < 0 || daysLeft > 30)
                         continue;
 
                     CalendarChild calendarChild = new CalendarChild(serie.getTitle(), saison.getNumber(), daysLeft, saison, episodes.get(i));
