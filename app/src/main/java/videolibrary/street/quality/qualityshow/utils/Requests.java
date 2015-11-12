@@ -205,6 +205,7 @@ public class Requests {
                             items.add(item);
                         }
                     }
+                    break;
                     case SERIES_RELATED:{
                         SerieRepository repo = new SerieRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -216,7 +217,7 @@ public class Requests {
                             items.add(item);
                         }
                     }
-
+                    break;
                     case MOVIES_RELATED:
                         FilmRepository repo = new FilmRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -227,6 +228,7 @@ public class Requests {
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
                             items.add(item);
                         }
+                        break;
                 }
 
                 return items;
