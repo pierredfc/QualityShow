@@ -92,7 +92,7 @@ public class Requests {
                     request = HOST + "/" + SERIES_PATH + "/" + toSearch + "/" + SEASONS_PATH;
                     break;
                 case SERIES_RELATED:
-                    request = HOST + "/Series/related?serie" + toSearch;
+                    request = HOST + "/Series/related?serie=" + toSearch;
                     break;
                 case MOVIES_RELATED:
                     request = HOST + "/Movies/related?movie=" + toSearch;
@@ -205,28 +205,28 @@ public class Requests {
                             items.add(item);
                         }
                     }
+                    break;
                     case SERIES_RELATED:{
                         SerieRepository repo = new SerieRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            JSONObject tmpObj = jsonObject.getJSONObject("show");
+                            JSONObject tmpObj = jsonArray.getJSONObject(i);
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
                             items.add(item);
                         }
                     }
-
+                    break;
                     case MOVIES_RELATED:
                         FilmRepository repo = new FilmRepository();
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            JSONObject tmpObj = jsonObject.getJSONObject("movie");
+                            JSONObject tmpObj = jsonArray.getJSONObject(i);
                             tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
                             tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
                             Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
                             items.add(item);
                         }
+                        break;
                 }
 
                 return items;

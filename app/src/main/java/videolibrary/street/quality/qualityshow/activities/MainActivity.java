@@ -45,7 +45,7 @@ import videolibrary.street.quality.qualityshow.utils.CalendarUtils;
 import videolibrary.street.quality.qualityshow.utils.Constants;
 import videolibrary.street.quality.qualityshow.utils.SearchPreferences;
 
-public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener, AlarmListener {
+public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     AlertDialog closeDialog;
 
     private SearchPreferences searchPreferences;
-    private AlarmPreferences alarmPreferences;
     private PendingIntent mServicePendingIntent;
 
     @Override
@@ -93,13 +92,13 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             }
         });
 
-        alarmPreferences = new AlarmPreferences(this);
-
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_container, homeFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
+        launchNotificationService();
     }
 
     private void startSearchActivity(String query) {
@@ -120,50 +119,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         mServicePendingIntent = PendingIntent.getService(this, 0, episodeNotificationService, 0);
         final AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), Constants.POLLING_DELAY, mServicePendingIntent);
-
-    }
-
-    @Override
-    public void setSeries(ArrayList<Serie> series) {
-        SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.notification_prefs), Context.MODE_PRIVATE);
-
-        for (Serie serie : series) {
-            for (Saison saison : serie.getSaisons()) {
-                int aired_episodes = saison.getAired_episodes();
-                List<Episode> episodes = saison.getEpisodes();
-                for (int i = aired_episodes; i < episodes.size(); i++) {
-                    if(CalendarUtils.getDayDiff(episodes.get(i).getFirst_aired()) >= 0){
-                        String[] tokens = episodes.get(i).getFirst_aired().split("[-]");
-                        int year = Integer.parseInt(tokens[0]);
-                        int month = Integer.parseInt(tokens[1]);
-                        int day = Integer.parseInt(tokens[2].split("[T]")[0]);
-                        int id = episodes.get(i).getIds().get("trakt");
-                        if(!alarmPreferences.isInAlarmPreferences(id)){
-                            setAlarm(serie.getTitle(), id, year, month, day);
-                            alarmPreferences.setAlarmPreferences(id);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void setAlarm(String serieName, int id, int year, int month, int day){
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Calendar cal = Calendar.getInstance();
-        int hour = 12;
-        int minutes = 0;
-        month -= 1;
-
-        cal.set(year, month, day, hour, minutes);
-        cal.add(Calendar.DATE, 1);
-        Intent intent = new Intent(QualityShowApplication.getContext(), NewEpisodeReceiver.class);
-        Bundle extras = new Bundle();
-        extras.putString(Constants.NEW_EPISODE_RECEIVER, serieName);
-        intent.putExtras(extras);
-
-        PendingIntent operation = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_ONE_SHOT);
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), operation);
     }
 
     @Override
@@ -217,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
             startActivity(intent);
         }
-
     }
 
     @Override
@@ -254,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
         }
 
-        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), this);
-
         return closeDialog;
     }
 
@@ -288,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -318,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void userIsLogout() {
-        finish();
+        super.finish();
     }
 
     @Override

@@ -14,11 +14,13 @@ import android.widget.Toast;
 import com.vlonjatg.progressactivity.ProgressActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ProfileActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 
@@ -31,6 +33,8 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
     private RecyclerView showsView;
     private TextView no_showsView;
     private ShowsAdapter showsAdapter;
+
+    User user;
 
     public static ProfileShowsFragment newInstance() {
         final ProfileShowsFragment profileShowsFragment = new ProfileShowsFragment();
@@ -46,6 +50,8 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
+        user = QualityShowApplication.getUserHelper().getCurrentUser();
+
         no_showsView = (TextView) rootView.findViewById(R.id.no_series);
 
         return rootView;
@@ -54,9 +60,13 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
-            rootView.showLoading();
+        if (user != null) {
+            if(user.getSeries() != null && user.getSeries().size() > 0){
+                this.showSeries(user.getSeries());
+            }else{
+                QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+                rootView.showLoading();
+            }
         }
     }
 
@@ -72,6 +82,10 @@ public class ProfileShowsFragment extends Fragment implements SerieListener {
 
     @Override
     public void getSeries(ArrayList<Serie> series) {
+        this.showSeries(series);
+    }
+
+    private void showSeries(ArrayList<Serie> series){
         if(series.size() == 0){
             no_showsView.setVisibility(View.VISIBLE);
         } else {
