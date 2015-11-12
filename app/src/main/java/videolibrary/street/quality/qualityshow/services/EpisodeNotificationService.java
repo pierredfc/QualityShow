@@ -48,7 +48,7 @@ public class EpisodeNotificationService extends Service implements SerieListener
     public void getSeries(ArrayList<Serie> series) {
         Log.d("NotificationService", "Stop");
         if(series != null){
-            alarmListener.setAlarm(series);
+            alarmListener.setSeries(series);
         }
         stopSelf();
     }
