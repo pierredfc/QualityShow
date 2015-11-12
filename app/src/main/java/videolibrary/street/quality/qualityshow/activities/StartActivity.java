@@ -36,7 +36,9 @@ public class StartActivity extends Activity implements View.OnClickListener, Use
         this.citationHelper = new CitationHelper();
         this.citation.setText(this.citationHelper.getCitation());
 
-        progressActivity.showLoading();
+        if(QualityShowApplication.getUserHelper().getCurrentUser() != null) {
+            progressActivity.showLoading();
+        }
 
         QualityShowApplication.getUserHelper().retrieveRegisteredUser(this);
         findViewById(R.id.no_account_button).setOnClickListener(this);

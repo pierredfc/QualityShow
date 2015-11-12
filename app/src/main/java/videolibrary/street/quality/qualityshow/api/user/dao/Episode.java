@@ -17,7 +17,7 @@ public class Episode extends Model implements Parcelable {
     private Integer number;
     private Boolean See;
     private HashMap<String, Screenshot> screenshot;
-    private HashMap<String, Ids> ids;
+    private HashMap<String, Integer> ids;
     private String first_aired;
 
 
@@ -61,11 +61,11 @@ public class Episode extends Model implements Parcelable {
         this.screenshot = screenshot;
     }
 
-    public HashMap<String, Ids> getIds() {
+    public HashMap<String, Integer> getIds() {
         return ids;
     }
 
-    public void setIds(HashMap<String, Ids> ids) {
+    public void setIds(HashMap<String, Integer> ids) {
         this.ids = ids;
     }
 

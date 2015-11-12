@@ -18,7 +18,9 @@
     <string name="no_result">No results found.</string>
     <string name="slogan">EASY. TO. FOLLOW</string>
     <string name="search_prefs">Search</string>
+    <string name="alarm_prefs">Alarm</string>
     <string name="search_prefs_queue">Search queue</string>
+    <string name="alarm_prefs_queue">Alarm queue</string>
     <string name="synopsys">Synopsys</string>
     <string name="seen">Seen</string>
     <string name="overview">Overview</string>

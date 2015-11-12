@@ -18,13 +18,13 @@ import videolibrary.street.quality.qualityshow.activities.StartActivity;
  */
 public class NotificationHelper {
 
-    public static void displayNotification(String serie, boolean vibrate, boolean sound) {
+    public static void displayNotification(String serieName, boolean vibrate, boolean sound) {
         final Context context = QualityShowApplication.getContext();
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle(context.getString(R.string.app_name))
-                .setContentText("The new episode of " + serie + " is out")
+                .setContentText("The new episode of " + serieName + " is out")
                 .setAutoCancel(true);
 
         final Intent newIntent = new Intent(context, StartActivity.class);
