@@ -58,14 +58,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
 
         if (userConnected) {
             user = QualityShowApplication.getUserHelper().getCurrentUser();
-            if (user.series != null) {
-                showNextAir(user.series);
-            } else {
-                QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+            QualityShowApplication.getUserHelper().series(user, true, this);
             }
-        }
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        QualityShowApplication.getUserHelper().series(user, true, this);
     }
 
     private void checkUserConnected() {
