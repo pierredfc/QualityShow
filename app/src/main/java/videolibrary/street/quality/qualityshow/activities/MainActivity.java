@@ -208,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
         }
 
-        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), this);
-
         return closeDialog;
     }
 
@@ -242,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -272,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void userIsLogout() {
-        finish();
+        super.finish();
     }
 
     @Override

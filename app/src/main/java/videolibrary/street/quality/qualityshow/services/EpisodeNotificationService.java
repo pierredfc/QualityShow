@@ -78,7 +78,6 @@ public class EpisodeNotificationService extends Service implements SerieListener
     }
 
 
-
     public void setSeries(ArrayList<Serie> series) {
         SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.notification_prefs), Context.MODE_PRIVATE);
 
