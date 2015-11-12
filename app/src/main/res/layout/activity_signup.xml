@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
-
-        <com.vlonjatg.progressactivity.ProgressActivity
-            android:id="@+id/sign_up_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            progressActivity:loadingBackgroundColor="#FFFFFF"
-            progressActivity:emptyBackgroundColor="#FFFFFF"
-            progressActivity:errorBackgroundColor="#FFFFFF">
-
-        </com.vlonjatg.progressactivity.ProgressActivity>
-    </RelativeLayout>
-
+    android:background="@color/background_gray"
+    android:id="@+id/sign_up_progress"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
 
     <EditText
         android:layout_width="match_parent"
@@ -33,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:textColor="#000"
-        android:hint="Email"
+        android:hint="@string/email_hint"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColorHint="#000" />
@@ -46,7 +33,7 @@
         android:id="@+id/nameText"
         android:layout_below="@+id/emailText"
         android:layout_centerHorizontal="true"
-        android:hint="Username"
+        android:hint="@string/username_hint"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textColorHint="#000"
@@ -60,7 +47,7 @@
         android:id="@+id/pwdText"
         android:layout_below="@+id/nameText"
         android:layout_alignStart="@+id/nameText"
-        android:hint="Password"
+        android:hint="@string/password_hint"
         android:textColorHint="#000"
         android:textColor="#000"
         android:fontFamily="sans-serif"/>
@@ -68,7 +55,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="S&apos;inscrire"
+        android:text="@string/sign_up"
         android:id="@+id/signUpButton"
         android:layout_below="@+id/pwdText"
         android:layout_centerHorizontal="true"
@@ -76,4 +63,4 @@
         android:background="@color/purple"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />
-</RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

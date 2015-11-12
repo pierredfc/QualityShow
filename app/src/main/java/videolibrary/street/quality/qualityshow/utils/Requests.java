@@ -2,8 +2,6 @@ package videolibrary.street.quality.qualityshow.utils;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.strongloop.android.remoting.JsonUtil;
 
 import org.json.JSONArray;
@@ -13,22 +11,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
-import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.repositories.EpisodeRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.FilmRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SerieRepository;
-import videolibrary.street.quality.qualityshow.responseModel.BeanItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanMovieItem;
-import videolibrary.street.quality.qualityshow.responseModel.BeanShowItem;
 
 public class Requests {
     public static final String HOST = "http://de-coster.fr:4000/api";
@@ -48,7 +40,9 @@ public class Requests {
     public static final String SERIE_SEASONS = "Serie_seasons";
     public static final String SEASONS_PATH = "seasons";
     public static final String SEASON_PATH = "season";
-    public static final String CALENDAR_HOST = "https://api-v2launch.trakt.tv/calendars/all/shows";
+    public static final String SERIES_RELATED = "series_related";
+    public static final String MOVIES_RELATED = "movies_related";
+
 
     public static List<Object> search(String mode, String toSearch) {
         try {
@@ -89,6 +83,11 @@ public class Requests {
                 case SERIE_SEASONS:
                     request = HOST + "/" + SERIES_PATH + "/" + toSearch + "/" + SEASONS_PATH;
                     break;
+                case SERIES_RELATED:
+                    request = HOST + "/Series/related?serie=" + toSearch;
+                    break;
+                case MOVIES_RELATED:
+                    request = HOST + "/Movies/related?movie=" + toSearch;
             }
             Log.d("Request", request);
 
@@ -198,6 +197,28 @@ public class Requests {
                             items.add(item);
                         }
                     }
+                    break;
+                    case SERIES_RELATED:{
+                        SerieRepository repo = new SerieRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject tmpObj = jsonArray.getJSONObject(i);
+                            tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                            tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            items.add(item);
+                        }
+                    }
+                    break;
+                    case MOVIES_RELATED:
+                        FilmRepository repo = new FilmRepository();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject tmpObj = jsonArray.getJSONObject(i);
+                            tmpObj.put("poster", tmpObj.getJSONObject("images").getJSONObject("poster"));
+                            tmpObj.put("fanart", tmpObj.getJSONObject("images").getJSONObject("fanart"));
+                            Object item = repo.createObject(JsonUtil.fromJson(tmpObj));
+                            items.add(item);
+                        }
+                        break;
                 }
 
                 return items;

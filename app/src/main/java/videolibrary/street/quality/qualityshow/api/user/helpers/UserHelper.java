@@ -1,16 +1,12 @@
 package videolibrary.street.quality.qualityshow.api.user.helpers;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.strongloop.android.loopback.callbacks.ObjectCallback;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.FilmsCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.SerieCallbacks;
 import videolibrary.street.quality.qualityshow.api.user.callbacks.UserCallbacks;
@@ -25,7 +21,6 @@ import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.UserRepository;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiAdapter;
 import videolibrary.street.quality.qualityshow.api.user.utils.ApiConstants;
-import videolibrary.street.quality.qualityshow.utils.Constants;
 
 /**
  * Created by elerion on 10/26/15.
@@ -151,16 +146,75 @@ public class UserHelper implements CategoryListener{
             serieSlug = String.valueOf(serie.getIds().get("slug"));
             User user = this.getCurrentUser();
             List<Serie> series = user.getSeries();
+            if (series!=null){
             for (Serie tmpSerie : series) {
                 String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
                 if (tmpSlug.equals(serieSlug)){
                     return true;
                 }
             }
+            }
         }catch (Exception e){
             throw e;
         }
         return false;
+    }
+    public Serie getUserSerie(Serie serie){
+        String serieSlug;
+        try {
+            serieSlug = String.valueOf(serie.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Serie> series = user.getSeries();
+            if (series!=null) {
+                for (Serie tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(serieSlug)) {
+                        return tmpSerie;
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return null;
+    }
+    public boolean movieIsExist(Film film){
+        String movieSlug;
+        try {
+            movieSlug = String.valueOf(film.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Film> series = user.getFilms();
+            if(series != null) {
+                for (Film tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(movieSlug)) {
+                        return true;
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return false;
+    }
+    public Film getUserFilm(Film film){
+        String movieSlug;
+        try {
+            movieSlug = String.valueOf(film.getIds().get("slug"));
+            User user = this.getCurrentUser();
+            List<Film> series = user.getFilms();
+            if (series!=null) {
+                for (Film tmpSerie : series) {
+                    String tmpSlug = String.valueOf(tmpSerie.getIds().get("slug"));
+                    if (tmpSlug.equals(movieSlug)) {
+                        return tmpSerie;
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw e;
+        }
+        return null;
     }
 
     public boolean filmIsExist(Film film){

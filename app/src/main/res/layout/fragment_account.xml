@@ -111,5 +111,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/twitter_icon" />
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/login_button"
+            android:layout_marginTop="15dp"
+            android:elevation="5dp"
+            android:theme="@style/MyBtnStyle"
+            android:background="@color/purple"
+            android:textColor="#fff"
+            android:text="@string/sign_in"
+            android:layout_gravity="center"
+            android:visibility="gone"
+           />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/or"
+            android:id="@+id/or"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_button"
+            android:elevation="5dp"
+            android:theme="@style/MyBtnStyle"
+            android:background="@color/purple"
+            android:textColor="#fff"
+            android:text="@string/sign_up"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

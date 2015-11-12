@@ -1,7 +1,5 @@
 package videolibrary.street.quality.qualityshow.api.user.utils;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
-
 /**
  * Created by elerion on 10/26/15.
  */

@@ -10,6 +10,15 @@ import java.util.List;
 public class EpisodeParentObject implements ParentObject {
     private List<Object> mChildrenList;
     private String title;
+    private String number;
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public String getTitle() {
         return title;
@@ -28,4 +37,6 @@ public class EpisodeParentObject implements ParentObject {
     public void setChildObjectList(List<Object> list) {
         mChildrenList=list;
     }
+
+
 }

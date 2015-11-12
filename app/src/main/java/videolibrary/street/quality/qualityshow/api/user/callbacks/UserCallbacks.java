@@ -7,10 +7,6 @@ import com.strongloop.android.loopback.UserRepository;
 import com.strongloop.android.loopback.callbacks.ListCallback;
 import com.strongloop.android.loopback.callbacks.ObjectCallback;
 import com.strongloop.android.loopback.callbacks.VoidCallback;
-import com.strongloop.android.remoting.JsonUtil;
-import com.strongloop.android.remoting.adapters.Adapter;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

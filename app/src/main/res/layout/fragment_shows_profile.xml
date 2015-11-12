@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.vlonjatg.progressactivity.ProgressActivity
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:id="@+id/shows_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/CustomTheme">
+    android:theme="@style/CustomTheme"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_series"
+            android:text="@string/no_series"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:textColor="#000"
+            android:visibility="gone"/>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/shows_profile_recyclerView"
         />
-</RelativeLayout>
+
+    </RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

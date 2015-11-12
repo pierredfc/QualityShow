@@ -1,5 +1,6 @@
 package videolibrary.street.quality.qualityshow.ui.holders;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +12,7 @@ import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 public class SearchHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    private View view;
+    private CardView view;
     public ImageView image;
     public TextView name;
     public TextView year;
@@ -21,7 +22,7 @@ public class SearchHolder extends RecyclerView.ViewHolder implements View.OnClic
 
     public SearchHolder(View itemView) {
         super(itemView);
-        this.view = itemView;
+        this.view = (CardView) itemView.findViewById(R.id.cv);
         this.image = (ImageView) itemView.findViewById(R.id.search_image_view);
         this.name = (TextView) itemView.findViewById(R.id.search_name_view);
         this.year = (TextView) itemView.findViewById(R.id.search_year_view);

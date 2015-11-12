@@ -15,9 +15,11 @@ public class Episode extends Model implements Parcelable {
     private String overview;
     private Integer saisonid;
     private Integer number;
-    private Boolean see;
+    private Boolean See;
     private HashMap<String, Screenshot> screenshot;
-    private HashMap<String, Ids> ids;
+    private HashMap<String, Integer> ids;
+    private String first_aired;
+
 
     public String getTitle() {
         return title;
@@ -59,23 +61,34 @@ public class Episode extends Model implements Parcelable {
         this.screenshot = screenshot;
     }
 
-    public HashMap<String, Ids> getIds() {
+    public HashMap<String, Integer> getIds() {
         return ids;
     }
 
-    public void setIds(HashMap<String, Ids> ids) {
+    public void setIds(HashMap<String, Integer> ids) {
         this.ids = ids;
     }
 
+
     public Boolean getSee() {
-        return see;
+        return See;
     }
 
     public void setSee(Boolean see) {
-        this.see = see;
+        See = see;
     }
 
-    public Episode(){ }
+    public String getFirst_aired() {
+        return first_aired;
+    }
+
+    public void setFirst_aired(String first_aired) {
+        this.first_aired = first_aired;
+    }
+
+    public Episode() {
+    }
+
 
     protected Episode(Parcel in) {
         title = in.readString();
@@ -83,9 +96,10 @@ public class Episode extends Model implements Parcelable {
         saisonid = in.readByte() == 0x00 ? null : in.readInt();
         number = in.readByte() == 0x00 ? null : in.readInt();
         byte seeVal = in.readByte();
-        see = seeVal == 0x02 ? null : seeVal != 0x00;
+        See = seeVal == 0x02 ? null : seeVal != 0x00;
         screenshot = (HashMap) in.readValue(HashMap.class.getClassLoader());
         ids = (HashMap) in.readValue(HashMap.class.getClassLoader());
+        first_aired = in.readString();
     }
 
     @Override
@@ -109,13 +123,14 @@ public class Episode extends Model implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeInt(number);
         }
-        if (see == null) {
+        if (See == null) {
             dest.writeByte((byte) (0x02));
         } else {
-            dest.writeByte((byte) (see ? 0x01 : 0x00));
+            dest.writeByte((byte) (See ? 0x01 : 0x00));
         }
         dest.writeValue(screenshot);
         dest.writeValue(ids);
+        dest.writeString(first_aired);
     }
 
     @SuppressWarnings("unused")

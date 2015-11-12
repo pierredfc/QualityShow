@@ -6,7 +6,11 @@ package videolibrary.street.quality.qualityshow.utils;
 public class Constants {
 
 
+    public static final Integer POLLING_DELAY = 3600000;
+
     public static final Integer CACHED_SEARCHES = 15;
+
+    public static final String NEW_EPISODE_RECEIVER = "Receiver";
 
     public static class Log{
         public static final String TAG = "QualityShow";

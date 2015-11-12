@@ -1,9 +1,11 @@
 package videolibrary.street.quality.qualityshow.activities;
 
 
-import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.mikepenz.materialdrawer.Drawer;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
@@ -27,16 +30,16 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
-import videolibrary.street.quality.qualityshow.async.RequestAsyncTask;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
+import videolibrary.street.quality.qualityshow.services.EpisodeNotificationService;
 import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
-import videolibrary.street.quality.qualityshow.utils.Requests;
+import videolibrary.street.quality.qualityshow.utils.Constants;
 import videolibrary.street.quality.qualityshow.utils.SearchPreferences;
 
-public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener{
+public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     AlertDialog closeDialog;
 
     private SearchPreferences searchPreferences;
+    private PendingIntent mServicePendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         transaction.add(R.id.frame_container, homeFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+
+        launchNotificationService();
     }
 
     private void startSearchActivity(String query) {
@@ -100,6 +106,14 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         startActivity(intent);
     }
 
+    private void launchNotificationService(){
+        final Intent episodeNotificationService = new Intent(this, EpisodeNotificationService.class);
+
+        final Calendar cal = Calendar.getInstance();
+        mServicePendingIntent = PendingIntent.getService(this, 0, episodeNotificationService, 0);
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), Constants.POLLING_DELAY, mServicePendingIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -129,43 +143,40 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         if (item instanceof Serie) {
             Intent intent = new Intent(this, ShowActivity.class);
             intent.putExtra("isMovie", false);
-            if(QualityShowApplication.getUserHelper() != null){
+            if (QualityShowApplication.getUserHelper() != null) {
                 intent.putExtra("isSearch", false);
-                intent.putExtra("show", (int)((Serie) item).getId());
-            }else {
+                intent.putExtra("show", (int) ((Serie) item).getId());
+            } else {
                 intent.putExtra("show", (Serie) item);
             }
 
             startActivity(intent);
-//            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-//            requestAsyncTask.execute(Requests.SERIE_FIND, String.valueOf(((Serie) item).getIds().get("slug")));
-
         }
+
         if (item instanceof Film) {
 
             Intent intent = new Intent(this, ShowActivity.class);
             intent.putExtra("isMovie", true);
-            if(QualityShowApplication.getUserHelper() != null){
+            if (QualityShowApplication.getUserHelper() != null) {
                 intent.putExtra("isSearch", false);
-                intent.putExtra("show", (int)((Film) item).getId());
-            }else {
+                intent.putExtra("show", (int) ((Film) item).getId());
+            } else {
                 intent.putExtra("show", (Film) item);
             }
 
             startActivity(intent);
-
-//            RequestAsyncTask requestAsyncTask = new RequestAsyncTask(this);
-//            requestAsyncTask.execute(Requests.MOVIE_FIND, String.valueOf(((Film) item).getIds().get("slug")));
         }
-
     }
 
     @Override
     public void onBackPressed() {
         int entryCount = getFragmentManager().getBackStackEntryCount();
+        Drawer draw=drawer.getDrawer();
         if (searchView.isSearchOpen()) {
             searchView.closeSearch();
-        } else if (entryCount > 1) {
+        }else if(draw.isDrawerOpen()) {
+            draw.closeDrawer();
+        }else if (entryCount > 1) {
             getFragmentManager().popBackStack();
         } else {
             askLeaveOrLogout();
@@ -190,11 +201,9 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             }
         });
 
-        if(QualityShowApplication.getUserHelper().getCurrentUser() != null){
+        if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
             closeDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.dialog_logout_choice), this);
         }
-
-        closeDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.dialog_quit_choice), this);
 
         return closeDialog;
     }
@@ -207,15 +216,27 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     @Override
     public void onResponseReceived(List<Object> response) {
         Intent intent = new Intent(this, ShowActivity.class);
-        if(response.get(0) instanceof  Serie) {
+        if (response.get(0) instanceof Serie) {
             intent.putExtra("isMovie", false);
             intent.putExtra("show", (Serie) response.get(0));
-        }
-        else if(response.get(0) instanceof Film){
-            intent.putExtra("isMovie",true);
-            intent.putExtra("show",(Film)response.get(0));
+        } else if (response.get(0) instanceof Film) {
+            intent.putExtra("isMovie", true);
+            intent.putExtra("show", (Film) response.get(0));
         }
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which == AlertDialog.BUTTON_NEGATIVE) {
+            if (QualityShowApplication.getUserHelper().getCurrentUser() == null) {
+                super.onBackPressed();
+            } else {
+                QualityShowApplication.getUserHelper().logout(this);
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -245,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void userIsLogout() {
-        finish();
+        super.finish();
     }
 
     @Override
@@ -260,20 +281,6 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
 
     @Override
     public void onError(Throwable t) {
-
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if(which ==  AlertDialog.BUTTON_NEGATIVE){
-            if(QualityShowApplication.getUserHelper().getCurrentUser() == null){
-                super.onBackPressed();
-            } else {
-                QualityShowApplication.getUserHelper().logout(this);
-            }
-        } else {
-            super.onBackPressed();
-        }
 
     }
 }

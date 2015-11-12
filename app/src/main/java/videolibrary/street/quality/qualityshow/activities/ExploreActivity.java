@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.mikepenz.materialdrawer.Drawer;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
@@ -104,6 +105,16 @@ public class ExploreActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Drawer draw = drawer.getDrawer();
+        if(draw.isDrawerOpen()){
+            draw.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
         }
     }
 

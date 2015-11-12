@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
+    android:background="@color/background_gray"
+    android:id="@+id/login_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/CustomTheme">
+    android:theme="@style/CustomTheme"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
 
 
     <LinearLayout
@@ -15,29 +19,11 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal">
-
-            <com.vlonjatg.progressactivity.ProgressActivity
-                android:id="@+id/login_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                progressActivity:loadingBackgroundColor="#FFFFFF"
-                progressActivity:emptyBackgroundColor="#FFFFFF"
-                progressActivity:errorBackgroundColor="#FFFFFF">
-
-            </com.vlonjatg.progressactivity.ProgressActivity>
-        </RelativeLayout>
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/login_email_text"
-            android:hint="Email"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:hint="@string/email_hint"
             android:layout_marginTop="150dp"
             android:theme="@style/MyETStyle"
             android:textColor="#000"
@@ -49,7 +35,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password_hint"
             android:id="@+id/login_pwd_txt"
             android:layout_marginBottom="10dp"
             android:theme="@style/MyETStyle"
@@ -60,13 +46,11 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Se connecter"
+            android:text="@string/sign_in"
             android:id="@+id/sign_in_button"
-            android:layout_below="@+id/editText2"
-            android:layout_alignEnd="@+id/editText2"
             android:theme="@style/MyBtnStyle"
             android:background="@color/purple"
             android:textColor="#fff" />
 
     </LinearLayout>
-</RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

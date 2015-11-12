@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.vlonjatg.progressactivity.ProgressActivity;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.ProfileActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.User;
 import videolibrary.street.quality.qualityshow.api.user.listeners.FilmListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
 
@@ -24,10 +27,13 @@ import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
  */
 public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
-    public View rootView;
+    public ProgressActivity rootView;
     private RecyclerView showsView;
+    private TextView no_moviesView;
 
     private ShowsAdapter showsAdapter;
+
+    private User user;
 
     public static ProfileMoviesFragment newInstance() {
         final ProfileMoviesFragment profileMoviesFragment = new ProfileMoviesFragment();
@@ -37,10 +43,14 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_movies_profile, container, false);
+        rootView = (ProgressActivity) inflater.inflate(R.layout.fragment_movies_profile, container, false);
         showsView = (RecyclerView) rootView.findViewById(R.id.movies_profile_recyclerView);
         this.showsView.setHasFixedSize(true);
         this.showsView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+
+        this.user = QualityShowApplication.getUserHelper().getCurrentUser();
+
+        no_moviesView = (TextView) rootView.findViewById(R.id.no_movies);
 
         return rootView;
     }
@@ -49,7 +59,12 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
     public void onStart() {
         super.onStart();
         if (QualityShowApplication.getUserHelper().getCurrentUser() != null) {
-            QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), false, this);
+            if(user.getFilms() != null && user.getFilms().size() > 0){
+                this.showFilms(user.getFilms());
+            }else{
+                QualityShowApplication.getUserHelper().films(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
+                rootView.showLoading();
+            }
         }
     }
 
@@ -65,13 +80,18 @@ public class ProfileMoviesFragment extends Fragment implements FilmListener {
 
     @Override
     public void getFilms(ArrayList<Film> films) {
+        this.showFilms(films);
+    }
+
+    private void showFilms(ArrayList<Film> films){
         if(films.size() == 0){
-            Toast.makeText(getActivity(), "No movies on your account.", Toast.LENGTH_SHORT).show();
+            no_moviesView.setVisibility(View.VISIBLE);
         } else {
             QualityShowApplication.getUserHelper().getCurrentUser().setFilms(films);
             showsAdapter = new ShowsAdapter(null, films, (ProfileActivity) getActivity());
             showsView.setAdapter(showsAdapter);
         }
+        rootView.showContent();
     }
 
     @Override

@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.vlonjatg.progressactivity.ProgressActivity
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:id="@+id/movies_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/CustomTheme">
+    android:theme="@style/CustomTheme"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray">
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/movies_profile_recyclerView"
-        />
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_movies"
+            android:text="@string/no_movies"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:textColor="#000"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/movies_profile_recyclerView"
+            />
+    </RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

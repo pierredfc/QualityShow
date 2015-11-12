@@ -1,7 +1,6 @@
 package videolibrary.street.quality.qualityshow.ui.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,7 @@ import android.widget.ArrayAdapter;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
@@ -21,10 +20,10 @@ import videolibrary.street.quality.qualityshow.ui.holders.SeasonHolder;
  * Created by Sacael on 06/11/2015.
  */
 public class SeasonAdapter extends ArrayAdapter<Saison> {
-    List<Object> results;
+    ArrayList<Saison> results;
     private ClickListener clickListener;
 
-    public SeasonAdapter(Context context,List<Saison> saisons) {
+    public SeasonAdapter(Context context,ArrayList<Saison> saisons) {
         super(context,0,saisons);
     }
     @Override
@@ -40,13 +39,8 @@ public class SeasonAdapter extends ArrayAdapter<Saison> {
             Object p = item.getPoster().get("thumb");
             String image = (String) p;
 
+            Picasso.with(QualityShowApplication.getContext()).load(image).placeholder(R.drawable.undefined_poster).into(holder.image);
 
-            if (image == null) {
-                Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
-                holder.image.setImageDrawable(drawable);
-            } else {
-                Picasso.with(QualityShowApplication.getContext()).load(image).into(holder.image);
-            }
             holder.number.setText("Season " + item.getNumber().toString());
 
             holder.episodes.setText(item.getAired_episodes().toString() + " episodes aired.");

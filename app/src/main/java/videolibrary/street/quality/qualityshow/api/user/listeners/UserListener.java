@@ -4,7 +4,6 @@ import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Film;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
 
 /**

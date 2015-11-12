@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_search"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray"
     android:theme="@style/CustomTheme"
     android:background="@color/background_gray">
 
@@ -14,6 +17,10 @@
         android:text="@string/no_result"
         android:id="@+id/no_result_found"
         android:visibility="gone"
+        android:layout_margin="15dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_gravity="center_horizontal" />
 
     <android.support.v7.widget.RecyclerView
@@ -27,4 +34,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

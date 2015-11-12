@@ -3,10 +3,8 @@ package videolibrary.street.quality.qualityshow.ui.holders;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import videolibrary.street.quality.qualityshow.R;
-import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 
 

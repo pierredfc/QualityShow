@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<com.vlonjatg.progressactivity.ProgressActivity xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:progressActivity="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme"
     android:id="@+id/activity_start"
+    progressActivity:loadingBackgroundColor="@color/background_gray"
+    progressActivity:emptyBackgroundColor="@color/background_gray"
+    progressActivity:errorBackgroundColor="@color/background_gray"
     android:background="@drawable/background">
 
     <RelativeLayout
@@ -82,13 +87,6 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/start_progressBar"
-            android:layout_alignBottom="@+id/imageView3"
-            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
-</RelativeLayout>
+</com.vlonjatg.progressactivity.ProgressActivity>

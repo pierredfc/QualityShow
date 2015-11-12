@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import videolibrary.street.quality.qualityshow.api.user.dao.Category;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SaisonListener;
 import videolibrary.street.quality.qualityshow.api.user.repositories.SaisonRepository;

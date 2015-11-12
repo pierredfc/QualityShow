@@ -1,10 +1,15 @@
 package videolibrary.street.quality.qualityshow.ui.holders;
 
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
+
 /**
  * Created by Sacael on 07/11/2015.
  */
 public class EpisodeChild {
+
+    private Episode episode;
     private String overview;
+    private String date;
     private boolean seen;
 
     public boolean isSeen() {
@@ -16,7 +21,6 @@ public class EpisodeChild {
     }
 
     public String getOverview() {
-
         return overview;
     }
 
@@ -24,8 +28,22 @@ public class EpisodeChild {
         this.overview = overview;
     }
 
-    public EpisodeChild(String overview,boolean seen){
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public EpisodeChild(String overview, String date, boolean seen,Episode e){
+        this.episode = e;
         this.overview=overview;
+        this.date = date;
         this.seen=seen;
     }
+    public Episode getEpisode() {
+        return episode;
+    }
+
 }

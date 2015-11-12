@@ -2,11 +2,9 @@ package videolibrary.street.quality.qualityshow.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -65,15 +63,39 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
     }
 
     @Override
-    public void getAllUsers(ArrayList<User> users) {
-
-    }
-
-    @Override
     public void isLogged(AccessToken accessToken, User user) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onError(Throwable t) {
+        progressActivity.showError(getDrawable(R.drawable.ic_info_outline), getString(R.string.internet_error), getString(R.string.internet_error_msg), getString(R.string.tryagain), errorClickListener);
+    }
+
+    @Override
+    public void onClick(View v) {
+        EditText email = (EditText) findViewById(R.id.login_email_text);
+        EditText password = (EditText) findViewById(R.id.login_pwd_txt);
+
+        Editable mailEditable = email.getText();
+        Editable pwdEditable = password.getText();
+
+        boolean emptyMail = TextUtils.isEmpty(mailEditable);
+        boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
+
+        if (!emptyMail && !emptyPwd) {
+            progressActivity.showLoading();
+            QualityShowApplication.getUserHelper().login(mailEditable.toString().trim(), pwdEditable.toString(), this);
+        } else {
+            Toast.makeText(this, getString(R.string.fill_out), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void getAllUsers(ArrayList<User> users) {
+
     }
 
     @Override
@@ -104,31 +126,5 @@ public class LoginActivity extends Activity implements UserListener, View.OnClic
     @Override
     public void userIsRetrieved(User user) {
 
-    }
-
-    @Override
-    public void onError(Throwable t) {
-        progressActivity.showError(getDrawable(R.drawable.ic_info_outline), "Erreur de connexion",
-                "We could not establish a connection with our servers.",
-                "Try Again", errorClickListener);
-    }
-
-    @Override
-    public void onClick(View v) {
-        EditText email = (EditText) findViewById(R.id.login_email_text);
-        EditText password = (EditText) findViewById(R.id.login_pwd_txt);
-
-        Editable mailEditable = email.getText();
-        Editable pwdEditable = password.getText();
-
-        boolean emptyMail = TextUtils.isEmpty(mailEditable);
-        boolean emptyPwd = TextUtils.isEmpty(pwdEditable);
-
-        if (!emptyMail && !emptyPwd) {
-            progressActivity.showLoading();
-            QualityShowApplication.getUserHelper().login(mailEditable.toString(), pwdEditable.toString(), this);
-        } else {
-            Toast.makeText(this, "Please fill out all fields completely.", Toast.LENGTH_LONG).show();
-        }
     }
 }

@@ -1,12 +1,10 @@
 package videolibrary.street.quality.qualityshow.api.user.repositories;
 
 import com.strongloop.android.loopback.ModelRepository;
-import com.strongloop.android.loopback.callbacks.VoidCallback;
 import com.strongloop.android.remoting.adapters.Adapter;
 import com.strongloop.android.remoting.adapters.RestContract;
 import com.strongloop.android.remoting.adapters.RestContractItem;
 
-import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
@@ -62,6 +60,9 @@ public class SaisonRepository extends ModelRepository<Saison> {
         params.put("urlSaisonId", saisonId);
         params.put("urlEpisodeId", (int)episode.getId());
         params.putAll(episode.toMap());
+        params.remove("see");
+        params.remove("See");
+        params.put("See", episode.getSee());
         invokeStaticMethod("updateEpisode", params, callback);
     }
 }
