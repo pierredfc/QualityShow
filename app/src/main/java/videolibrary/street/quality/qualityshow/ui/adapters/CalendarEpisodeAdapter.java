@@ -1,15 +1,18 @@
 package videolibrary.street.quality.qualityshow.ui.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.ui.holders.CalendarChild;
 import videolibrary.street.quality.qualityshow.ui.holders.CalendarChildHolder;
@@ -56,6 +59,14 @@ public class CalendarEpisodeAdapter extends ExpandableRecyclerAdapter<CalendarPa
     public void onBindChildViewHolder(final CalendarChildHolder calendarChildHolder, int i, Object o) {
         CalendarChild calendarChild = (CalendarChild) o;
         calendarChildHolder.episodeEntry.setText(calendarChild.getEpisode().getTitle());
+        calendarChildHolder.calendarSaisonEntry.setText("Season " + calendarChild.getSeasonNumber());
+        calendarChildHolder.calendarSerieName.setText(calendarChild.getSerieTitle());
+        if (calendarChild.getThumb() == null) {
+            Drawable drawable = QualityShowApplication.getContext().getDrawable(R.drawable.undefined_poster);
+            calendarChildHolder.image.setImageDrawable(drawable);
+        } else {
+            Picasso.with(QualityShowApplication.getContext()).load(calendarChild.getThumb()).into(calendarChildHolder.image);
+        }
     }
 }
 

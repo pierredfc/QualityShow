@@ -11,12 +11,14 @@ public class CalendarChild {
     private Integer seasonNumber;
     private Episode episode;
     private Integer daysLeft;
+    private String thumb;
 
-    public CalendarChild(String serieTitle, Integer seasonNumber, Episode episode, Integer daysLeft) {
+    public CalendarChild(String serieTitle, Integer seasonNumber, Episode episode, Integer daysLeft, String thumb) {
         this.serieTitle = serieTitle;
         this.seasonNumber = seasonNumber;
         this.episode = episode;
         this.daysLeft = daysLeft;
+        this.thumb = thumb;
     }
 
     public String getSerieTitle() {
@@ -49,5 +51,13 @@ public class CalendarChild {
 
     public void setDaysLeft(Integer daysLeft) {
         this.daysLeft = daysLeft;
+    }
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
     }
 }
