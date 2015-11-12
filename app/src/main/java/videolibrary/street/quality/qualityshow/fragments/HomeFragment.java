@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -30,14 +29,10 @@ import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
 import videolibrary.street.quality.qualityshow.activities.MainActivity;
 import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
-import videolibrary.street.quality.qualityshow.api.user.dao.Ids;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
-import videolibrary.street.quality.qualityshow.receivers.NewEpisodeReceiver;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
-import videolibrary.street.quality.qualityshow.utils.AlarmPreferences;
-import videolibrary.street.quality.qualityshow.utils.Constants;
 
 
 public class HomeFragment extends Fragment implements SerieListener {
@@ -50,8 +45,6 @@ public class HomeFragment extends Fragment implements SerieListener {
     private ShowsAdapter showsAdapter;
 
     private List<Serie> userSerie;
-
-    private AlarmPreferences alarmPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +63,6 @@ public class HomeFragment extends Fragment implements SerieListener {
     public void onStart() {
         super.onStart();
         if (userConnected) {
-            alarmPreferences = new AlarmPreferences(getActivity());
             QualityShowApplication.getUserHelper().series(QualityShowApplication.getUserHelper().getCurrentUser(), true, this);
             rootView.showLoading();
         }
@@ -91,9 +83,6 @@ public class HomeFragment extends Fragment implements SerieListener {
         showsView.setAdapter(showsAdapter);
         rootView.showContent();
         getNextAir(series);
-        ArrayList<Integer> ole = alarmPreferences.getAlarmPreferences();
-
-        testAlarm(series);
     }
 
     private void getNextAir(ArrayList<Serie> series) {
@@ -126,49 +115,6 @@ public class HomeFragment extends Fragment implements SerieListener {
 
         long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
         return (int) (diff / (24 * 60 * 60 * 1000));
-    }
-
-
-    private void testAlarm(ArrayList<Serie> series){
-        SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.notification_prefs), Context.MODE_PRIVATE);
-
-        for (Serie serie : series) {
-            for (Saison saison : serie.getSaisons()) {
-                int aired_episodes = saison.getAired_episodes();
-                List<Episode> episodes = saison.getEpisodes();
-                for (int i = aired_episodes; i < episodes.size(); i++) {
-                    if(getDayDiff(episodes.get(i).getFirst_aired()) >= 0){
-                        String[] tokens = episodes.get(i).getFirst_aired().split("[-]");
-                        int year = Integer.parseInt(tokens[0]);
-                        int month = Integer.parseInt(tokens[1]);
-                        int day = Integer.parseInt(tokens[2].split("[T]")[0]);
-                        int id = episodes.get(i).getIds().get("trakt");
-                        if(!alarmPreferences.isInAlarmPreferences(id)){
-                            setAlarm(serie.getTitle(), id, year, month, day);
-                            alarmPreferences.setAlarmPreferences(id);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void setAlarm(String serieName, int id, int year, int month, int day){
-        AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Calendar cal = Calendar.getInstance();
-        int hour = 12;
-        int minutes = 0;
-        month -= 1;
-
-        cal.set(year, month, day, hour, minutes);
-        cal.add(Calendar.DATE, 1);
-        Intent intent = new Intent(QualityShowApplication.getContext(), NewEpisodeReceiver.class);
-        Bundle extras = new Bundle();
-        extras.putString(Constants.NEW_EPISODE_RECEIVER, serieName);
-        intent.putExtras(extras);
-
-        PendingIntent operation = PendingIntent.getBroadcast(getActivity(), id, intent, PendingIntent.FLAG_ONE_SHOT);
-        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), operation);
     }
 
     @Override

@@ -1,10 +1,14 @@
 package videolibrary.street.quality.qualityshow.activities;
 
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,22 +21,31 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.strongloop.android.loopback.AccessToken;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import videolibrary.street.quality.qualityshow.QualityShowApplication;
 import videolibrary.street.quality.qualityshow.R;
+import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Film;
+import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.listeners.AlarmListener;
 import videolibrary.street.quality.qualityshow.api.user.listeners.UserListener;
 import videolibrary.street.quality.qualityshow.fragments.HomeFragment;
 import videolibrary.street.quality.qualityshow.listeners.CalendarListener;
 import videolibrary.street.quality.qualityshow.listeners.ClickListener;
 import videolibrary.street.quality.qualityshow.listeners.RequestListener;
+import videolibrary.street.quality.qualityshow.receivers.NewEpisodeReceiver;
+import videolibrary.street.quality.qualityshow.services.EpisodeNotificationService;
 import videolibrary.street.quality.qualityshow.ui.utils.DrawerMenuUtils;
+import videolibrary.street.quality.qualityshow.utils.AlarmPreferences;
+import videolibrary.street.quality.qualityshow.utils.CalendarUtils;
+import videolibrary.street.quality.qualityshow.utils.Constants;
 import videolibrary.street.quality.qualityshow.utils.SearchPreferences;
 
-public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener {
+public class MainActivity extends AppCompatActivity implements UserListener, ClickListener, CalendarListener, RequestListener, DialogInterface.OnClickListener, AlarmListener {
 
     private Toolbar toolbar;
     private MaterialSearchView searchView;
@@ -41,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
     AlertDialog closeDialog;
 
     private SearchPreferences searchPreferences;
+    private AlarmPreferences alarmPreferences;
+    private PendingIntent mServicePendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
             }
         });
 
+        alarmPreferences = new AlarmPreferences(this);
+
         homeFragment = new HomeFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.frame_container, homeFragment);
@@ -96,6 +113,58 @@ public class MainActivity extends AppCompatActivity implements UserListener, Cli
         startActivity(intent);
     }
 
+    private void launchNotificationService(){
+        final Intent episodeNotificationService = new Intent(this, EpisodeNotificationService.class);
+
+        final Calendar cal = Calendar.getInstance();
+        mServicePendingIntent = PendingIntent.getService(this, 0, episodeNotificationService, 0);
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), Constants.POLLING_DELAY, mServicePendingIntent);
+
+    }
+
+    @Override
+    public void setSeries(ArrayList<Serie> series) {
+        SharedPreferences prefs = QualityShowApplication.getContext().getSharedPreferences(getString(R.string.notification_prefs), Context.MODE_PRIVATE);
+
+        for (Serie serie : series) {
+            for (Saison saison : serie.getSaisons()) {
+                int aired_episodes = saison.getAired_episodes();
+                List<Episode> episodes = saison.getEpisodes();
+                for (int i = aired_episodes; i < episodes.size(); i++) {
+                    if(CalendarUtils.getDayDiff(episodes.get(i).getFirst_aired()) >= 0){
+                        String[] tokens = episodes.get(i).getFirst_aired().split("[-]");
+                        int year = Integer.parseInt(tokens[0]);
+                        int month = Integer.parseInt(tokens[1]);
+                        int day = Integer.parseInt(tokens[2].split("[T]")[0]);
+                        int id = episodes.get(i).getIds().get("trakt");
+                        if(!alarmPreferences.isInAlarmPreferences(id)){
+                            setAlarm(serie.getTitle(), id, year, month, day);
+                            alarmPreferences.setAlarmPreferences(id);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void setAlarm(String serieName, int id, int year, int month, int day){
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Calendar cal = Calendar.getInstance();
+        int hour = 12;
+        int minutes = 0;
+        month -= 1;
+
+        cal.set(year, month, day, hour, minutes);
+        cal.add(Calendar.DATE, 1);
+        Intent intent = new Intent(QualityShowApplication.getContext(), NewEpisodeReceiver.class);
+        Bundle extras = new Bundle();
+        extras.putString(Constants.NEW_EPISODE_RECEIVER, serieName);
+        intent.putExtras(extras);
+
+        PendingIntent operation = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_ONE_SHOT);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), operation);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
