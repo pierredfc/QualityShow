@@ -82,13 +82,9 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
         setContentView(R.layout.activity_show);
 
         isFollow = false;
-
         Intent intent = getIntent();
-        show = intent.getParcelableExtra("show");
-        if(show == null){
-            show=QualityShowApplication.getShow();
-        }
-        IsMovie = (show instanceof Film);
+
+        IsMovie = intent.getBooleanExtra("isMovie", false);
         boolean isSearch = intent.getBooleanExtra("isSearch", false);
         UserHelper userHelper = QualityShowApplication.getUserHelper();
         user = userHelper.getCurrentUser();
@@ -102,7 +98,7 @@ public class ShowActivity extends AppCompatActivity implements FilmListener, Ser
             }
 
         } else {
-
+            show = intent.getParcelableExtra("show");
             if(userHelper.getCurrentUser() != null){
                 if (!IsMovie && userHelper.serieIsExist((Serie)this.show)) {
                     show=userHelper.getUserSerie((Serie)show);
