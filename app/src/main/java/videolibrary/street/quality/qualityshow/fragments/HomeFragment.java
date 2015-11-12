@@ -113,7 +113,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
                 return;
             }
         }
-        CalendarParent calendarParent = new CalendarParent(new ArrayList<>(), calendarChild.getDaysLeft(), "In " + calendarChild.getDaysLeft() + " days");
+        String daysLeftStr;
+        switch (calendarChild.getDaysLeft()) {
+            case 0:
+                daysLeftStr = "Today";
+                break;
+            case 1:
+                daysLeftStr = "Tomorrow";
+                break;
+            default:
+                daysLeftStr = "In " + calendarChild.getDaysLeft() + " days";
+
+        }
+        CalendarParent calendarParent = new CalendarParent(new ArrayList<>(), calendarChild.getDaysLeft(), daysLeftStr);
         calendarParent.getChildObjectList().add(calendarChild);
         parentObjects.add(calendarParent);
     }
