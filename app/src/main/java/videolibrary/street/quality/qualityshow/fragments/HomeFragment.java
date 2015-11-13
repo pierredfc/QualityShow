@@ -29,6 +29,7 @@ import videolibrary.street.quality.qualityshow.api.user.dao.Episode;
 import videolibrary.street.quality.qualityshow.api.user.dao.Saison;
 import videolibrary.street.quality.qualityshow.api.user.dao.Serie;
 import videolibrary.street.quality.qualityshow.api.user.dao.User;
+import videolibrary.street.quality.qualityshow.api.user.helpers.UserHelper;
 import videolibrary.street.quality.qualityshow.api.user.listeners.SerieListener;
 import videolibrary.street.quality.qualityshow.ui.adapters.CalendarEpisodeAdapter;
 import videolibrary.street.quality.qualityshow.ui.adapters.ShowsAdapter;
@@ -59,7 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
         if (userConnected) {
             user = QualityShowApplication.getUserHelper().getCurrentUser();
             QualityShowApplication.getUserHelper().series(user, true, this);
-            }
+        }
 
         return rootView;
     }
@@ -67,7 +68,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Seri
     @Override
     public void onResume() {
         super.onResume();
-        QualityShowApplication.getUserHelper().series(user, true, this);
+        UserHelper userHelper = QualityShowApplication.getUserHelper();
+        if (userHelper.getCurrentUser() != null) {
+            userHelper.series(user, true, this);
+        }
     }
 
     private void checkUserConnected() {

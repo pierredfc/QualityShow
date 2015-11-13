@@ -134,9 +134,6 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
                     activity.startActivity(loginIntent);
                 } else {
                     QualityShowApplication.getUserHelper().logout(this);
-                    Intent intent = new Intent(QualityShowApplication.getContext(), StartActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    activity.startActivity(intent);
                 }
                 break;
             default:
@@ -172,7 +169,9 @@ public class DrawerMenuUtils implements Drawer.OnDrawerItemClickListener, UserLi
 
     @Override
     public void userIsLogout() {
-        activity.finish();
+        Intent intent = new Intent(QualityShowApplication.getContext(), StartActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
     }
 
     @Override

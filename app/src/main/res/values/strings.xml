@@ -98,4 +98,9 @@
 
     <!-- ABOUT -->
     <string name="about_text">© Quality Street</string>
+    <string name="name1">De-Coster Romain</string>
+    <string name="BDM">De Magnienville Baptiste</string>
+    <string name="name3">Defache Pierre</string>
+    <string name="name4">Rozanes Jonathan</string>
+    <string name="name5">Samyn Edouard</string>
 </resources>

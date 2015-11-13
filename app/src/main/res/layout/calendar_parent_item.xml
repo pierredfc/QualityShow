@@ -2,12 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:paddingTop="1dp">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="#fff"
+        android:id="@+id/name5"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/bordertext"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -22,4 +37,6 @@
 
             />
     </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 </LinearLayout>
