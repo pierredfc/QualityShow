@@ -218,7 +218,9 @@ public class SettingsActivity extends AppCompatActivity implements Drawer.OnDraw
 
     @Override
     public void userIsLogout() {
-        super.finish();
+        Intent intent = new Intent(QualityShowApplication.getContext(), StartActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
